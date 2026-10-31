@@ -39,5 +39,7 @@
   "mw4.attachment.scope_vudu_mw4.name": "Vudu 6.5x Scope (M700)",
   "mw4.attachment.scope_mk5hd_mw4.name": "MK5 HD Scope (M700)",
   "mw4.gun.mcx_spear_lt.name": "MCX Spear LT",
-  "mw4.gun.mcx_spear_lt.desc": "§aFully modular short stroke piston rifle Swap a handguard and it is a different gun It only jams on your aim"
+  "mw4.gun.mcx_spear_lt.desc": "§aFully modular short stroke piston rifle Swap a handguard and it is a different gun It only jams on your aim",
+  "mw4.gun.hk437.name": "HK437",
+  "mw4.gun.hk437.desc": "§aA compact modular rifle with clean handling for close and mid-range fights"
 }

@@ -1,0 +1,29 @@
+{
+  "model": "mw4:ammo/762x39",
+  "texture": "mw4:ammo/uv/762x39",
+  "slot": "mw4:ammo/slot/762x39",
+  "shell": {
+    "model": "mw4:shell/rex_ammo_spent_blk",
+    "texture": "mw4:shell/rex_ammo_spent_blk"
+  },
+  "tracer_color": "#FF9999",
+  "transform": {
+    "scale": {
+      "thirdperson": [
+        0.75,
+        0.75,
+        0.75
+      ],
+      "ground": [
+        0.75,
+        0.75,
+        0.75
+      ],
+      "fixed": [
+        1.5,
+        1.5,
+        1.5
+      ]
+    }
+  }
+}

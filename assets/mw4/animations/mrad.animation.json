@@ -20431,11 +20431,6 @@
 						]
 					}
 				}
-			},
-			"sound_effects": {
-				"0.0334": {
-					"effect": "mw4:mrad/p21_sn_mromeo_drop_rattle.lnn.75.48000.all"
-				}
 			}
 		},
 		"inspect": {
@@ -180523,11 +180518,6 @@
 							1.0
 						]
 					}
-				}
-			},
-			"sound_effects": {
-				"0.0334": {
-					"effect": "mw4:mrad/p21_sn_mromeo_drop_rattle.lnn.75.48000.all"
 				}
 			}
 		}

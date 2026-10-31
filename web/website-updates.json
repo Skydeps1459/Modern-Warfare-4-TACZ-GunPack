@@ -1,6 +1,28 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.35",
+      "title": "Modern Warfare 4 1.10.0-Release 更新日志上线",
+      "publishedAt": "2026-10-31T21:01:15Z",
+      "summary": "时隔多天第一次接触mesh网格模型的一次较大的更新，也是总算做出来一个可玩版本了，有BUG请反馈我会一一修复",
+      "changes": [
+        "新增 HK437 突击步枪、专属状态机和完整音效",
+        "同步 HK437 模型与动画更新并完善备弹匣、快慢机、握把和空仓显隐表现",
+        "修复 MRAD 切枪音效重叠与 MK23 持枪镜头位置异常",
+        "更新 GitHub Release 与网页枪包更新日志"
+      ],
+      "bugFixes": [
+        "修复 HK437 普通战术换弹备弹匣不显示或动画错误",
+        "修复 HK437 快慢机状态、切换动画、手臂和镜头动作缺失",
+        "修复 HK437 切换快慢机时扩容弹匣状态丢失",
+        "修复 HK437 装配握把后默认枪管仍显示",
+        "修复 HK437 扩容弹匣空仓检视仍显示弹匣内子弹",
+        "修复 MRAD 切枪音效重叠",
+        "修复 MK23 持枪镜头位置偏低"
+      ],
+      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.0-Release"
+    },
+    {
       "id": "website-v1.0.34",
       "title": "修复网页更新详情返回链接",
       "publishedAt": "2026-10-26T14:38:30Z",

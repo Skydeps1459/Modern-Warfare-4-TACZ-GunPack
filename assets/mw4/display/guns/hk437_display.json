@@ -1,0 +1,111 @@
+{
+  "model_type": "mesh",
+  "model": "mw4:gun/hk437_geo",
+  "texture": "mw4:gun/uv/hk437",
+  "uv": [
+    "mw4:gun/uv/hk437",
+    "mw4:gun/uv/hk437_n",
+    "mw4:gun/uv/hk437_s"
+  ],
+  "lod": {
+    "model": "mw4:gun/hk437_geo",
+    "texture": "mw4:gun/uv/hk437"
+  },
+  "hud": "mw4:gun/hud/hk437",
+  "slot": "mw4:gun/slot/hk437",
+  "ammo_count_style": "normal",
+  "damage_style": "per_projectile",
+  "animation": "mw4:hk437",
+  "state_machine": "mw4:hk437_state_machine",
+  "use_default_animation": "rifle",
+  "third_person_animation": "default",
+  "transform": {
+    "scale": {
+      "thirdperson": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "ground": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "fixed": [
+        1.2,
+        1.2,
+        1.2
+      ]
+    }
+  },
+  "muzzle_flash": {
+    "texture": "tacz:flash/common_muzzle_flash",
+    "scale": 0.75
+  },
+  "iron_zoom": 1.5,
+  "shell": {
+    "initial_velocity": [
+      5,
+      2,
+      1
+    ],
+    "random_velocity": [
+      1,
+      1,
+      0.25
+    ],
+    "acceleration": [
+      0.0,
+      -10,
+      0.0
+    ],
+    "angular_velocity": [
+      360,
+      -1200,
+      90
+    ],
+    "living_time": 1.0
+  },
+  "sounds": {
+    "shoot": "mw4:hk437/weap_rex_kilo437_fire_plr_shot.qnn.85.48000.all",
+    "shoot_3p": "mw4:hk437/weap_rex_kilo437_fire_plr_shot.qnn.85.48000.all",
+    "silence": "mw4:hk437/weap_rex_kilo437_fire_plr_mech.qnn.85.48000.all",
+    "silence_3p": "mw4:hk437/weap_rex_kilo437_fire_plr_mech.qnn.85.48000.all"
+  },
+  "offhand_show": {
+    "pos": [
+      1,
+      20,
+      3.5
+    ],
+    "rotate": [
+      0,
+      0,
+      60
+    ],
+    "scale": [
+      0.5,
+      0.5,
+      0.5
+    ]
+  },
+  "hotbar_show": {
+    "0": {
+      "pos": [
+        -1,
+        20,
+        3
+      ],
+      "rotate": [
+        -180,
+        0,
+        120
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  }
+}

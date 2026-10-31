@@ -39,5 +39,7 @@
   "mw4.attachment.scope_vudu_mw4.name": "Vudu 6.5 倍镜（M700）",
   "mw4.attachment.scope_mk5hd_mw4.name": "MK5 HD 高倍镜（M700）",
   "mw4.gun.mcx_spear_lt.name": "MCX SPEAR LT 突击步枪",
-  "mw4.gun.mcx_spear_lt.desc": "§a枪管护木全模块化 换个零件就像换了把枪 短行程活塞保证它不挑食 唯一挑的是你家里有没有矿"
+  "mw4.gun.mcx_spear_lt.desc": "§a枪管护木全模块化 换个零件就像换了把枪 短行程活塞保证它不挑食 唯一挑的是你家里有没有矿",
+  "mw4.gun.hk437.name": "HK437 突击步枪",
+  "mw4.gun.hk437.desc": "§a模块化短管步枪 手感利落 近中距离都够用"
 }

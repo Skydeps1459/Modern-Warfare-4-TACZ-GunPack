@@ -1,0 +1,9 @@
+{
+  "name": "mw4.gun.hk437.name",
+  "display": "mw4:hk437_display",
+  "data": "mw4:hk437_data",
+  "tooltip": "mw4.gun.hk437.desc",
+  "type": "rifle",
+  "item_type": "modern_kinetic",
+  "sort": 20
+}
