@@ -2849404,7 +2849404,7 @@
         },
         {
           "name": "barrel",
-          "parent": "handguard_default",
+          "parent": "tag_barrel_attach",
           "pivot": [
             0.10365,
             11.18549,
@@ -3810702,13 +3810702,13 @@
           "parent": "view",
           "pivot": [
             5.8,
-            8.54878,
-            4.8349
+            5.4,
+            5.3349
           ],
           "rotation": [
-            0,
-            90,
-            0
+            0.0,
+            90.0,
+            0.0
           ]
         },
         {
