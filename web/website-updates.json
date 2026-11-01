@@ -1,6 +1,22 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.39",
+      "title": "Modern Warfare 4 1.10.4-Release 热更新",
+      "publishedAt": "2026-11-01T09:25:01Z",
+      "summary": "修复 HK437 前握把挂点、随机近战音效和命中反馈",
+      "changes": [
+        "同步 GitHub Release 与网页枪包更新日志",
+        "更新主包下载版本号与校验信息"
+      ],
+      "bugFixes": [
+        "修复 HK437 前握把安装后的位置不正确",
+        "修复 HK437 近战动画固定顺序播放且音效引用不匹配",
+        "修复 HK437 普通命中与击杀音效和其他枪不一致"
+      ],
+      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.4-Release"
+    },
+    {
       "id": "website-v1.0.38",
       "title": "Modern Warfare 4 1.10.3-Release 热更新",
       "publishedAt": "2026-11-01T08:25:00Z",

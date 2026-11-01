@@ -115366,6 +115366,11 @@
             ]
           }
         }
+      },
+      "sound_effects": {
+        "0.11": {
+          "effect": "mw4:hk437/melee_3"
+        }
       }
     },
     "melee_bayonet_2": {
@@ -121159,6 +121164,11 @@
             ]
           }
         }
+      },
+      "sound_effects": {
+        "0.1": {
+          "effect": "mw4:hk437/melee_1"
+        }
       }
     },
     "melee_bayonet_3": {
@@ -126626,6 +126636,11 @@
               1
             ]
           }
+        }
+      },
+      "sound_effects": {
+        "0.1": {
+          "effect": "mw4:hk437/melee_3"
         }
       }
     },

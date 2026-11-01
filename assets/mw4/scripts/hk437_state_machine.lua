@@ -20,6 +20,7 @@ local default = require("mw4_default_state_machine")
 local STATIC_TRACK_LINE = default.STATIC_TRACK_LINE
 local MAIN_TRACK = default.MAIN_TRACK
 local static_track_top = default.static_track_top
+local main_track_states = default.main_track_states
 
 local function increment(obj)
     obj.value = obj.value + 1
@@ -38,6 +39,28 @@ local VISIBLE_ROUNDS = 4
 local MAX_MAG_LEVEL = 1
 local CLIP_PREFIX = "hk437_ammo_l"
 local CAPACITY_BY_LEVEL = {30, 45, 60}
+local MELEE_ANIMATION_COUNT = 3
+
+local function nextMeleeIndex(this)
+    if this.hk437_melee_bag == nil or #this.hk437_melee_bag == 0 then
+        this.hk437_melee_bag = {}
+        for index = 1, MELEE_ANIMATION_COUNT do
+            table.insert(this.hk437_melee_bag, index)
+        end
+        for index = #this.hk437_melee_bag, 2, -1 do
+            local swap = math.random(index)
+            this.hk437_melee_bag[index], this.hk437_melee_bag[swap] =
+                this.hk437_melee_bag[swap], this.hk437_melee_bag[index]
+        end
+        if this.hk437_last_melee == this.hk437_melee_bag[#this.hk437_melee_bag] then
+            this.hk437_melee_bag[#this.hk437_melee_bag], this.hk437_melee_bag[1] =
+                this.hk437_melee_bag[1], this.hk437_melee_bag[#this.hk437_melee_bag]
+        end
+    end
+    local index = table.remove(this.hk437_melee_bag)
+    this.hk437_last_melee = index
+    return index
+end
 
 local function safeContextNumber(context, method, fallback)
     local ok, value = pcall(function()
@@ -141,6 +164,24 @@ end
 function base_track_state.update(this, context)
     applyAmmoVisual(this, context, false)
     applySightVisual(this, context, false)
+end
+
+-- 三段近战动画随机洗牌；音效由动画自身的 sound_effects 固定绑定。
+local idle_state = setmetatable({}, {__index = main_track_states.idle})
+
+function idle_state.transition(this, context, input)
+    if input == INPUT_BAYONET_MUZZLE or input == INPUT_BAYONET_STOCK then
+        local index = nextMeleeIndex(this)
+        context:runAnimation(
+            "melee_bayonet_" .. tostring(index),
+            context:getTrack(STATIC_TRACK_LINE, MAIN_TRACK),
+            false,
+            PLAY_ONCE_STOP,
+            0.2
+        )
+        return this.main_track_states.idle
+    end
+    return main_track_states.idle.transition(this, context, input)
 end
 
 -- 快慢机静态姿态独立占一条轨道。所有普通动画都不能写
@@ -247,6 +288,9 @@ function hk437_fire_mode_states.auto.transition(this, context, input)
 end
 
 local M = setmetatable({
+    main_track_states = setmetatable({
+        idle = idle_state
+    }, {__index = main_track_states}),
     HK437_AMMO_TRACK = HK437_AMMO_TRACK,
     HK437_AMMO_CLIP_PREFIX = CLIP_PREFIX,
     HK437_SIGHT_TRACK = HK437_SIGHT_TRACK,
@@ -265,6 +309,8 @@ function M:initialize(context)
     self.hk437_last_level = -1
     self.hk437_last_round_count = -1
     self.hk437_last_sight_visible = nil
+    self.hk437_melee_bag = {}
+    self.hk437_last_melee = -1
 end
 
 function M:states()

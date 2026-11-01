@@ -71,7 +71,10 @@
     "shoot_3p": "mw4:hk437/weap_rex_kilo437_fire_plr_shot.qnn.85.48000.all",
     "silence": "mw4:hk437/weap_rex_kilo437_fire_plr_mech.qnn.85.48000.all",
     "silence_3p": "mw4:hk437/weap_rex_kilo437_fire_plr_mech.qnn.85.48000.all",
-    "fire_select": ""
+    "fire_select": "",
+    "flesh_hit": "mw4:hitmarker/mp_hit_indication_3c.lnn.75.48000.all",
+    "kill": "mw4:hitmarker/iw9_kill_alert.lnn.75.48000.all",
+    "melee_stock": ""
   },
   "offhand_show": {
     "pos": [
