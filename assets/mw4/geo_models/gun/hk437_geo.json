@@ -1390384,7 +1390384,7 @@
         },
         {
           "name": "tag_sight_show",
-          "parent": "rear_sight",
+          "parent": "mount",
           "pivot": [
             0.10365,
             13.82256,
@@ -1701538,7 +1701538,7 @@
         },
         {
           "name": "tag_sight_show2",
-          "parent": "fore_sight",
+          "parent": "mount",
           "pivot": [
             0.10365,
             13.81868,
@@ -3810723,6 +3810723,15 @@
             15,
             135,
             0
+          ]
+        },
+        {
+          "name": "mount",
+          "parent": "j_gun",
+          "pivot": [
+            0.10365,
+            10.60796,
+            -5.83282
           ]
         }
       ]
