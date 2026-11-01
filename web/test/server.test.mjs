@@ -23,6 +23,7 @@ import {
   isPackRelease,
   isWebsiteRelease,
   normalizeRelease as normalizeClientRelease,
+  pickPackRelease as pickClientPackRelease,
   sortPackReleasesByVersion
 } from "../public/release-data.js";
 import { decodeBase64Utf8 } from "../public/download-config.js";
@@ -105,6 +106,7 @@ test("selects the highest pack version even when it was published earlier", () =
   const highest = { tag: "v1.10.4-Release", asset: { name: "1.10.4.zip" }, prerelease: false };
   const later = { tag: "v1.10.3-Release", asset: { name: "1.10.3.zip" }, prerelease: false };
   assert.equal(pickPackRelease([later, highest]), highest);
+  assert.equal(pickClientPackRelease([later, highest]), highest);
 });
 
 test("separates website releases from downloadable gun-pack releases", () => {

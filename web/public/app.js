@@ -3,7 +3,7 @@ import {
   loadPackReleases,
   loadReleases,
   pickPackRelease
-} from "./release-data.js?v=20261101-2";
+} from "./release-data.js?v=20261101-3";
 import {
   createHomepageWebsiteUpdate,
   loadWebsiteUpdates
@@ -232,7 +232,8 @@ async function fetchJson(url, options = {}) {
 
 async function loadFromLocalBackend() {
   return fetchJson(new URL("api/status", siteBaseUrl()), {
-    headers: { Accept: "application/json" }
+    headers: { Accept: "application/json" },
+    cache: "no-store"
   });
 }
 
@@ -242,9 +243,13 @@ async function loadFromGitHubPages() {
     Accept: "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28"
   };
+  const gunpackEndpoint = new URL("api/gunpack.json", siteBaseUrl());
+  gunpackEndpoint.searchParams.set("v", Date.now().toString());
+  const repositoryEndpoint = new URL("api/repository.json", siteBaseUrl());
+  repositoryEndpoint.searchParams.set("v", Date.now().toString());
   const [gunpack, repositoryResult, releases] = await Promise.all([
-    fetchJson(new URL("api/gunpack.json", siteBaseUrl())),
-    fetchJson(new URL("api/repository.json", siteBaseUrl()))
+    fetchJson(gunpackEndpoint, { cache: "no-store" }),
+    fetchJson(repositoryEndpoint, { cache: "no-store" })
       .catch(() => fetchJson(apiBase, { headers }))
       .catch(() => null),
     loadReleases(siteBaseUrl())

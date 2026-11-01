@@ -5,7 +5,7 @@ import {
   loadPackReleases,
   releaseAnchor,
   renderReleaseNotes
-} from "./release-data.js?v=20261101-2";
+} from "./release-data.js?v=20261101-3";
 import {
   loadDomesticMirror,
   loadDownloadConfig

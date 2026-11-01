@@ -61,11 +61,11 @@ export function normalizeRelease(release) {
 }
 
 export function pickPackRelease(releases) {
-  return releases.find((release) => !release.prerelease && release.asset)
-    || releases.find((release) => release.asset)
-    || releases.find((release) => !release.prerelease)
-    || releases[0]
-    || null;
+  const byVersion = (items) => sortPackReleasesByVersion(items)[0] || null;
+  return byVersion(releases.filter((release) => !release.prerelease && release.asset))
+    || byVersion(releases.filter((release) => release.asset))
+    || byVersion(releases.filter((release) => !release.prerelease))
+    || byVersion(releases);
 }
 
 export function sortReleasesByDate(releases) {
