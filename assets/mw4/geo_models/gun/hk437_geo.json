@@ -2736465,7 +2736465,7 @@
           ]
         },
         {
-          "name": "handguard_default",
+          "name": "handguard_base",
           "parent": "tag_barrel_attach",
           "pivot": [
             0.10365,
@@ -2736475,7 +2736475,7 @@
         },
         {
           "name": "handguard",
-          "parent": "handguard_default",
+          "parent": "handguard_base",
           "pivot": [
             0.10365,
             11.18549,
