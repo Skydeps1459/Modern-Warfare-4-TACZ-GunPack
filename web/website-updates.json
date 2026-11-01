@@ -1,6 +1,23 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.38",
+      "title": "Modern Warfare 4 1.10.3-Release 热更新",
+      "publishedAt": "2026-11-01T08:25:00Z",
+      "summary": "修复 HK437 瞄具异常网格、前握把视角、枪管显隐和默认护木显示",
+      "changes": [
+        "同步 GitHub Release 与网页枪包更新日志",
+        "更新主包下载版本号与校验信息"
+      ],
+      "bugFixes": [
+        "修复 HK437 未装备瞄具时仍显示异常瞄具网格",
+        "修复 HK437 前握把改装视角位置不正确",
+        "修复 HK437 装备前握把时枪管异常隐藏",
+        "修复 HK437 装备配件时默认护木被隐藏"
+      ],
+      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.3-Release"
+    },
+    {
       "id": "website-v1.0.37",
       "title": "Modern Warfare 4 1.10.2-Release 热更新",
       "publishedAt": "2026-11-01T08:00:00Z",
