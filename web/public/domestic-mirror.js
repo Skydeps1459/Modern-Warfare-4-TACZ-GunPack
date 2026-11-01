@@ -1,3 +1,5 @@
+import { uiText } from "./i18n.js?v=20261101-1";
+
 const boundMirrors = new WeakMap();
 let toastTimer = null;
 
@@ -60,10 +62,16 @@ export function bindDomesticMirrorCopy(link, mirror) {
     if (!currentMirror?.password) return;
     try {
       await copyText(currentMirror.password);
-      showToast(`蓝奏云密码 ${currentMirror.password} 已复制，请在新页面输入。`);
+      showToast(uiText(
+        `蓝奏云密码 ${currentMirror.password} 已复制，请在新页面输入。`,
+        `Lanzou Cloud password ${currentMirror.password} copied. Enter it on the new page.`
+      ));
     } catch (error) {
       console.error(error);
-      showToast(`无法自动复制，请手动输入密码：${currentMirror.password}`);
+      showToast(uiText(
+        `无法自动复制，请手动输入密码：${currentMirror.password}`,
+        `Could not copy automatically. Enter the password manually: ${currentMirror.password}`
+      ));
     }
   });
 }

@@ -3,17 +3,23 @@ import {
   loadPackReleases,
   loadReleases,
   pickPackRelease
-} from "./release-data.js?v=20261101-1";
+} from "./release-data.js?v=20261101-2";
 import {
   createHomepageWebsiteUpdate,
   loadWebsiteUpdates
-} from "./website-update-data.js?v=20261025-6";
+} from "./website-update-data.js?v=20261101-2";
 import {
   accelerateDownloadUrl,
   loadDomesticMirror,
   loadDownloadConfig
-} from "./download-config.js?v=20261026-1";
-import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261025-1";
+} from "./download-config.js?v=20261101-2";
+import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
+import {
+  intlLocale,
+  isEnglish,
+  siteBaseUrl,
+  uiText
+} from "./i18n.js?v=20261101-1";
 
 const elements = {
   packVersion: document.querySelector("#pack-version"),
@@ -48,10 +54,10 @@ const releasesUrl = `${repositoryUrl}/releases`;
 let acceleratorPrefix = "https://gh-proxy.com/";
 let currentDownloadUrl = null;
 
-const numberFormatter = new Intl.NumberFormat("zh-CN");
+const numberFormatter = new Intl.NumberFormat(intlLocale());
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
 const SCROLL_ANCHOR_IDS = ["arsenal", "updates", "install", "website-log"];
-const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+const dateFormatter = new Intl.DateTimeFormat(intlLocale(), {
   year: "numeric",
   month: "2-digit",
   day: "2-digit"
@@ -83,7 +89,7 @@ function applyDownloadLinks(url) {
 }
 
 async function refreshDownloadAccelerator() {
-  const config = await loadDownloadConfig();
+  const config = await loadDownloadConfig(siteBaseUrl());
   acceleratorPrefix = config.selected.prefix;
   if (currentDownloadUrl) applyDownloadLinks(currentDownloadUrl);
 }
@@ -103,20 +109,23 @@ async function loadDomesticMirrorLink({ preferLive = false } = {}) {
   }
   domesticMirrorInFlight = true;
   try {
-    const mirror = await loadDomesticMirror(undefined, { preferLive });
+    const mirror = await loadDomesticMirror(siteBaseUrl(), { preferLive });
     if (!mirror) {
       elements.downloadLanzou.hidden = true;
       lastDomesticMirrorKey = "";
       return;
     }
     // 内容没变就不动 DOM，避免每 30 秒重建按钮、重复绑定复制事件
-    const key = [mirror.url, mirror.password, mirror.label].join("|");
+    const mirrorLabel = isEnglish() ? "Lanzou Cloud mirror" : mirror.label;
+    const key = [mirror.url, mirror.password, mirrorLabel].join("|");
     if (key === lastDomesticMirrorKey) return;
     lastDomesticMirrorKey = key;
     elements.downloadLanzou.href = mirror.url;
     elements.downloadLanzou.textContent = mirror.password
-      ? `${mirror.label} · 密码 ${mirror.password}`
-      : mirror.label;
+      ? (isEnglish()
+          ? `${mirrorLabel} · Password ${mirror.password}`
+          : `${mirrorLabel} · 密码 ${mirror.password}`)
+      : mirrorLabel;
     elements.downloadLanzou.hidden = false;
     bindDomesticMirrorCopy(elements.downloadLanzou, mirror);
   } finally {
@@ -135,24 +144,26 @@ function createGunCard(gun, index) {
   number.textContent = String(index + 1).padStart(2, "0");
   const type = document.createElement("span");
   type.className = "gun-type";
-  type.textContent = gun.typeLabel;
+  const gunName = isEnglish() ? (gun.nameEn || gun.name) : gun.name;
+  type.textContent = isEnglish() ? (gun.typeLabelEn || gun.typeLabel) : gun.typeLabel;
   top.append(number, type);
 
   const imageWrap = document.createElement("div");
   imageWrap.className = "gun-image-wrap";
   const image = document.createElement("img");
   image.className = "gun-image";
-  image.src = gun.iconUrl;
-  image.alt = `${gun.name} 图标`;
+  image.src = new URL(gun.iconUrl, siteBaseUrl()).href;
+  image.alt = uiText(`${gun.name} 图标`, `${gunName} icon`);
   image.loading = "lazy";
   image.decoding = "async";
   image.addEventListener("error", () => image.remove(), { once: true });
   imageWrap.append(image);
 
   const heading = document.createElement("h3");
-  heading.textContent = gun.name;
+  heading.textContent = gunName;
   const description = document.createElement("p");
-  description.textContent = gun.description || "Modern Warfare 4 枪械平台";
+  description.textContent = (isEnglish() ? gun.descriptionEn : gun.description)
+    || uiText("Modern Warfare 4 枪械平台", "Modern Warfare 4 weapon platform");
 
   article.append(top, imageWrap, heading, description);
   return article;
@@ -163,7 +174,7 @@ function renderGuns(guns) {
   if (!Array.isArray(guns) || guns.length === 0) {
     const empty = document.createElement("div");
     empty.className = "loading-panel";
-    empty.textContent = "仓库中暂未找到枪械索引。";
+    empty.textContent = uiText("仓库中暂未找到枪械索引。", "No weapon index was found in the repository.");
     elements.grid.append(empty);
     return;
   }
@@ -187,21 +198,25 @@ function renderStatus(data) {
     elements.repoName.textContent = repository.fullName;
     elements.repoStars.textContent = numberFormatter.format(repository.stars);
     elements.repoUpdated.textContent = formatDate(repository.pushedAt || repository.updatedAt);
-    elements.repositoryDescription.textContent = repository.description || "仓库已连接。";
+    elements.repositoryDescription.textContent = repository.description
+      || uiText("仓库已连接。", "Repository connected.");
     applyRepositoryLinks(repository.url);
   } else {
-    elements.repoName.textContent = "GitHub API 暂不可用";
+    elements.repoName.textContent = uiText("GitHub API 暂不可用", "GitHub API unavailable");
     elements.repoStars.textContent = "--";
     elements.repoUpdated.textContent = "--";
     elements.repositoryDescription.textContent = githubError
-      ? "枪包数据已加载；GitHub 状态暂时无法同步。"
-      : "等待仓库状态同步。";
+      ? uiText(
+          "枪包数据已加载；GitHub 状态暂时无法同步。",
+          "Gun pack data loaded; GitHub status is temporarily unavailable."
+        )
+      : uiText("等待仓库状态同步。", "Waiting for repository status.");
   }
 
   if (release) {
     elements.releaseDate.textContent = formatDate(release.publishedAt);
     elements.assetSize.textContent = release.asset
-      ? `${formatBytes(release.asset.size)} / ${numberFormatter.format(release.asset.downloadCount)} 次`
+      ? `${formatBytes(release.asset.size)} / ${numberFormatter.format(release.asset.downloadCount)} ${uiText("次", "downloads")}`
       : release.tag;
   } else {
     elements.releaseDate.textContent = "NO RELEASE";
@@ -216,7 +231,7 @@ async function fetchJson(url, options = {}) {
 }
 
 async function loadFromLocalBackend() {
-  return fetchJson(new URL("api/status", document.baseURI), {
+  return fetchJson(new URL("api/status", siteBaseUrl()), {
     headers: { Accept: "application/json" }
   });
 }
@@ -228,11 +243,11 @@ async function loadFromGitHubPages() {
     "X-GitHub-Api-Version": "2022-11-28"
   };
   const [gunpack, repositoryResult, releases] = await Promise.all([
-    fetchJson(new URL("api/gunpack.json", document.baseURI)),
-    fetchJson(new URL("api/repository.json", document.baseURI))
+    fetchJson(new URL("api/gunpack.json", siteBaseUrl())),
+    fetchJson(new URL("api/repository.json", siteBaseUrl()))
       .catch(() => fetchJson(apiBase, { headers }))
       .catch(() => null),
-    loadReleases()
+    loadReleases(siteBaseUrl())
   ]);
   const packRelease = pickPackRelease(releases);
 
@@ -275,7 +290,10 @@ async function loadStatus() {
     elements.grid.replaceChildren();
     const panel = document.createElement("div");
     panel.className = "loading-panel";
-    panel.textContent = "网页后端暂时无法连接，请稍后刷新。";
+    panel.textContent = uiText(
+      "网页后端暂时无法连接，请稍后刷新。",
+      "The website backend is temporarily unavailable. Please refresh later."
+    );
     elements.grid.append(panel);
     elements.packVersion.textContent = "OFFLINE";
     elements.gunCount.textContent = "--";
@@ -290,7 +308,10 @@ async function loadRecentReleases() {
     if (releases.length === 0) {
       const empty = document.createElement("div");
       empty.className = "loading-panel";
-      empty.textContent = "暂时没有可展示的 Release 更新。";
+      empty.textContent = uiText(
+        "暂时没有可展示的 Release 更新。",
+        "No release updates are available yet."
+      );
       elements.recentReleases.append(empty);
       return;
     }
@@ -303,19 +324,25 @@ async function loadRecentReleases() {
     elements.recentReleases.replaceChildren();
     const panel = document.createElement("div");
     panel.className = "loading-panel";
-    panel.textContent = "更新日志暂时无法载入，请稍后重试。";
+    panel.textContent = uiText(
+      "更新日志暂时无法载入，请稍后重试。",
+      "Release notes could not be loaded. Please try again later."
+    );
     elements.recentReleases.append(panel);
   }
 }
 
 async function loadHomepageWebsiteUpdates() {
   try {
-    const updates = await loadWebsiteUpdates();
+    const updates = await loadWebsiteUpdates(siteBaseUrl());
     elements.homepageWebsiteUpdates.replaceChildren();
     if (updates.length === 0) {
       const empty = document.createElement("div");
       empty.className = "loading-panel";
-      empty.textContent = "暂时没有网页更新记录。";
+      empty.textContent = uiText(
+        "暂时没有网页更新记录。",
+        "No website updates are available yet."
+      );
       elements.homepageWebsiteUpdates.append(empty);
       return;
     }
@@ -328,7 +355,10 @@ async function loadHomepageWebsiteUpdates() {
     elements.homepageWebsiteUpdates.replaceChildren();
     const empty = document.createElement("div");
     empty.className = "loading-panel";
-    empty.textContent = "网页更新记录暂时无法载入。";
+    empty.textContent = uiText(
+      "网页更新记录暂时无法载入。",
+      "Website updates could not be loaded."
+    );
     elements.homepageWebsiteUpdates.append(empty);
   }
 }

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en" data-site-base="../">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Download Modern Warfare 4 TACZ Gun Pack, browse weapon platforms, releases, and installation instructions.">
+    <meta name="theme-color" content="#0a0c0b">
+    <title>Modern Warfare 4 // TACZ Gun Pack</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css?v=20261101-1">
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Modern Warfare 4 home">
+        <span class="brand-mark">MW</span>
+        <span class="brand-copy">
+          <strong>MODERN WARFARE 4</strong>
+          <small>TACZ GUN PACK</small>
+        </span>
+      </a>
+      <nav aria-label="Navigation">
+        <a href="#arsenal">Armory</a>
+        <a href="#updates">Updates</a>
+        <a href="./changelog.html">Changelog</a>
+        <a href="#website-log">Website</a>
+        <a href="#install">Install</a>
+        <a class="language-link" href="../" lang="zh-CN">中文</a>
+        <a href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack" rel="noreferrer">GitHub ↗</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse"></span> TACTICAL ARMORY / ONLINE</p>
+          <h1>ENTER THE<br><span>COVER FIRE ZONE</span></h1>
+          <p class="hero-text">
+            A Modern Warfare 4 TACZ gun pack built for the main world. Unified models, animations,
+            weapon audio, and reload logic. Download the latest release and place it in your
+            <code>tacz</code> directory.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" id="download-accelerated" href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases" rel="noreferrer">
+              <span>Accelerated download</span>
+              <span class="button-arrow">↓</span>
+            </a>
+            <a class="button button-ghost" id="download-direct" href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases" rel="noreferrer">
+              GitHub direct
+            </a>
+            <a class="button button-outline" id="download-lanzou" href="#" rel="noreferrer" hidden>
+              Lanzou Cloud mirror
+            </a>
+          </div>
+          <dl class="hero-stats">
+            <div>
+              <dt>Current version</dt>
+              <dd id="pack-version">Loading…</dd>
+            </div>
+            <div>
+              <dt>Weapon platforms</dt>
+              <dd id="gun-count">--</dd>
+            </div>
+            <div>
+              <dt>Repository stars</dt>
+              <dd id="repo-stars">--</dd>
+            </div>
+          </dl>
+        </div>
+
+        <aside class="deployment-card" aria-label="Current release overview">
+          <div class="card-grid" aria-hidden="true"></div>
+          <div class="card-topline">
+            <span>Release overview</span>
+            <span class="status-label">Synced</span>
+          </div>
+          <div class="scope" aria-hidden="true">
+            <span class="scope-ring scope-ring-one"></span>
+            <span class="scope-ring scope-ring-two"></span>
+            <span class="scope-cross scope-cross-x"></span>
+            <span class="scope-cross scope-cross-y"></span>
+            <span class="scope-center"></span>
+          </div>
+          <div class="manifest-list">
+            <div><span>PACKAGE</span><strong id="manifest-version">MW4</strong></div>
+            <div><span>RELEASE</span><strong id="release-date">CHECKING</strong></div>
+            <div><span>PACK LICENSE</span><strong id="manifest-license">GPL-3.0</strong></div>
+            <div><span>NAMESPACE</span><strong>mw4</strong></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="ticker" aria-label="Gun pack information">
+        <div>
+          <span>15 WEAPON PLATFORMS</span>
+          <span>5 AMMO CALIBERS</span>
+          <span>FORGE 1.20.1</span>
+          <span>TACZ 1.1.8</span>
+          <span>GPL-3.0 PACK / MIT SITE</span>
+          <span aria-hidden="true">15 WEAPON PLATFORMS</span>
+          <span aria-hidden="true">5 AMMO CALIBERS</span>
+          <span aria-hidden="true">FORGE 1.20.1</span>
+          <span aria-hidden="true">TACZ 1.1.8</span>
+          <span aria-hidden="true">GPL-3.0 PACK / MIT SITE</span>
+        </div>
+      </section>
+
+      <section class="section arsenal" id="arsenal">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CURRENT LOADOUT</p>
+            <h2>Armory</h2>
+          </div>
+          <p>The weapon index is read directly from the repository and updates automatically when new guns are added.</p>
+        </div>
+        <div class="gun-grid" id="gun-grid" aria-live="polite">
+          <div class="loading-panel">Loading gun pack data…</div>
+        </div>
+      </section>
+
+      <section class="section updates" id="updates">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RECENT PATCHES</p>
+            <h2>Patches &amp; Logs</h2>
+          </div>
+          <p>The three newest gun pack releases are shown here. Original release notes may be published in Chinese.</p>
+        </div>
+        <div class="update-grid" id="recent-releases" aria-live="polite">
+          <div class="loading-panel">Loading recent updates…</div>
+        </div>
+        <div class="updates-more">
+          <a class="button button-outline" href="./changelog.html">View full changelog ↗</a>
+        </div>
+      </section>
+
+      <section class="section intel" id="install">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FIELD MANUAL</p>
+            <h2>Three-step deployment</h2>
+          </div>
+          <p>For Forge 1.20.1 and TACZ. Fully exit the game before updating so the old ZIP file is no longer locked.</p>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="step-number">01</span>
+            <div>
+              <h3>Get the release</h3>
+              <p>Download <code>Modern Warfare 4-&lt;version&gt;.zip</code> from GitHub Releases.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">02</span>
+            <div>
+              <h3>Place it in TACZ</h3>
+              <p>Put the ZIP in the instance's <code>.minecraft/tacz/</code> directory. Do not extract it.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">03</span>
+            <div>
+              <h3>Reload</h3>
+              <p>Start the game or run <code>/tacz reload</code>. Restart the client after replacing an existing pack.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="repository-panel">
+        <div>
+          <p class="eyebrow">SOURCE CONTROL</p>
+          <h2>Repository &amp; release sync</h2>
+          <p id="repository-description">Repository status, release dates, and download assets are synchronized through the GitHub API.</p>
+        </div>
+        <div class="repo-metrics">
+          <div><span>REPOSITORY</span><strong id="repo-name">Skydeps1459 / Modern-Warfare-4-TACZ-GunPack</strong></div>
+          <div><span>LAST PUSH</span><strong id="repo-updated">--</strong></div>
+          <div><span>DOWNLOAD ASSET</span><strong id="asset-size">--</strong></div>
+        </div>
+        <a class="button button-outline" id="repo-panel-link" href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack" rel="noreferrer">Open GitHub repository ↗</a>
+      </section>
+
+      <section class="section website-history" id="website-log">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">WEBSITE BUILD LOG</p>
+            <h2>Website updates</h2>
+          </div>
+          <p>Only website interface, data, and feature changes are recorded here. Detailed update notes are currently maintained in Chinese.</p>
+        </div>
+        <div class="home-website-update-list" id="homepage-website-updates" aria-live="polite">
+          <div class="loading-panel">Loading website updates…</div>
+        </div>
+        <div class="updates-more">
+          <a class="button button-outline" href="./website-updates.html?v=20261101-2">View all website updates ↗</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>MODERN WARFARE 4 // TACZ</span>
+      <span><a href="./website-updates.html?v=20261101-2">Website updates</a> · Pack <a href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/blob/main/GUNPACK-LICENSE.md" rel="noreferrer">GPL-3.0</a> · Site code and docs <a href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/blob/main/LICENSE" rel="noreferrer">MIT</a> · <a class="admin-entry" href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/edit/main/web/domestic-mirror.json" rel="noreferrer" title="Repository owner only">Site admin</a> · <a href="../" lang="zh-CN">中文版</a></span>
+      <span class="site-credit">Website and backend developed and updated by Deepseek-V4.1-flash · Maintained by Skydeps1459 · <a href="https://space.bilibili.com/342953064?spm_id_from=333.1007.0.0" rel="noreferrer" target="_blank">Author on Bilibili ↗</a></span>
+    </footer>
+
+    <script src="../app.js?v=20261101-3" type="module"></script>
+  </body>
+</html>

@@ -41,6 +41,7 @@ test("reads the live gun pack manifest", async () => {
   assert.equal(manifest.license, "GPL-3.0");
   assert.ok(manifest.guns.length >= 14);
   assert.ok(manifest.guns.every((gun) => gun.id && gun.name && gun.iconUrl));
+  assert.ok(manifest.guns.every((gun) => gun.nameEn && gun.typeLabelEn));
 });
 
 test("creates file-based icon URLs for static hosting", async () => {
@@ -130,9 +131,9 @@ test("renders a dedicated detail page for each update id", () => {
 });
 
 test("builds one canonical home-card detail path", () => {
-  assert.equal(
+  assert.match(
     websiteUpdateDetailPath("website-v1.0.14"),
-    "./website-updates/website-v1.0.14.html?v=20261025-11"
+    /^\.\/website-updates\/website-v1\.0\.14\.html\?v=\d{8}-\d+$/
   );
 });
 
@@ -227,6 +228,20 @@ test("serves health and local gun pack data", async (t) => {
   assert.match(pageHtml, /id="website-log"/);
   assert.match(pageHtml, /id="homepage-website-updates"/);
 
+  const englishPageResponse = await fetch(`${baseUrl}/en/`);
+  assert.equal(englishPageResponse.status, 200);
+  const englishPageHtml = await englishPageResponse.text();
+  assert.match(englishPageHtml, /<html lang="en"/);
+  assert.match(englishPageHtml, /Three-step deployment/);
+
+  const englishChangelogResponse = await fetch(`${baseUrl}/en/changelog.html`);
+  assert.equal(englishChangelogResponse.status, 200);
+  assert.match(await englishChangelogResponse.text(), /Changelog/);
+
+  const englishWebsiteUpdatesResponse = await fetch(`${baseUrl}/en/website-updates.html`);
+  assert.equal(englishWebsiteUpdatesResponse.status, 200);
+  assert.match(await englishWebsiteUpdatesResponse.text(), /Website Updates/);
+
   const changelogResponse = await fetch(`${baseUrl}/changelog.html`);
   assert.equal(changelogResponse.status, 200);
   assert.match(await changelogResponse.text(), /更新日志/);
@@ -242,6 +257,12 @@ test("serves health and local gun pack data", async (t) => {
   const dedicatedDetailResponse = await fetch(`${baseUrl}/website-updates/website-v1.0.12.html`);
   assert.equal(dedicatedDetailResponse.status, 200);
   assert.match(await dedicatedDetailResponse.text(), /website-v1\.0\.12/);
+
+  const englishDetailResponse = await fetch(`${baseUrl}/en/website-updates/website-v1.0.12.html`);
+  assert.equal(englishDetailResponse.status, 200);
+  const englishDetailHtml = await englishDetailResponse.text();
+  assert.match(englishDetailHtml, /<html lang="en"/);
+  assert.match(englishDetailHtml, /website-v1\.0\.12/);
 
   const legacyNestedUpdatesResponse = await fetch(
     `${baseUrl}/website-updates/website-updates.html?v=20261025-11`,

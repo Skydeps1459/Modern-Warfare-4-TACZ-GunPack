@@ -207,6 +207,7 @@ export async function buildStaticSite() {
   const iconSourceDir = join(projectRoot, "assets", "mw4", "textures", "gun", "slot");
   const iconOutputDir = join(distDir, "api", "icons");
   const detailOutputDir = join(distDir, "website-updates");
+  const englishDetailOutputDir = join(distDir, "en", "website-updates");
 
   await rm(distDir, { recursive: true, force: true });
   await mkdir(iconOutputDir, { recursive: true });
@@ -217,6 +218,7 @@ export async function buildStaticSite() {
       await cp(join(publicDir, name), join(distDir, name), { recursive: true });
     }
   }
+  await mkdir(englishDetailOutputDir, { recursive: true });
 
   const [manifest, releases, repository, downloadedSelection] = await Promise.all([
     readGunPackManifest(),
@@ -245,14 +247,20 @@ export async function buildStaticSite() {
   await cp(join(webDir, "website-updates.json"), join(distDir, "api", "website-updates.json"));
   await cp(join(webDir, "domestic-mirror.json"), join(distDir, "api", "domestic-mirror.json"));
 
-  const [detailTemplate, websiteUpdates] = await Promise.all([
+  const [detailTemplate, englishDetailTemplate, websiteUpdates] = await Promise.all([
     readFile(join(webDir, "templates", "website-update-detail.html"), "utf8"),
+    readFile(join(webDir, "templates", "website-update-detail-en.html"), "utf8"),
     readWebsiteUpdates()
   ]);
   for (const update of websiteUpdates) {
     await writeFile(
       join(detailOutputDir, `${update.id}.html`),
       toDetailPage(detailTemplate, update.id),
+      "utf8"
+    );
+    await writeFile(
+      join(englishDetailOutputDir, `${update.id}.html`),
+      toDetailPage(englishDetailTemplate, update.id),
       "utf8"
     );
   }
@@ -267,7 +275,7 @@ export async function buildStaticSite() {
 
   console.log(
     `Built static site: ${manifest.version}, ${manifest.guns.length} guns, ` +
-      `${releases.length} releases, ${websiteUpdates.length} website detail pages`
+      `${releases.length} releases, ${websiteUpdates.length} website detail pages in Chinese and English`
   );
   console.log(
     `Download accelerator: ${downloadConfig.selected.name} ` +

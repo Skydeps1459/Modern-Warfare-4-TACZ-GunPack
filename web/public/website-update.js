@@ -1,7 +1,8 @@
 import {
   formatWebsiteUpdateDate,
   loadWebsiteUpdates
-} from "./website-update-data.js?v=20261025-6";
+} from "./website-update-data.js?v=20261101-2";
+import { siteBaseUrl, uiText } from "./i18n.js?v=20261101-1";
 
 const shell = document.querySelector("#website-update-detail");
 const crumb = document.querySelector("#website-detail-crumb");
@@ -34,7 +35,10 @@ function requestedUpdateId() {
 
 function renderUpdate(update) {
   crumb.textContent = update.id;
-  document.title = `${update.id} // 网页更新 // Modern Warfare 4 TACZ`;
+  document.title = uiText(
+    `${update.id} // 网页更新 // Modern Warfare 4 TACZ`,
+    `${update.id} // Website Update // Modern Warfare 4 TACZ`
+  );
 
   const article = document.createElement("article");
   article.className = "release-entry website-release-entry website-detail-card";
@@ -59,34 +63,34 @@ function renderUpdate(update) {
     releaseLink.className = "button button-ghost";
     releaseLink.href = update.releaseUrl;
     releaseLink.rel = "noreferrer";
-    releaseLink.textContent = "GitHub 发行说明 ↗";
+    releaseLink.textContent = uiText("GitHub 发行说明 ↗", "GitHub release notes ↗");
     actions.append(releaseLink);
   }
   const backLink = document.createElement("a");
   backLink.className = "button button-outline";
-  const siteBase = new URL(
-    document.documentElement.dataset.siteBase || "./",
-    document.baseURI
-  );
-  backLink.href = new URL("website-updates.html?v=20261025-11", siteBase);
-  backLink.textContent = "返回网页更新";
+  backLink.href = new URL("../website-updates.html?v=20261101-2", document.baseURI);
+  backLink.textContent = uiText("返回网页更新", "Back to website updates");
   actions.append(backLink);
   header.append(copy, actions);
 
   const facts = document.createElement("div");
   facts.className = "release-facts";
-  facts.textContent = `更新 ${update.changes?.length || 0} 项 · 修复 ${update.bugFixes?.length || 0} 项 · 不提供网站文件下载`;
+  facts.textContent = uiText(
+    `更新 ${update.changes?.length || 0} 项 · 修复 ${update.bugFixes?.length || 0} 项 · 不提供网站文件下载`,
+    `${update.changes?.length || 0} changes · ${update.bugFixes?.length || 0} fixes · Website files are not provided for download`
+  );
 
   const notes = document.createElement("div");
   notes.className = "release-notes website-release-notes";
   const summary = document.createElement("p");
   summary.className = "website-detail-summary";
-  summary.textContent = update.summary || "查看本次网页版本包含的完整变更。";
+  summary.textContent = update.summary
+    || uiText("查看本次网页版本包含的完整变更。", "View the full changes in this website update.");
   notes.append(summary);
 
-  const changes = createChangeSection("完整更新内容", update.changes);
+  const changes = createChangeSection(uiText("完整更新内容", "Full update details"), update.changes);
   if (changes) notes.append(changes);
-  const bugFixes = createChangeSection("问题修复", update.bugFixes);
+  const bugFixes = createChangeSection(uiText("问题修复", "Fixes"), update.bugFixes);
   if (bugFixes) notes.append(bugFixes);
 
   article.append(header, facts, notes);
@@ -99,19 +103,25 @@ async function renderWebsiteUpdateDetail() {
     shell.replaceChildren();
     const empty = document.createElement("div");
     empty.className = "log-empty";
-    empty.textContent = "没有指定网页更新版本，请从网页更新列表进入。";
+    empty.textContent = uiText(
+      "没有指定网页更新版本，请从网页更新列表进入。",
+      "No website update version was specified. Open one from the website update list."
+    );
     shell.append(empty);
     return;
   }
 
   try {
-    const updates = await loadWebsiteUpdates(document.documentElement.dataset.siteBase || "./");
+    const updates = await loadWebsiteUpdates(siteBaseUrl());
     const update = updates.find((item) => item.id === id);
     if (!update) {
       shell.replaceChildren();
       const empty = document.createElement("div");
       empty.className = "log-empty";
-      empty.textContent = `没有找到网页更新版本：${id}`;
+      empty.textContent = uiText(
+        `没有找到网页更新版本：${id}`,
+        `Website update not found: ${id}`
+      );
       shell.append(empty);
       return;
     }
@@ -121,7 +131,10 @@ async function renderWebsiteUpdateDetail() {
     shell.replaceChildren();
     const empty = document.createElement("div");
     empty.className = "log-empty";
-    empty.textContent = "网页更新详情暂时无法载入，请稍后重试。";
+    empty.textContent = uiText(
+      "网页更新详情暂时无法载入，请稍后重试。",
+      "Website update details could not be loaded. Please try again later."
+    );
     shell.append(empty);
   }
 }

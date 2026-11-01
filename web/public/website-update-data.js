@@ -1,4 +1,10 @@
-const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+import {
+  intlLocale,
+  siteBaseUrl,
+  uiText
+} from "./i18n.js?v=20261101-1";
+
+const dateFormatter = new Intl.DateTimeFormat(intlLocale(), {
   year: "numeric",
   month: "2-digit",
   day: "2-digit"
@@ -15,7 +21,7 @@ async function fetchJson(url) {
   return response.json();
 }
 
-export async function loadWebsiteUpdates(baseUrl = new URL("./", document.baseURI)) {
+export async function loadWebsiteUpdates(baseUrl = siteBaseUrl()) {
   const siteBase = typeof baseUrl === "string"
     ? new URL(baseUrl, document.baseURI)
     : baseUrl;
@@ -40,7 +46,7 @@ export async function loadWebsiteUpdates(baseUrl = new URL("./", document.baseUR
 }
 
 export function websiteUpdateDetailPath(updateId) {
-  return `./website-updates/${encodeURIComponent(updateId)}.html?v=20261025-11`;
+  return `./website-updates/${encodeURIComponent(updateId)}.html?v=20261101-2`;
 }
 
 export function createHomepageWebsiteUpdate(update) {
@@ -59,10 +65,11 @@ export function createHomepageWebsiteUpdate(update) {
   const heading = document.createElement("h3");
   heading.textContent = update.title;
   const summary = document.createElement("p");
-  summary.textContent = update.summary || "查看本次网页版本包含的完整变更。";
+  summary.textContent = update.summary
+    || uiText("查看本次网页版本包含的完整变更。", "View the full changes in this website update.");
   const link = document.createElement("a");
   link.href = websiteUpdateDetailPath(update.id);
-  link.textContent = "查看完整记录";
+  link.textContent = uiText("查看完整记录", "View full record");
 
   article.append(meta, heading, summary, link);
   return article;

@@ -45,6 +45,11 @@ const staticFiles = new Map([
   ["/changelog.html", { file: "changelog.html", type: "text/html; charset=utf-8" }],
   ["/website-updates.html", { file: "website-updates.html", type: "text/html; charset=utf-8" }],
   ["/website-update.html", { file: "website-update.html", type: "text/html; charset=utf-8" }],
+  ["/en", { file: "en/index.html", type: "text/html; charset=utf-8" }],
+  ["/en/", { file: "en/index.html", type: "text/html; charset=utf-8" }],
+  ["/en/index.html", { file: "en/index.html", type: "text/html; charset=utf-8" }],
+  ["/en/changelog.html", { file: "en/changelog.html", type: "text/html; charset=utf-8" }],
+  ["/en/website-updates.html", { file: "en/website-updates.html", type: "text/html; charset=utf-8" }],
   ["/styles.css", { file: "styles.css", type: "text/css; charset=utf-8" }],
   ["/app.js", { file: "app.js", type: "text/javascript; charset=utf-8" }],
   ["/changelog.js", { file: "changelog.js", type: "text/javascript; charset=utf-8" }],
@@ -54,7 +59,8 @@ const staticFiles = new Map([
   ["/website-update-data.js", { file: "website-update-data.js", type: "text/javascript; charset=utf-8" }],
   ["/download-config.js", { file: "download-config.js", type: "text/javascript; charset=utf-8" }],
   ["/domestic-mirror.js", { file: "domestic-mirror.js", type: "text/javascript; charset=utf-8" }],
-  ["/release-data.js", { file: "release-data.js", type: "text/javascript; charset=utf-8" }]
+  ["/release-data.js", { file: "release-data.js", type: "text/javascript; charset=utf-8" }],
+  ["/i18n.js", { file: "i18n.js", type: "text/javascript; charset=utf-8" }]
 ]);
 
 const mimeTypes = new Map([
@@ -75,6 +81,18 @@ const gunTypeLabels = {
   mg: "机枪",
   dmr: "精确射手步枪",
   launcher: "发射器"
+};
+
+const gunTypeLabelsEn = {
+  rifle: "Assault Rifle",
+  sniper: "Sniper Rifle",
+  pistol: "Pistol",
+  smg: "SMG",
+  shotgun: "Shotgun",
+  lmg: "LMG",
+  mg: "Machine Gun",
+  dmr: "Marksman Rifle",
+  launcher: "Launcher"
 };
 
 class GitHubRequestError extends Error {
@@ -263,12 +281,17 @@ export async function readGunPackManifest() {
       .map(async (name) => {
         const id = name.slice(0, -5);
         const data = await readJson(join(gunIndexRoot, name));
+        const localizedName = plainText(zhLang[data.name] || enLang[data.name] || id);
+        const localizedDescription = plainText(zhLang[data.tooltip] || enLang[data.tooltip] || "");
         return {
           id,
-          name: plainText(zhLang[data.name] || enLang[data.name] || id),
-          description: plainText(zhLang[data.tooltip] || enLang[data.tooltip] || ""),
+          name: localizedName,
+          nameEn: plainText(enLang[data.name] || localizedName),
+          description: localizedDescription,
+          descriptionEn: plainText(enLang[data.tooltip] || localizedDescription),
           type: data.type || "rifle",
           typeLabel: gunTypeLabels[data.type] || data.type || "枪械",
+          typeLabelEn: gunTypeLabelsEn[data.type] || data.type || "Weapon",
           sort: Number(data.sort ?? 999),
           iconUrl: `api/icons/${encodeURIComponent(id)}`
         };
@@ -279,7 +302,9 @@ export async function readGunPackManifest() {
 
   return {
     name: plainText(info.name),
+    nameEn: plainText(enLang[info.name] || info.name),
     description: plainText(zhLang[info.desc] || enLang[info.desc] || info.desc),
+    descriptionEn: plainText(enLang[info.desc] || info.desc),
     version: info.version,
     license: info.license,
     authors: info.authors || [],
@@ -781,6 +806,20 @@ async function handleRequest(request, response) {
       "Cache-Control": "no-store"
     });
     response.end();
+    return;
+  }
+
+  const englishDetailMatch = url.pathname.match(/^\/en\/website-updates\/([a-z0-9._-]+)\.html$/i);
+  if (englishDetailMatch) {
+    const updateId = englishDetailMatch[1];
+    const template = await readFile(join(serverDir, "templates", "website-update-detail-en.html"), "utf8");
+    const body = template.replaceAll("{{UPDATE_ID}}", updateId);
+    response.writeHead(200, {
+      "Content-Type": "text/html; charset=utf-8",
+      "Content-Length": Buffer.byteLength(body),
+      "Cache-Control": "public, max-age=300"
+    });
+    response.end(body);
     return;
   }
 

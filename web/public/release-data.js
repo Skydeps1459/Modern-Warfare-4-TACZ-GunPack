@@ -1,9 +1,16 @@
+import {
+  intlLocale,
+  isEnglish,
+  siteBaseUrl,
+  uiText
+} from "./i18n.js?v=20261101-1";
+
 const repositoryConfig = {
   owner: "Skydeps1459",
   repo: "Modern-Warfare-4-TACZ-GunPack"
 };
 
-const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+const dateFormatter = new Intl.DateTimeFormat(intlLocale(), {
   year: "numeric",
   month: "2-digit",
   day: "2-digit"
@@ -110,9 +117,12 @@ async function fetchJson(url, options = {}) {
   return response.json();
 }
 
-export async function loadReleases() {
-  const localApi = new URL("api/releases", document.baseURI);
-  const staticApi = new URL("api/releases.json", document.baseURI);
+export async function loadReleases(baseUrl = siteBaseUrl()) {
+  const siteBase = typeof baseUrl === "string"
+    ? new URL(baseUrl, document.baseURI)
+    : baseUrl;
+  const localApi = new URL("api/releases", siteBase);
+  const staticApi = new URL("api/releases.json", siteBase);
   staticApi.searchParams.set("v", Date.now().toString());
   const githubApi = `https://api.github.com/repos/${repositoryConfig.owner}/${repositoryConfig.repo}/releases?per_page=30`;
 
@@ -182,6 +192,14 @@ function appendInlineContent(container, text) {
 export function renderReleaseNotes(markdown, container) {
   container.replaceChildren();
   const lines = String(markdown || "").replace(/\r\n/g, "\n").split("\n");
+  const headingLabels = {
+    "Bug 修复": "Bug Fixes",
+    "新增内容": "New Content",
+    "其他变更": "Other Changes",
+    "安装": "Installation",
+    "校验": "Verification",
+    "下载": "Downloads"
+  };
   let list = null;
   let paragraph = null;
 
@@ -202,7 +220,11 @@ export function renderReleaseNotes(markdown, container) {
       flush();
       const level = Math.min(4, heading[1].length + 1);
       const element = document.createElement(`h${level}`);
-      appendInlineContent(element, heading[2]);
+      const headingText = heading[2].trim();
+      appendInlineContent(
+        element,
+        isEnglish() ? (headingLabels[headingText] || headingText) : headingText
+      );
       container.append(element);
       continue;
     }
@@ -251,13 +273,17 @@ export function extractReleaseSummary(markdown) {
     .replace(/`/g, "")
     .trim();
 
-  const bugHeadingIndex = lines.findIndex((line) => /^#{1,4}\s+.*bug\s*修复/i.test(line));
+  const bugHeadingIndex = lines.findIndex((line) =>
+    /^#{1,4}\s+.*(?:bug\s*修复|bug\s*fixes?)/i.test(line)
+  );
   const scopedLines = bugHeadingIndex >= 0
     ? lines.slice(bugHeadingIndex + 1)
     : lines;
   const summaryLine = scopedLines.find((line) => line.trim() && !isHeading(line))
     || lines.find((line) => line.trim() && !isListItem(line));
-  return summaryLine ? clean(summaryLine).slice(0, 180) : "查看本次版本包含的完整更新内容。";
+  return summaryLine
+    ? clean(summaryLine).slice(0, 180)
+    : uiText("查看本次版本包含的完整更新内容。", "View the full changes included in this release.");
 }
 
 export function createHomeReleaseCard(release) {
@@ -281,7 +307,7 @@ export function createHomeReleaseCard(release) {
   const link = document.createElement("a");
   link.className = "update-link";
   link.href = `./changelog.html#${releaseAnchor(release.tag)}`;
-  link.textContent = "查看完整更新";
+  link.textContent = uiText("查看完整更新", "View full update");
 
   article.append(meta, heading, summary, link);
   return article;

@@ -133,6 +133,11 @@ code {
   color: var(--acid);
 }
 
+.topbar nav a.language-link {
+  color: var(--ink);
+  font-weight: 700;
+}
+
 main {
   width: min(1440px, 100%);
   margin: 0 auto;
@@ -1086,7 +1091,7 @@ footer .site-credit a {
     height: 68px;
   }
 
-  .topbar nav a:not(:last-child) {
+  .topbar nav a:not(:last-child):not(.language-link) {
     display: none;
   }
 

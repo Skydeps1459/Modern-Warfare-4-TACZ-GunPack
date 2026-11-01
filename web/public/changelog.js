@@ -5,12 +5,17 @@ import {
   loadPackReleases,
   releaseAnchor,
   renderReleaseNotes
-} from "./release-data.js?v=20261101-1";
+} from "./release-data.js?v=20261101-2";
 import {
   loadDomesticMirror,
   loadDownloadConfig
-} from "./download-config.js?v=20261026-1";
-import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261025-1";
+} from "./download-config.js?v=20261101-2";
+import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
+import {
+  isEnglish,
+  siteBaseUrl,
+  uiText
+} from "./i18n.js?v=20261101-1";
 
 const list = document.querySelector("#changelog-list");
 const count = document.querySelector("#release-count");
@@ -41,7 +46,7 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, isLatest
     accelerated.className = "button button-primary";
     accelerated.href = acceleratedReleaseUrl(release.downloadUrl, acceleratorPrefix);
     accelerated.rel = "noreferrer";
-    accelerated.textContent = "加速下载";
+    accelerated.textContent = uiText("加速下载", "Accelerated download");
     actions.append(accelerated);
   }
   if (isLatestPack && domesticMirror) {
@@ -49,9 +54,12 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, isLatest
     domestic.className = "button button-outline";
     domestic.href = domesticMirror.url;
     domestic.rel = "noreferrer";
+    const mirrorLabel = isEnglish() ? "Lanzou Cloud mirror" : domesticMirror.label;
     domestic.textContent = domesticMirror.password
-      ? `${domesticMirror.label} · 密码 ${domesticMirror.password}`
-      : domesticMirror.label;
+      ? (isEnglish()
+          ? `${mirrorLabel} · Password ${domesticMirror.password}`
+          : `${mirrorLabel} · 密码 ${domesticMirror.password}`)
+      : mirrorLabel;
     bindDomesticMirrorCopy(domestic, domesticMirror);
     actions.append(domestic);
   }
@@ -59,7 +67,9 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, isLatest
   direct.className = release.asset ? "button button-ghost" : "button button-outline";
   direct.href = release.url;
   direct.rel = "noreferrer";
-  direct.textContent = release.asset ? "GitHub Release ↗" : "查看发行说明 ↗";
+  direct.textContent = release.asset
+    ? "GitHub Release ↗"
+    : uiText("查看发行说明 ↗", "View release notes ↗");
   actions.append(direct);
   header.append(copy, actions);
 
@@ -71,7 +81,10 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, isLatest
     facts.append(asset);
   } else {
     const asset = document.createElement("span");
-    asset.textContent = "该版本没有附带 zip 文件";
+    asset.textContent = uiText(
+      "该版本没有附带 zip 文件",
+      "This release has no ZIP asset"
+    );
     facts.append(asset);
   }
 
@@ -101,15 +114,21 @@ async function renderChangelog({ preferLive = false } = {}) {
   try {
     const [releases, downloadConfig, domesticMirror] = await Promise.all([
       loadPackReleases(),
-      loadDownloadConfig(),
-      loadDomesticMirror(undefined, { preferLive })
+      loadDownloadConfig(siteBaseUrl()),
+      loadDomesticMirror(siteBaseUrl(), { preferLive })
     ]);
-    count.textContent = `${releases.length} 个版本`;
+    count.textContent = uiText(
+      `${releases.length} 个版本`,
+      `${releases.length} releases`
+    );
     list.replaceChildren();
     if (releases.length === 0) {
       const empty = document.createElement("div");
       empty.className = "log-empty";
-      empty.textContent = "暂时没有可展示的 Release 更新日志。";
+      empty.textContent = uiText(
+        "暂时没有可展示的 Release 更新日志。",
+        "No release notes are available yet."
+      );
       list.append(empty);
       return;
     }
@@ -133,7 +152,10 @@ async function renderChangelog({ preferLive = false } = {}) {
     list.replaceChildren();
     const empty = document.createElement("div");
     empty.className = "log-empty";
-    empty.textContent = "更新日志暂时无法载入，请稍后重试。";
+    empty.textContent = uiText(
+      "更新日志暂时无法载入，请稍后重试。",
+      "Release notes could not be loaded. Please try again later."
+    );
     list.append(empty);
   }
 }
