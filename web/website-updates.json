@@ -1,6 +1,21 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.40",
+      "title": "更新日志按版本号重新排列",
+      "publishedAt": "2026-11-01T13:21:35Z",
+      "summary": "更新日志与首页最近版本改为按版本号从高到低排列，不再受 Release 发布时间差异影响。",
+      "changes": [
+        "枪包更新日志按语义版本号从高到低展示。",
+        "首页最近更新同步使用版本号排序。",
+        "首页下载入口优先选择版本号最高的枪包 Release。"
+      ],
+      "bugFixes": [
+        "修复较新版本更早发布时更新日志出现版本倒序的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.39",
       "title": "Modern Warfare 4 1.10.4-Release 热更新",
       "publishedAt": "2026-11-01T09:25:01Z",

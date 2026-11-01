@@ -22,7 +22,8 @@ import {
   extractReleaseSummary,
   isPackRelease,
   isWebsiteRelease,
-  normalizeRelease as normalizeClientRelease
+  normalizeRelease as normalizeClientRelease,
+  sortPackReleasesByVersion
 } from "../public/release-data.js";
 import { decodeBase64Utf8 } from "../public/download-config.js";
 import { websiteUpdateDetailPath } from "../public/website-update-data.js";
@@ -84,6 +85,25 @@ test("sorts the release feed by publication time", () => {
     { tag: "newer", publishedAt: "2026-10-25T12:00:00Z" }
   ]);
   assert.deepEqual(releases.map((release) => release.tag), ["newer", "older"]);
+});
+
+test("sorts pack releases by version before publication time", () => {
+  const releases = sortPackReleasesByVersion([
+    { tag: "v1.10.3-Release", publishedAt: "2026-11-01T09:30:00Z" },
+    { tag: "v1.10.4-Release", publishedAt: "2026-11-01T09:20:00Z" },
+    { tag: "v1.9.9-Release", publishedAt: "2026-11-01T10:00:00Z" },
+    { tag: "v1.10.2-Release", publishedAt: "2026-11-01T09:10:00Z" }
+  ]);
+  assert.deepEqual(
+    releases.map((release) => release.tag),
+    ["v1.10.4-Release", "v1.10.3-Release", "v1.10.2-Release", "v1.9.9-Release"]
+  );
+});
+
+test("selects the highest pack version even when it was published earlier", () => {
+  const highest = { tag: "v1.10.4-Release", asset: { name: "1.10.4.zip" }, prerelease: false };
+  const later = { tag: "v1.10.3-Release", asset: { name: "1.10.3.zip" }, prerelease: false };
+  assert.equal(pickPackRelease([later, highest]), highest);
 });
 
 test("separates website releases from downloadable gun-pack releases", () => {

@@ -331,15 +331,42 @@ export function normalizeRelease(release) {
 }
 
 export function pickPackRelease(releases) {
-  return releases.find((release) => !release.prerelease && release.asset)
-    || releases.find((release) => release.asset)
-    || releases.find((release) => !release.prerelease)
-    || releases[0]
-    || null;
+  const byVersion = (release) => sortPackReleasesByVersion(release)[0] || null;
+  return byVersion(releases.filter((release) => !release.prerelease && release.asset))
+    || byVersion(releases.filter((release) => release.asset))
+    || byVersion(releases.filter((release) => !release.prerelease))
+    || byVersion(releases);
 }
 
 export function sortReleasesByDate(releases) {
   return releases.sort((left, right) => {
+    const leftTime = new Date(left.publishedAt || 0).getTime();
+    const rightTime = new Date(right.publishedAt || 0).getTime();
+    return rightTime - leftTime;
+  });
+}
+
+export function sortPackReleasesByVersion(releases) {
+  const versionParts = (release) => {
+    const match = String(release?.tag || "").match(/(?:^|v)(\d+)\.(\d+)\.(\d+)/i);
+    return match ? match.slice(1).map(Number) : null;
+  };
+
+  return [...releases].sort((left, right) => {
+    const leftVersion = versionParts(left);
+    const rightVersion = versionParts(right);
+    if (leftVersion && rightVersion) {
+      for (let index = 0; index < leftVersion.length; index += 1) {
+        if (leftVersion[index] !== rightVersion[index]) {
+          return rightVersion[index] - leftVersion[index];
+        }
+      }
+    } else if (leftVersion) {
+      return -1;
+    } else if (rightVersion) {
+      return 1;
+    }
+
     const leftTime = new Date(left.publishedAt || 0).getTime();
     const rightTime = new Date(right.publishedAt || 0).getTime();
     return rightTime - leftTime;

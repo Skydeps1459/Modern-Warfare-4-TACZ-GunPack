@@ -69,6 +69,33 @@ export function sortReleasesByDate(releases) {
   });
 }
 
+function releaseVersionParts(release) {
+  const match = String(release?.tag || "").match(/(?:^|v)(\d+)\.(\d+)\.(\d+)/i);
+  return match ? match.slice(1).map(Number) : null;
+}
+
+export function sortPackReleasesByVersion(releases) {
+  return [...releases].sort((left, right) => {
+    const leftVersion = releaseVersionParts(left);
+    const rightVersion = releaseVersionParts(right);
+    if (leftVersion && rightVersion) {
+      for (let index = 0; index < leftVersion.length; index += 1) {
+        if (leftVersion[index] !== rightVersion[index]) {
+          return rightVersion[index] - leftVersion[index];
+        }
+      }
+    } else if (leftVersion) {
+      return -1;
+    } else if (rightVersion) {
+      return 1;
+    }
+
+    const leftTime = new Date(left.publishedAt || 0).getTime();
+    const rightTime = new Date(right.publishedAt || 0).getTime();
+    return rightTime - leftTime;
+  });
+}
+
 export function isWebsiteRelease(release) {
   return /^(?:website|web|site)-/i.test(release?.tag || "");
 }
@@ -109,7 +136,7 @@ export async function loadReleases() {
 }
 
 export async function loadPackReleases() {
-  return (await loadReleases()).filter(isPackRelease);
+  return sortPackReleasesByVersion((await loadReleases()).filter(isPackRelease));
 }
 
 export async function loadWebsiteReleases() {
