@@ -2562883,15 +2562883,6 @@
             0.10365,
             11.18549,
             -5.83282
-          ]
-        },
-        {
-          "name": "barrel",
-          "parent": "tag_barrel_attach",
-          "pivot": [
-            0.10365,
-            11.18549,
-            -5.83282
           ],
           "poly_mesh": {
             "normalized_uvs": true,
@@ -2736463,6 +2736454,15 @@
               ]
             ]
           }
+        },
+        {
+          "name": "barrel",
+          "parent": "tag_barrel_attach",
+          "pivot": [
+            0.10365,
+            11.18549,
+            -5.83282
+          ]
         },
         {
           "name": "handguard_default",
