@@ -1,6 +1,22 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.36",
+      "title": "Modern Warfare 4 1.10.1-Release 热更新",
+      "publishedAt": "2026-10-31T21:20:00Z",
+      "summary": "修复 HK437 快慢机官方音效叠加、空瞄具模型异常和第三人称配件状态不同步",
+      "changes": [
+        "同步 GitHub Release 与网页枪包更新日志",
+        "更新主包下载版本号与校验信息"
+      ],
+      "bugFixes": [
+        "修复 HK437 切换快慢机时仍叠加官方音效",
+        "修复 HK437 未安装瞄具时错误显示瞄具定位模型",
+        "修复 HK437 第三人称下弹鼓和扩容弹匣错误显示"
+      ],
+      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.1-Release"
+    },
+    {
       "id": "website-v1.0.35",
       "title": "Modern Warfare 4 1.10.0-Release 更新日志上线",
       "publishedAt": "2026-10-31T21:01:15Z",

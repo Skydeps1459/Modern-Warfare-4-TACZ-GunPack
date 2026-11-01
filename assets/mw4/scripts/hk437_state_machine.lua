@@ -28,6 +28,7 @@ end
 
 -- 放在默认静态轨道之后，避免覆盖 static_idle、快慢机或 bolt_caught。
 local HK437_AMMO_TRACK = increment(static_track_top)
+local HK437_SIGHT_TRACK = increment(static_track_top)
 local HK437_FIRE_MODE_TRACK = increment(static_track_top)
 local HK437_SWITCH_MODE_TRACK = increment(static_track_top)
 
@@ -104,15 +105,42 @@ local function applyAmmoVisual(this, context, force)
     )
 end
 
+local function hasScope(context)
+    if context.getAttachment == nil then
+        return false
+    end
+    local ok, attachment = pcall(function()
+        return context:getAttachment("scope")
+    end)
+    return ok and attachment ~= nil and attachment ~= ""
+end
+
+local function applySightVisual(this, context, force)
+    local visible = hasScope(context)
+    if (not force) and this.hk437_last_sight_visible == visible then
+        return
+    end
+    this.hk437_last_sight_visible = visible
+    context:runAnimation(
+        visible and "hk437_sight_on" or "hk437_sight_off",
+        context:getTrack(STATIC_TRACK_LINE, this.HK437_SIGHT_TRACK),
+        false,
+        PLAY_ONCE_HOLD,
+        0
+    )
+end
+
 local base_track_state = setmetatable({}, {__index = default.base_track_state})
 
 function base_track_state.entry(this, context)
     default.base_track_state.entry(this, context)
     applyAmmoVisual(this, context, true)
+    applySightVisual(this, context, true)
 end
 
 function base_track_state.update(this, context)
     applyAmmoVisual(this, context, false)
+    applySightVisual(this, context, false)
 end
 
 -- 快慢机静态姿态独立占一条轨道。所有普通动画都不能写
@@ -221,6 +249,7 @@ end
 local M = setmetatable({
     HK437_AMMO_TRACK = HK437_AMMO_TRACK,
     HK437_AMMO_CLIP_PREFIX = CLIP_PREFIX,
+    HK437_SIGHT_TRACK = HK437_SIGHT_TRACK,
     HK437_FIRE_MODE_TRACK = HK437_FIRE_MODE_TRACK,
     HK437_SWITCH_MODE_TRACK = HK437_SWITCH_MODE_TRACK,
     INPUT_MODE_SEMI = "hk437_input_mode_semi",
@@ -235,6 +264,7 @@ function M:initialize(context)
     default.initialize(self, context)
     self.hk437_last_level = -1
     self.hk437_last_round_count = -1
+    self.hk437_last_sight_visible = nil
 end
 
 function M:states()

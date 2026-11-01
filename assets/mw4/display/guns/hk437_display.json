@@ -70,7 +70,8 @@
     "shoot": "mw4:hk437/weap_rex_kilo437_fire_plr_shot.qnn.85.48000.all",
     "shoot_3p": "mw4:hk437/weap_rex_kilo437_fire_plr_shot.qnn.85.48000.all",
     "silence": "mw4:hk437/weap_rex_kilo437_fire_plr_mech.qnn.85.48000.all",
-    "silence_3p": "mw4:hk437/weap_rex_kilo437_fire_plr_mech.qnn.85.48000.all"
+    "silence_3p": "mw4:hk437/weap_rex_kilo437_fire_plr_mech.qnn.85.48000.all",
+    "fire_select": ""
   },
   "offhand_show": {
     "pos": [

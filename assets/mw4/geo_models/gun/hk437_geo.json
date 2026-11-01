@@ -55283,7 +55283,7 @@
           }
         },
         {
-          "name": "mag_standard_visual",
+          "name": "mag_standard",
           "parent": "magazine",
           "pivot": [
             0.10365,
@@ -55293,7 +55293,7 @@
         },
         {
           "name": "j_mag1",
-          "parent": "mag_standard_visual",
+          "parent": "mag_standard",
           "pivot": [
             0.10365,
             8.01601,
@@ -249697,7 +249697,7 @@
         },
         {
           "name": "mag_follower",
-          "parent": "mag_standard_visual",
+          "parent": "mag_standard",
           "pivot": [
             0.10365,
             2.78445,
@@ -463536,7 +463536,7 @@
         },
         {
           "name": "mag_internals",
-          "parent": "mag_standard_visual",
+          "parent": "mag_standard",
           "pivot": [
             0.10365,
             7.61834,
@@ -463544,7 +463544,7 @@
           ]
         },
         {
-          "name": "mag_extended_1_visual",
+          "name": "mag_extended_1",
           "parent": "magazine",
           "pivot": [
             0.10365,
@@ -463553,7 +463553,7 @@
           ]
         },
         {
-          "name": "mag_extended_2_visual",
+          "name": "mag_extended_2",
           "parent": "magazine",
           "pivot": [
             0.10365,
@@ -684540,7 +684540,7 @@
         },
         {
           "name": "bullet_in_mag_extended_2",
-          "parent": "mag_extended_2_visual",
+          "parent": "mag_extended_2",
           "pivot": [
             0.10365,
             8.01601,
@@ -749929,7 +749929,7 @@
           }
         },
         {
-          "name": "mag_extended_3_visual",
+          "name": "mag_extended_3",
           "parent": "magazine",
           "pivot": [
             0.10365,
@@ -749939,7 +749939,7 @@
         },
         {
           "name": "j_mag1_extended_3",
-          "parent": "mag_extended_3_visual",
+          "parent": "mag_extended_3",
           "pivot": [
             0.10365,
             8.01601,
@@ -1257876,7 +1257876,7 @@
         },
         {
           "name": "mag_follower_extended_3_group",
-          "parent": "mag_extended_3_visual",
+          "parent": "mag_extended_3",
           "pivot": [
             0.10365,
             2.78445,
@@ -1390227,7 +1390227,7 @@
         },
         {
           "name": "mag_internals_extended_3",
-          "parent": "mag_extended_3_visual",
+          "parent": "mag_extended_3",
           "pivot": [
             0.10365,
             7.61834,
@@ -1390236,7 +1390236,7 @@
         },
         {
           "name": "bullet_in_mag_extended_3",
-          "parent": "mag_extended_3_visual",
+          "parent": "mag_extended_3",
           "pivot": [
             0.10365,
             8.01601,
