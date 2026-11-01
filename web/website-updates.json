@@ -1,6 +1,18 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.41",
+      "title": "网页更新日志移除枪包记录",
+      "publishedAt": "2026-11-01T13:24:03Z",
+      "summary": "网页更新日志现在只保留网页界面、数据和功能变化，不再重复记录枪包 Release 内容。",
+      "changes": [
+        "移除 1.10.0 至 1.10.4 热更新对应的五条网页日志。",
+        "枪包版本与修复内容继续只在枪包更新日志和 GitHub Release 中展示。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.40",
       "title": "更新日志按版本号重新排列",
       "publishedAt": "2026-11-01T13:21:35Z",
@@ -14,95 +26,6 @@
         "修复较新版本更早发布时更新日志出现版本倒序的问题。"
       ],
       "releaseUrl": null
-    },
-    {
-      "id": "website-v1.0.39",
-      "title": "Modern Warfare 4 1.10.4-Release 热更新",
-      "publishedAt": "2026-11-01T09:25:01Z",
-      "summary": "修复 HK437 前握把挂点、随机近战音效和命中反馈",
-      "changes": [
-        "同步 GitHub Release 与网页枪包更新日志",
-        "更新主包下载版本号与校验信息"
-      ],
-      "bugFixes": [
-        "修复 HK437 前握把安装后的位置不正确",
-        "修复 HK437 近战动画固定顺序播放且音效引用不匹配",
-        "修复 HK437 普通命中与击杀音效和其他枪不一致"
-      ],
-      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.4-Release"
-    },
-    {
-      "id": "website-v1.0.38",
-      "title": "Modern Warfare 4 1.10.3-Release 热更新",
-      "publishedAt": "2026-11-01T08:25:00Z",
-      "summary": "修复 HK437 瞄具异常网格、前握把视角、枪管显隐和默认护木显示",
-      "changes": [
-        "同步 GitHub Release 与网页枪包更新日志",
-        "更新主包下载版本号与校验信息"
-      ],
-      "bugFixes": [
-        "修复 HK437 未装备瞄具时仍显示异常瞄具网格",
-        "修复 HK437 前握把改装视角位置不正确",
-        "修复 HK437 装备前握把时枪管异常隐藏",
-        "修复 HK437 装备配件时默认护木被隐藏"
-      ],
-      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.3-Release"
-    },
-    {
-      "id": "website-v1.0.37",
-      "title": "Modern Warfare 4 1.10.2-Release 热更新",
-      "publishedAt": "2026-11-01T08:00:00Z",
-      "summary": "修复 HK437 瞄具展示异常、空仓切枪状态丢失、前握把视角和枪管显隐问题",
-      "changes": [
-        "同步 GitHub Release 与网页枪包更新日志",
-        "更新主包下载版本号与校验信息"
-      ],
-      "bugFixes": [
-        "修复 HK437 未装备瞄具时仍显示瞄具展示模型",
-        "修复 HK437 空仓切枪不能保持空仓状态",
-        "修复 HK437 前握把改装视角位置不正确",
-        "修复 HK437 装备前握把时枪管错误隐藏"
-      ],
-      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.2-Release"
-    },
-    {
-      "id": "website-v1.0.36",
-      "title": "Modern Warfare 4 1.10.1-Release 热更新",
-      "publishedAt": "2026-10-31T21:20:00Z",
-      "summary": "修复 HK437 快慢机官方音效叠加、空仓切枪动画丢失和第三人称配件状态不同步",
-      "changes": [
-        "同步 GitHub Release 与网页枪包更新日志",
-        "更新主包下载版本号与校验信息"
-      ],
-      "bugFixes": [
-        "修复 HK437 切换快慢机时仍叠加官方音效",
-        "修复 HK437 空仓切换武器时切枪动画丢失",
-        "修复 HK437 第三人称下弹鼓和扩容弹匣错误显示"
-      ],
-      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.1-Release"
-    },
-    {
-      "id": "website-v1.0.35",
-      "title": "Modern Warfare 4 1.10.0-Release 更新日志上线",
-      "publishedAt": "2026-10-31T21:01:15Z",
-      "summary": "时隔多天第一次接触mesh网格模型的一次较大的更新，也是总算做出来一个可玩版本了，有BUG请反馈我会一一修复",
-      "changes": [
-        "新增 HK437 突击步枪、专属状态机和完整音效",
-        "同步 HK437 模型与动画更新并完善备弹匣、快慢机、握把和空仓显隐表现",
-        "补入 HK437 空仓挂机姿态并替换最新版 Release 附件",
-        "修复 MRAD 切枪音效重叠与 MK23 持枪镜头位置异常",
-        "更新 GitHub Release 与网页枪包更新日志"
-      ],
-      "bugFixes": [
-        "修复 HK437 普通战术换弹备弹匣不显示或动画错误",
-        "修复 HK437 快慢机状态、切换动画、手臂和镜头动作缺失",
-        "修复 HK437 切换快慢机时扩容弹匣状态丢失",
-        "修复 HK437 装配握把后默认枪管仍显示",
-        "修复 HK437 扩容弹匣空仓检视仍显示弹匣内子弹",
-        "修复 MRAD 切枪音效重叠",
-        "修复 MK23 持枪镜头位置偏低"
-      ],
-      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.0-Release"
     },
     {
       "id": "website-v1.0.34",
