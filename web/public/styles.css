@@ -197,6 +197,18 @@ main {
   text-rendering: geometricPrecision;
 }
 
+html[lang="en"] .hero h1 {
+  max-width: 920px;
+  font-size: clamp(50px, 6vw, 92px);
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+}
+
+html[lang="en"] .hero h1 span {
+  -webkit-text-stroke-width: 0.75px;
+  letter-spacing: 0.015em;
+}
+
 .hero-text {
   max-width: 650px;
   margin: 34px 0 0;
@@ -1109,6 +1121,17 @@ footer .site-credit a {
     -webkit-text-fill-color: var(--ink);
     -webkit-text-stroke-width: 0;
     letter-spacing: 0.015em;
+  }
+
+  html[lang="en"] .hero h1 {
+    font-size: clamp(46px, 13vw, 64px);
+    line-height: 1.18;
+    letter-spacing: 0.005em;
+  }
+
+  html[lang="en"] .hero h1 span {
+    -webkit-text-stroke-width: 0;
+    letter-spacing: 0.01em;
   }
 
   .hero-stats {
