@@ -118,3 +118,43 @@ button,
   color: #ff8a3d;
 }
 
+#cdn-save-status {
+  min-height: 22px;
+  color: var(--muted);
+}
+
+#cdn-save-status.success {
+  color: var(--acid);
+}
+
+#cdn-save-status.error {
+  color: #ff8a3d;
+}
+
+select {
+  width: 100%;
+  padding: 13px 14px;
+  color: #fff;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  outline: none;
+  background: #090b0a;
+  font: inherit;
+}
+
+select:focus {
+  border-color: var(--acid);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-row input {
+  width: auto;
+  margin: 0;
+  accent-color: var(--acid);
+}
+

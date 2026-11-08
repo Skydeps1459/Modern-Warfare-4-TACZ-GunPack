@@ -63,8 +63,8 @@ export function bindDomesticMirrorCopy(link, mirror) {
     try {
       await copyText(currentMirror.password);
       showToast(uiText(
-        `蓝奏云密码 ${currentMirror.password} 已复制，请在新页面输入。`,
-        `Lanzou Cloud password ${currentMirror.password} copied. Enter it on the new page.`
+        `密码 ${currentMirror.password} 已复制，请在新页面输入。`,
+        `Password ${currentMirror.password} copied. Enter it on the new page.`
       ));
     } catch (error) {
       console.error(error);

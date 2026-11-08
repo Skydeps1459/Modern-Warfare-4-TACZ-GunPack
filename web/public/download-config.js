@@ -2,6 +2,9 @@ const DEFAULT_PREFIX = "https://gh-proxy.com/";
 const DOMESTIC_MIRROR_RAW_URL = "https://raw.githubusercontent.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/main/web/domestic-mirror.json";
 const DOMESTIC_MIRROR_CDN_URL = "https://cdn.jsdelivr.net/gh/Skydeps1459/Modern-Warfare-4-TACZ-GunPack@main/web/domestic-mirror.json";
 const DOMESTIC_MIRROR_API_URL = "https://api.github.com/repos/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/contents/web/domestic-mirror.json?ref=main";
+const CDN_MIRROR_RAW_URL = "https://raw.githubusercontent.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/main/web/cdn-mirror.json";
+const CDN_MIRROR_CDN_URL = "https://cdn.jsdelivr.net/gh/Skydeps1459/Modern-Warfare-4-TACZ-GunPack@main/web/cdn-mirror.json";
+const CDN_MIRROR_API_URL = "https://api.github.com/repos/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/contents/web/cdn-mirror.json?ref=main";
 
 export function decodeBase64Utf8(value) {
   const binary = atob(String(value || "").replace(/\s/g, ""));
@@ -109,6 +112,65 @@ export async function loadDomesticMirror(
       };
     } catch (error) {
       console.info(`Domestic mirror source unavailable: ${source.url.hostname}`, error.message);
+    }
+  }
+  return null;
+}
+
+export async function loadCdnMirror(
+  baseUrl = new URL("./", document.baseURI),
+  { preferLive = false } = {}
+) {
+  const siteBase = typeof baseUrl === "string"
+    ? new URL(baseUrl, document.baseURI)
+    : baseUrl;
+  const endpoint = new URL("api/cdn-mirror.json", siteBase);
+  endpoint.searchParams.set("v", Date.now().toString());
+  const liveEndpoint = new URL(CDN_MIRROR_RAW_URL);
+  liveEndpoint.searchParams.set("v", Date.now().toString());
+  const cdnEndpoint = new URL(CDN_MIRROR_CDN_URL);
+  cdnEndpoint.searchParams.set("v", Date.now().toString());
+  const apiEndpoint = new URL(CDN_MIRROR_API_URL);
+  apiEndpoint.searchParams.set("v", Date.now().toString());
+
+  const sources = preferLive
+    ? [
+        { url: new URL("api/cdn-mirror", siteBase) },
+        { url: apiEndpoint, githubContents: true },
+        { url: endpoint },
+        { url: liveEndpoint },
+        { url: cdnEndpoint }
+      ]
+    : [
+        { url: new URL("api/cdn-mirror", siteBase) },
+        { url: endpoint },
+        { url: liveEndpoint },
+        { url: apiEndpoint, githubContents: true },
+        { url: cdnEndpoint }
+      ];
+  for (const source of sources) {
+    try {
+      const response = await fetch(source.url, {
+        headers: { Accept: "application/json" },
+        cache: "no-store"
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      let mirror = await response.json();
+      if (source.githubContents) {
+        mirror = JSON.parse(decodeBase64Utf8(mirror.content));
+      }
+      if (mirror.enabled !== true || !mirror.url) return null;
+      const url = new URL(mirror.url);
+      if (url.protocol !== "https:") throw new Error("Invalid URL");
+      return {
+        label: String(mirror.label || "腾讯云CDN加速"),
+        mode: mirror.mode === "prefix" ? "prefix" : "direct",
+        url: url.href,
+        password: String(mirror.password || ""),
+        source: source.url.hostname
+      };
+    } catch (error) {
+      console.info(`CDN mirror source unavailable: ${source.url.hostname}`, error.message);
     }
   }
   return null;

@@ -10,6 +10,7 @@ const projectRoot = resolve(serverDir, "..");
 const publicDir = join(serverDir, "public");
 const websiteUpdatesPath = join(serverDir, "website-updates.json");
 const domesticMirrorPath = join(serverDir, "domestic-mirror.json");
+const cdnMirrorPath = join(serverDir, "cdn-mirror.json");
 const adminDir = join(serverDir, "admin");
 const gunpackRoot = join(projectRoot, "assets", "mw4");
 const gunIndexRoot = join(projectRoot, "data", "mw4", "index", "guns");
@@ -50,6 +51,8 @@ const staticFiles = new Map([
   ["/en/index.html", { file: "en/index.html", type: "text/html; charset=utf-8" }],
   ["/en/changelog.html", { file: "en/changelog.html", type: "text/html; charset=utf-8" }],
   ["/en/website-updates.html", { file: "en/website-updates.html", type: "text/html; charset=utf-8" }],
+  ["/cdn-notice.html", { file: "cdn-notice.html", type: "text/html; charset=utf-8" }],
+  ["/en/cdn-notice.html", { file: "en/cdn-notice.html", type: "text/html; charset=utf-8" }],
   ["/styles.css", { file: "styles.css", type: "text/css; charset=utf-8" }],
   ["/app.js", { file: "app.js", type: "text/javascript; charset=utf-8" }],
   ["/changelog.js", { file: "changelog.js", type: "text/javascript; charset=utf-8" }],
@@ -191,6 +194,38 @@ export function validateDomesticMirror(input, allowedHosts = ALLOWED_MIRROR_HOST
   }
 
   return { label, url: url.href, password };
+}
+
+export function validateCdnMirror(input) {
+  const label = String(input?.label || "腾讯云CDN加速").trim();
+  const password = String(input?.password || "").trim();
+  const enabled = input?.enabled === true;
+  const mode = input?.mode === "prefix" ? "prefix" : "direct";
+  if (!label || label.length > 60) {
+    throw new Error("分流名称必须为 1-60 个字符。");
+  }
+  if (password.length > 32) {
+    throw new Error("分享密码不能超过 32 个字符。");
+  }
+
+  let url;
+  try {
+    url = new URL(String(input?.url || "").trim());
+  } catch {
+    if (!enabled) {
+      // 未启用时允许暂时不填链接，方便先保存停用状态
+      return { enabled: false, label, mode, url: "", password };
+    }
+    throw new Error("请输入有效的 CDN 下载链接。");
+  }
+  if (url.protocol !== "https:") {
+    throw new Error("CDN 分流链接必须使用 HTTPS。");
+  }
+  if (mode === "prefix" && !url.href.endsWith("/")) {
+    throw new Error("前缀模式链接需以 / 结尾（将自动拼接 GitHub Release 原链）。");
+  }
+
+  return { enabled, label, mode, url: url.href, password };
 }
 
 function parseCookies(request) {
@@ -548,8 +583,8 @@ async function fetchGitHubUser(accessToken) {
   return response.json();
 }
 
-async function writeDomesticMirrorToGitHub(accessToken, mirror) {
-  const apiBase = `https://api.github.com/repos/${encodeURIComponent(ADMIN_REPOSITORY_OWNER)}/${encodeURIComponent(ADMIN_REPOSITORY_NAME)}/contents/web/domestic-mirror.json`;
+async function writeMirrorJsonToGitHub(accessToken, repoFilePath, commitMessage, mirror) {
+  const apiBase = `https://api.github.com/repos/${encodeURIComponent(ADMIN_REPOSITORY_OWNER)}/${encodeURIComponent(ADMIN_REPOSITORY_NAME)}/contents/${repoFilePath}`;
   const headers = {
     Accept: "application/vnd.github+json",
     Authorization: `Bearer ${accessToken}`,
@@ -565,7 +600,7 @@ async function writeDomesticMirrorToGitHub(accessToken, mirror) {
   const current = currentResponse.ok ? await currentResponse.json() : null;
   const content = `${JSON.stringify(mirror, null, 2)}\n`;
   const body = {
-    message: "Update domestic Lanzou mirror",
+    message: commitMessage,
     content: Buffer.from(content, "utf8").toString("base64"),
     branch: "main"
   };
@@ -587,12 +622,31 @@ async function writeDomesticMirrorToGitHub(accessToken, mirror) {
   };
 }
 
+async function writeDomesticMirrorToGitHub(accessToken, mirror) {
+  return writeMirrorJsonToGitHub(
+    accessToken,
+    "web/domestic-mirror.json",
+    "Update domestic Lanzou mirror",
+    mirror
+  );
+}
+
+async function writeCdnMirrorToGitHub(accessToken, mirror) {
+  return writeMirrorJsonToGitHub(
+    accessToken,
+    "web/cdn-mirror.json",
+    "Update Tencent Cloud CDN mirror",
+    mirror
+  );
+}
+
 async function handleRequest(request, response) {
   applySecurityHeaders(response);
   const method = request.method || "GET";
   const origin = `http://${request.headers.host || "localhost"}`;
   const url = new URL(request.url || "/", origin);
-  const adminPost = method === "POST" && url.pathname === "/api/admin/domestic-mirror";
+  const adminPost = method === "POST"
+    && (url.pathname === "/api/admin/domestic-mirror" || url.pathname === "/api/admin/cdn-mirror");
   if (!["GET", "HEAD"].includes(method) && !adminPost) {
     sendJson(response, 405, { error: "Method not allowed" });
     return;
@@ -692,7 +746,14 @@ async function handleRequest(request, response) {
       authenticated: true,
       user: adminSession.user,
       csrfToken: adminSession.csrfToken,
-      mirror: await readJson(domesticMirrorPath)
+      mirror: await readJson(domesticMirrorPath),
+      cdnMirror: await readJson(cdnMirrorPath).catch(() => ({
+        enabled: false,
+        label: "腾讯云CDN加速",
+        mode: "direct",
+        url: "",
+        password: ""
+      }))
     });
     return;
   }
@@ -710,9 +771,15 @@ async function handleRequest(request, response) {
 
     try {
       const body = JSON.parse(await readRequestBody(request));
-      const mirror = validateDomesticMirror(body);
-      const commit = await writeDomesticMirrorToGitHub(adminSession.accessToken, mirror);
-      sendJson(response, 200, { ok: true, mirror, commit });
+      if (url.pathname === "/api/admin/cdn-mirror") {
+        const mirror = validateCdnMirror(body);
+        const commit = await writeCdnMirrorToGitHub(adminSession.accessToken, mirror);
+        sendJson(response, 200, { ok: true, mirror, commit });
+      } else {
+        const mirror = validateDomesticMirror(body);
+        const commit = await writeDomesticMirrorToGitHub(adminSession.accessToken, mirror);
+        sendJson(response, 200, { ok: true, mirror, commit });
+      }
     } catch (error) {
       sendJson(response, 400, { error: error.message || "Failed to update mirror." });
     }
@@ -785,6 +852,11 @@ async function handleRequest(request, response) {
 
   if (url.pathname === "/api/domestic-mirror") {
     sendJson(response, 200, await readJson(domesticMirrorPath));
+    return;
+  }
+
+  if (url.pathname === "/api/cdn-mirror") {
+    sendJson(response, 200, await readJson(cdnMirrorPath));
     return;
   }
 

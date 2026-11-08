@@ -1,0 +1,7 @@
+{
+  "enabled": false,
+  "label": "腾讯云CDN加速",
+  "mode": "direct",
+  "url": "",
+  "password": ""
+}

@@ -12,7 +12,7 @@
       <header>
         <p class="eyebrow">MW4 // RESTRICTED CONTROL</p>
         <h1>分流管理</h1>
-        <p>只有仓库所有者 GitHub 账号可以修改国内蓝奏云分流地址。</p>
+        <p>只有仓库所有者 GitHub 账号可以修改国内蓝奏云分流与腾讯云 CDN 加速分流。</p>
       </header>
 
       <section id="admin-state" class="panel">
@@ -38,6 +38,37 @@
         </label>
         <button type="submit">保存并更新网页</button>
         <p id="save-status" role="status"></p>
+      </form>
+
+      <form id="cdn-form" class="panel hidden">
+        <div class="account-row">
+          <span>腾讯云CDN加速分流</span>
+        </div>
+        <label class="checkbox-row">
+          <input id="cdn-enabled" type="checkbox">
+          启用（未勾选时网页不显示该按钮）
+        </label>
+        <label>
+          分流名称
+          <input id="cdn-label" maxlength="60" required>
+        </label>
+        <label>
+          链接模式
+          <select id="cdn-mode">
+            <option value="direct">直接链接（固定下载地址）</option>
+            <option value="prefix">前缀拼接（CDN 域名前缀 + Release 原链）</option>
+          </select>
+        </label>
+        <label>
+          CDN 链接
+          <input id="cdn-url" type="url" placeholder="https://cdn.example.com/... 或 https://download.example.com/">
+        </label>
+        <label>
+          提取密码（可留空）
+          <input id="cdn-password" maxlength="32">
+        </label>
+        <button type="submit">保存并更新网页</button>
+        <p id="cdn-save-status" role="status"></p>
       </form>
     </main>
     <script src="/admin/app.js" type="module"></script>

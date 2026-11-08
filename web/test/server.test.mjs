@@ -10,7 +10,8 @@ import {
   readGunPackManifest,
   readWebsiteUpdates,
   sortReleasesByDate,
-  validateDomesticMirror
+  validateDomesticMirror,
+  validateCdnMirror
 } from "../server.mjs";
 import {
   downloadConfigFromSelection,
@@ -201,6 +202,58 @@ test("validates domestic Lanzou mirror updates", () => {
   }), /蓝奏云/);
 });
 
+test("validates Tencent Cloud CDN mirror updates", () => {
+  const direct = validateCdnMirror({
+    enabled: true,
+    label: "腾讯云CDN加速",
+    mode: "direct",
+    url: "https://mw4-download.example.com/Modern.Warfare.4.zip",
+    password: ""
+  });
+  assert.equal(direct.enabled, true);
+  assert.equal(direct.mode, "direct");
+  assert.equal(direct.url, "https://mw4-download.example.com/Modern.Warfare.4.zip");
+
+  const prefix = validateCdnMirror({
+    enabled: true,
+    label: "腾讯云CDN前缀",
+    mode: "prefix",
+    url: "https://cdn.example.com/",
+    password: "abcd"
+  });
+  assert.equal(prefix.mode, "prefix");
+  assert.equal(prefix.password, "abcd");
+
+  // prefix mode requires trailing slash
+  assert.throws(() => validateCdnMirror({
+    enabled: true,
+    label: "bad prefix",
+    mode: "prefix",
+    url: "https://cdn.example.com/gh",
+    password: ""
+  }), /\/ 结尾/);
+
+  // http is rejected
+  assert.throws(() => validateCdnMirror({
+    enabled: true,
+    label: "bad scheme",
+    mode: "direct",
+    url: "http://cdn.example.com/file.zip",
+    password: ""
+  }), /HTTPS/);
+
+  // disabled mirrors may keep an empty url
+  const disabled = validateCdnMirror({
+    enabled: false,
+    label: "腾讯云CDN加速",
+    mode: "direct",
+    url: "",
+    password: ""
+  });
+  assert.equal(disabled.enabled, false);
+  assert.equal(disabled.url, "");
+});
+
 test("serves health and local gun pack data", async (t) => {
   const server = createAppServer();
   server.listen(0, "127.0.0.1");
@@ -286,6 +339,19 @@ test("serves health and local gun pack data", async (t) => {
   const domesticMirror = await domesticMirrorResponse.json();
   assert.match(domesticMirror.url, /^https:\/\/[^/]*lanzou/i);
   assert.ok(domesticMirror.password.length > 0);
+
+  const cdnMirrorResponse = await fetch(`${baseUrl}/api/cdn-mirror`);
+  assert.equal(cdnMirrorResponse.status, 200);
+  const cdnMirror = await cdnMirrorResponse.json();
+  assert.equal(typeof cdnMirror.enabled, "boolean");
+
+  const cdnNoticeResponse = await fetch(`${baseUrl}/cdn-notice.html`);
+  assert.equal(cdnNoticeResponse.status, 200);
+  assert.match(await cdnNoticeResponse.text(), /CDN 加速暂未开放/);
+
+  const englishCdnNoticeResponse = await fetch(`${baseUrl}/en/cdn-notice.html`);
+  assert.equal(englishCdnNoticeResponse.status, 200);
+  assert.match(await englishCdnNoticeResponse.text(), /CDN acceleration is not/);
 
   const adminPageResponse = await fetch(`${baseUrl}/admin/`);
   assert.equal(adminPageResponse.status, 200);
