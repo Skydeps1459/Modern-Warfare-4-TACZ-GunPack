@@ -345,13 +345,8 @@ test("serves health and local gun pack data", async (t) => {
   const cdnMirror = await cdnMirrorResponse.json();
   assert.equal(typeof cdnMirror.enabled, "boolean");
 
-  const cdnNoticeResponse = await fetch(`${baseUrl}/cdn-notice.html`);
-  assert.equal(cdnNoticeResponse.status, 200);
-  assert.match(await cdnNoticeResponse.text(), /很抱歉，CDN下载现已暂时停用/);
-
-  const englishCdnNoticeResponse = await fetch(`${baseUrl}/en/cdn-notice.html`);
-  assert.equal(englishCdnNoticeResponse.status, 200);
-  assert.match(await englishCdnNoticeResponse.text(), /CDN download is/);
+  const removedCdnNoticeResponse = await fetch(`${baseUrl}/cdn-notice.html`);
+  assert.equal(removedCdnNoticeResponse.status, 404);
 
   const adminPageResponse = await fetch(`${baseUrl}/admin/`);
   assert.equal(adminPageResponse.status, 200);
