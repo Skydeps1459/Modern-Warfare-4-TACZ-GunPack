@@ -1,6 +1,18 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.45",
+      "title": "腾讯云CDN下载暂时停用",
+      "publishedAt": "2026-11-08T23:44:00Z",
+      "summary": "应运营要求，腾讯云 CDN 下载通道已暂时停用；中英文首页 CDN 按钮点击后统一展示“很抱歉，CDN下载现已暂时停用”提示页，其余下载通道不受影响。",
+      "changes": [
+        "中英文 CDN 提示页文案改为“很抱歉，CDN下载现已暂时停用”。",
+        "CDN 按钮在停用期间继续展示，点击跳转停用提示页而非下载链接。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.44",
       "title": "新增腾讯云CDN加速下载入口",
       "publishedAt": "2026-11-08T20:48:00Z",
