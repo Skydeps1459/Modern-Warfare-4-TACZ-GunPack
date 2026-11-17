@@ -6,10 +6,10 @@
 [![Code: MIT](https://img.shields.io/badge/code-MIT-c7f36b)](./LICENSE)
 [![Gun pack: GPL--3.0](https://img.shields.io/badge/gun%20pack-GPL--3.0-orange)](./GUNPACK-LICENSE.md)
 
-Modern Warfare 4 is a TACZ gun pack for Minecraft Forge 1.20.1 with the
-namespace `mw4`. The current release is **1.8.2-Release**, containing 14 guns,
-ammunition, attachments, reload state machines, and a repository-linked
-website.
+Modern Warfare 4 is a TACZ gun pack for Minecraft Forge 1.20.1 and NeoForge
+1.21.1 with the namespace `mw4`. The current release is **1.11.0-Release**,
+containing 15 guns, ammunition, attachments, reload state machines, and a
+repository-linked website.
 
 Website: <https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>
 
@@ -23,7 +23,7 @@ mirror, and keep the original GitHub Release URL as a fallback.
 ## Release policy
 
 - Bug fixes are accumulated and verified locally. A hotfix release is created
-  only after at least **three independent verified bug fixes**.
+  only after at least **six independent verified bug fixes**.
 - Every hotfix Release page must list the bug fixes actually included in the
   attached package using [`RELEASE_NOTES_TEMPLATE.md`](./RELEASE_NOTES_TEMPLATE.md).
 - New guns are not uploaded or released unless explicitly requested.
@@ -35,14 +35,15 @@ See [`RELEASE_POLICY.md`](./RELEASE_POLICY.md) for the complete policy.
 
 | Category | Weapons |
 | --- | --- |
-| Assault rifles | AK-47, FN FAL, HK416D, M16A1, M4A1, SCAR-H, MCX SPEAR LT |
+| Assault rifles | AK-47, AK-74M, FN FAL, HK416D, HK437, M16A1, M4A1, SCAR-H, MCX SPEAR LT |
 | Sniper / precision rifles | AWP, MRAD, M700 |
 | Light machine gun | RPK |
 | Battle rifle | HK G3 |
 | Pistols | Desert Eagle, HK MK23 |
 
-The pack also includes 5.56×45mm, 7.62×39mm, .308 Winchester, .338 Lapua
-Magnum, .50 AE, and .45 ACP ammunition, M700 optics, and a drum magazine.
+The pack also includes 5.45×39mm, 5.56×45mm, 7.62×39mm, .308 Winchester,
+.338 Lapua Magnum, .50 AE, and .45 ACP ammunition, M700 optics, and a drum
+magazine.
 
 ## Installation
 

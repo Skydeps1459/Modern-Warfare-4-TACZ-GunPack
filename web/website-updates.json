@@ -1,6 +1,19 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.46",
+      "title": "枪包文档同步至 1.11.0",
+      "publishedAt": "2026-11-17T22:23:15Z",
+      "summary": "仓库自述文档同步到 1.11.0-Release：版本说明、枪械列表与弹药列表更新，并标注 1.20.1 与 1.21.1 双版本支持。",
+      "changes": [
+        "中英文 README 当前版本更新为 1.11.0-Release，枪械数更新为 15 把。",
+        "枪械列表补入 AK-74M 与 HK437，弹药列表补入 5.45×39mm。",
+        "标注枪包同时支持 Minecraft Forge 1.20.1 与 NeoForge 1.21.1。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.45",
       "title": "移除腾讯云CDN下载入口",
       "publishedAt": "2026-11-08T23:44:00Z",

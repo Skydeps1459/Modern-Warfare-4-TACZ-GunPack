@@ -1,6 +1,7 @@
 {
   "namespace": "mw4",
   "dependencies": {
-    "tacz": "[1.1.4,)"
+    "tacz": "[1.1.4,)",
+    "minecraft": "[1.20.1],[1.21.1]"
   }
 }

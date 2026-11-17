@@ -1,0 +1,22 @@
+{
+  "type": "tacz:gun_smith_table_crafting",
+  "materials": [
+    {
+      "item": {
+        "tag": "c:ingots/copper"
+      },
+      "count": 8
+    },
+    {
+      "item": {
+        "tag": "c:gunpowders"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "type": "ammo",
+    "id": "mw4:556x45",
+    "count": 50
+  }
+}

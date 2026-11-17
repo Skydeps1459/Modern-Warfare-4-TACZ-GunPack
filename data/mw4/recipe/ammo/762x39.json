@@ -1,0 +1,23 @@
+{
+  "type": "tacz:gun_smith_table_crafting",
+  "materials": [
+    {
+      "item": {
+        "tag": "c:ingots/copper"
+      },
+      "count": 15
+    },
+    {
+      "item": {
+        "tag": "c:gunpowders"
+      },
+      "count": 3
+    }
+  ],
+  "result": {
+    "type": "ammo",
+    "group": "ifp_rifle_cartridges",
+    "id": "mw4:762x39",
+    "count": 35
+  }
+}

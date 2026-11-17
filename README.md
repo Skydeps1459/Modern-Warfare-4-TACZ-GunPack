@@ -6,9 +6,9 @@
 [![Code: MIT](https://img.shields.io/badge/code-MIT-c7f36b)](./LICENSE)
 [![Gun pack: GPL--3.0](https://img.shields.io/badge/gun%20pack-GPL--3.0-orange)](./GUNPACK-LICENSE.md)
 
-Modern Warfare 4 是面向 Minecraft Forge 1.20.1 与 TACZ 的枪包，命名空间为
-`mw4`。当前版本为 **1.8.2-Release**，包含 14 把枪、弹药、配件、换弹状态机和
-仓库联动网页。
+Modern Warfare 4 是面向 Minecraft Forge 1.20.1 与 NeoForge 1.21.1 的 TACZ
+枪包，命名空间为 `mw4`。当前版本为 **1.11.0-Release**，包含 15 把枪、弹药、
+配件、换弹状态机和仓库联动网页。
 
 在线网页：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>
 
@@ -20,7 +20,7 @@ Modern Warfare 4 是面向 Minecraft Forge 1.20.1 与 TACZ 的枪包，命名空
 
 ## 发布规则
 
-- Bug 修复先在本地累计；满 **3 个独立且已验证的 bug 修复**后，才发布末位 +1
+- Bug 修复先在本地累计；满 **6 个独立且已验证的 bug 修复**后，才发布末位 +1
   的 hotfix 版本。
 - 每个 hotfix 的 GitHub Release 页面必须同步列出本次实际包含的 bug 修复项，
   统一使用 [`RELEASE_NOTES_TEMPLATE.md`](./RELEASE_NOTES_TEMPLATE.md)。
@@ -34,14 +34,14 @@ Modern Warfare 4 是面向 Minecraft Forge 1.20.1 与 TACZ 的枪包，命名空
 
 | 类型 | 枪械 |
 | --- | --- |
-| 突击步枪 | AK-47、FN FAL、HK416D、M16A1、M4A1、SCAR-H、MCX SPEAR LT |
+| 突击步枪 | AK-47、AK-74M、FN FAL、HK416D、HK437、M16A1、M4A1、SCAR-H、MCX SPEAR LT |
 | 狙击/精准步枪 | AWP、MRAD、M700 |
 | 轻机枪 | RPK |
 | 战斗步枪 | HK G3 |
 | 手枪 | 沙漠之鹰、HK MK23 |
 
-枪包还包含 5.56×45mm、7.62×39mm、.308 Winchester、.338 Lapua Magnum、
-.50 AE 和 .45 ACP 等弹药，以及 M700 瞄具和弹鼓配件。
+枪包还包含 5.45×39mm、5.56×45mm、7.62×39mm、.308 Winchester、.338 Lapua
+Magnum、.50 AE 和 .45 ACP 等弹药，以及 M700 瞄具和弹鼓配件。
 
 ## 安装
 

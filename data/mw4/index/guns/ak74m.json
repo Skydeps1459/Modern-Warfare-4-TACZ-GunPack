@@ -1,0 +1,9 @@
+{
+  "name": "mw4.gun.ak74m.name",
+  "display": "mw4:ak74m_display",
+  "data": "mw4:ak74m_data",
+  "tooltip": "mw4.gun.ak74m.desc",
+  "type": "rifle",
+  "item_type": "modern_kinetic",
+  "sort": 21
+}

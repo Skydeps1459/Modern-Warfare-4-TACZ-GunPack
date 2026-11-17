@@ -6,7 +6,7 @@ This policy applies to every update pushed to
 ## Bug-fix hotfixes
 
 - Bug fixes are accumulated and verified locally first.
-- A hotfix is published only after at least **three independent bug fixes** have
+- A hotfix is published only after at least **six independent bug fixes** have
   been completed and verified.
 - Multiple symptoms caused by one root cause count as one bug, not several.
 - When the threshold is reached, increment only the final version component
