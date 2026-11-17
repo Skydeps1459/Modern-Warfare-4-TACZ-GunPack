@@ -8,6 +8,11 @@ const noticeEnInput = document.querySelector("#mirror-notice-en");
 const urlInput = document.querySelector("#mirror-url");
 const passwordInput = document.querySelector("#mirror-password");
 const saveStatus = document.querySelector("#save-status");
+const mobileForm = document.querySelector("#mobile-form");
+const mobileLabelInput = document.querySelector("#mobile-label");
+const mobileUrlInput = document.querySelector("#mobile-url");
+const mobilePasswordInput = document.querySelector("#mobile-password");
+const mobileSaveStatus = document.querySelector("#mobile-save-status");
 
 let csrfToken = "";
 
@@ -52,9 +57,14 @@ async function loadSession() {
   noticeEnInput.value = payload.mirror.noticeEn || "";
   urlInput.value = payload.mirror.url || "";
   passwordInput.value = payload.mirror.password || "";
+  const mobile = payload.mobileMirror || {};
+  mobileLabelInput.value = mobile.label || "移动云盘分流";
+  mobileUrlInput.value = mobile.url || "";
+  mobilePasswordInput.value = mobile.password || "";
   syncClosedState();
   statePanel.classList.add("hidden");
   form.classList.remove("hidden");
+  mobileForm.classList.remove("hidden");
 }
 
 closedInput.addEventListener("change", syncClosedState);
@@ -98,6 +108,37 @@ form.addEventListener("submit", async (event) => {
     ? "已提交关闭状态，GitHub Pages 将自动更新。"
     : "已提交，GitHub Pages 将自动更新。";
   saveStatus.className = "success";
+});
+
+mobileForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  mobileSaveStatus.textContent = "正在提交到 GitHub…";
+  mobileSaveStatus.className = "";
+
+  const response = await fetch("/api/admin/mobile-mirror", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRF-Token": csrfToken
+    },
+    body: JSON.stringify({
+      label: mobileLabelInput.value.trim(),
+      url: mobileUrlInput.value.trim(),
+      password: mobilePasswordInput.value.trim()
+    })
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    mobileSaveStatus.textContent = payload.error || `保存失败（HTTP ${response.status}）`;
+    mobileSaveStatus.className = "error";
+    return;
+  }
+
+  mobileSaveStatus.textContent = mobileUrlInput.value.trim()
+    ? "已提交，GitHub Pages 将自动更新。"
+    : "已保存（链接为空，网页暂不显示该按钮）。";
+  mobileSaveStatus.className = "success";
 });
 
 loadSession().catch((error) => {

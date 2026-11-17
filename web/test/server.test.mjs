@@ -10,7 +10,8 @@ import {
   readGunPackManifest,
   readWebsiteUpdates,
   sortReleasesByDate,
-  validateDomesticMirror
+  validateDomesticMirror,
+  validateMobileMirror
 } from "../server.mjs";
 import {
   downloadConfigFromSelection,
@@ -224,6 +225,34 @@ test("validates closed domestic mirror state", () => {
   }), /过长/);
 });
 
+test("validates China Mobile Cloud mirror updates", () => {
+  const mirror = validateMobileMirror({
+    label: "移动云盘分流",
+    url: "https://yun.139.com/shareweb/#/w/i/abc123",
+    password: "m66k"
+  });
+  assert.equal(mirror.url, "https://yun.139.com/shareweb/#/w/i/abc123");
+  assert.equal(mirror.password, "m66k");
+
+  // empty url keeps the mirror hidden on the website
+  const empty = validateMobileMirror({ label: "移动云盘分流", url: "", password: "" });
+  assert.equal(empty.url, "");
+
+  // non-mobile-cloud domains are rejected
+  assert.throws(() => validateMobileMirror({
+    label: "bad",
+    url: "https://example.com/file",
+    password: ""
+  }), /移动云盘/);
+
+  // http is rejected
+  assert.throws(() => validateMobileMirror({
+    label: "bad scheme",
+    url: "http://yun.139.com/share",
+    password: ""
+  }), /HTTPS/);
+});
+
 test("serves health and local gun pack data", async (t) => {
   const server = createAppServer();
   server.listen(0, "127.0.0.1");
@@ -313,6 +342,15 @@ test("serves health and local gun pack data", async (t) => {
   } else {
     assert.match(domesticMirror.url, /^https:\/\/[^/]*lanzou/i);
     assert.ok(domesticMirror.password.length > 0);
+  }
+
+  const mobileMirrorResponse = await fetch(`${baseUrl}/api/mobile-mirror`);
+  assert.equal(mobileMirrorResponse.status, 200);
+  const mobileMirror = await mobileMirrorResponse.json();
+  assert.equal(typeof mobileMirror.url, "string");
+  assert.equal(typeof mobileMirror.label, "string");
+  if (mobileMirror.url) {
+    assert.match(mobileMirror.url, /^https:\/\/[^/]*139\.com/i);
   }
 
   const lanzouNoticeResponse = await fetch(`${baseUrl}/lanzou-notice.html`);

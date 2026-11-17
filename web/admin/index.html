@@ -12,7 +12,7 @@
       <header>
         <p class="eyebrow">MW4 // RESTRICTED CONTROL</p>
         <h1>分流管理</h1>
-        <p>只有仓库所有者 GitHub 账号可以修改国内蓝奏云分流（含关闭状态与公告）。</p>
+        <p>只有仓库所有者 GitHub 账号可以修改国内蓝奏云分流（含关闭状态与公告）与移动云盘分流链接。</p>
       </header>
 
       <section id="admin-state" class="panel">
@@ -50,6 +50,26 @@
         </label>
         <button type="submit">保存并更新网页</button>
         <p id="save-status" role="status"></p>
+      </form>
+
+      <form id="mobile-form" class="panel hidden">
+        <div class="account-row">
+          <span>移动云盘分流</span>
+        </div>
+        <label>
+          分流名称
+          <input id="mobile-label" maxlength="60" required>
+        </label>
+        <label>
+          移动云盘链接（留空则网页暂不显示该按钮）
+          <input id="mobile-url" type="url" placeholder="https://yun.139.com/...">
+        </label>
+        <label>
+          分享密码（可留空）
+          <input id="mobile-password" maxlength="32">
+        </label>
+        <button type="submit">保存并更新网页</button>
+        <p id="mobile-save-status" role="status"></p>
       </form>
     </main>
     <script src="/admin/app.js" type="module"></script>

@@ -11,8 +11,9 @@ import {
 import {
   accelerateDownloadUrl,
   loadDomesticMirror,
-  loadDownloadConfig
-} from "./download-config.js?v=20261118-1";
+  loadDownloadConfig,
+  loadMobileMirror
+} from "./download-config.js?v=20261118-2";
 import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
 import {
   intlLocale,
@@ -37,6 +38,7 @@ const elements = {
   downloadDirect: document.querySelector("#download-direct"),
   downloadLanzou: document.querySelector("#download-lanzou"),
   lanzouNotice: document.querySelector("#lanzou-closed-notice"),
+  downloadMobile: document.querySelector("#download-mobile"),
   recentReleases: document.querySelector("#recent-releases"),
   homepageWebsiteUpdates: document.querySelector("#homepage-website-updates"),
   repoLinks: [
@@ -153,6 +155,43 @@ async function loadDomesticMirrorLink({ preferLive = false } = {}) {
   } finally {
     lastDomesticMirrorAt = Date.now();
     domesticMirrorInFlight = false;
+  }
+}
+
+let mobileMirrorInFlight = false;
+let lastMobileMirrorKey = null;
+let lastLiveMobileAt = 0;
+
+async function loadMobileMirrorLink({ preferLive = false } = {}) {
+  if (mobileMirrorInFlight || !elements.downloadMobile) return;
+  // 连续切窗口时别把 GitHub API 的 60 次/小时额度打光
+  if (preferLive) {
+    if (Date.now() - lastLiveMobileAt < 10_000) preferLive = false;
+    else lastLiveMobileAt = Date.now();
+  }
+  mobileMirrorInFlight = true;
+  try {
+    const mirror = await loadMobileMirror(siteBaseUrl(), { preferLive });
+    if (!mirror) {
+      elements.downloadMobile.hidden = true;
+      lastMobileMirrorKey = "";
+      return;
+    }
+    // 内容没变就不动 DOM，避免每 30 秒重建按钮、重复绑定复制事件
+    const mirrorLabel = isEnglish() ? "China Mobile Cloud mirror" : mirror.label;
+    const key = [mirror.url, mirror.password, mirrorLabel].join("|");
+    if (key === lastMobileMirrorKey) return;
+    lastMobileMirrorKey = key;
+    elements.downloadMobile.href = mirror.url;
+    elements.downloadMobile.textContent = mirror.password
+      ? (isEnglish()
+          ? `${mirrorLabel} · Password ${mirror.password}`
+          : `${mirrorLabel} · 密码 ${mirror.password}`)
+      : mirrorLabel;
+    elements.downloadMobile.hidden = false;
+    bindDomesticMirrorCopy(elements.downloadMobile, mirror);
+  } finally {
+    mobileMirrorInFlight = false;
   }
 }
 
@@ -402,7 +441,8 @@ async function refreshPublicData() {
       loadRecentReleases(),
       loadHomepageWebsiteUpdates(),
       refreshDownloadAccelerator(),
-      loadDomesticMirrorLink()
+      loadDomesticMirrorLink(),
+      loadMobileMirrorLink()
     ]);
     lastRefreshAt = Date.now();
   } finally {
@@ -417,19 +457,23 @@ setInterval(refreshPublicData, AUTO_REFRESH_MS);
 setInterval(() => {
   if (document.visibilityState === "visible") {
     loadDomesticMirrorLink();
+    loadMobileMirrorLink();
   }
 }, MIRROR_REFRESH_MS);
 window.addEventListener("online", () => {
   loadDomesticMirrorLink({ preferLive: true });
+  loadMobileMirrorLink({ preferLive: true });
 });
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState !== "visible") return;
   // 回到页面时直接问 GitHub API，拿到的是刚提交的最新值
   loadDomesticMirrorLink({ preferLive: true });
+  loadMobileMirrorLink({ preferLive: true });
   if (Date.now() - lastRefreshAt >= AUTO_REFRESH_MS) refreshPublicData();
 });
 window.addEventListener("focus", () => {
   loadDomesticMirrorLink({ preferLive: true });
+  loadMobileMirrorLink({ preferLive: true });
 });
 
 let scrollFrame = 0;

@@ -10,6 +10,7 @@ const projectRoot = resolve(serverDir, "..");
 const publicDir = join(serverDir, "public");
 const websiteUpdatesPath = join(serverDir, "website-updates.json");
 const domesticMirrorPath = join(serverDir, "domestic-mirror.json");
+const mobileMirrorPath = join(serverDir, "mobile-mirror.json");
 const adminDir = join(serverDir, "admin");
 const gunpackRoot = join(projectRoot, "assets", "mw4");
 const gunIndexRoot = join(projectRoot, "data", "mw4", "index", "guns");
@@ -32,6 +33,11 @@ const ADMIN_REPOSITORY_OWNER = process.env.GITHUB_OWNER || "Skydeps1459";
 const ADMIN_REPOSITORY_NAME = process.env.GITHUB_REPO || "Modern-Warfare-4-TACZ-GunPack";
 const ALLOWED_MIRROR_HOSTS = (process.env.ALLOWED_MIRROR_HOSTS
   || "lanzouc.com,lanzoux.com,lanzoui.com,lanzou.com")
+  .split(",")
+  .map((host) => host.trim().toLowerCase())
+  .filter(Boolean);
+const ALLOWED_MOBILE_MIRROR_HOSTS = (process.env.ALLOWED_MOBILE_MIRROR_HOSTS
+  || "yun.139.com,mcloud.139.com,caiyun.139.com")
   .split(",")
   .map((host) => host.trim().toLowerCase())
   .filter(Boolean);
@@ -200,6 +206,39 @@ export function validateDomesticMirror(input, allowedHosts = ALLOWED_MIRROR_HOST
   const host = url.hostname.toLowerCase();
   if (!allowedHosts.some((allowed) => host === allowed || host.endsWith(`.${allowed}`))) {
     throw new Error("链接域名不在允许的蓝奏云列表中。");
+  }
+
+  return { label, url: url.href, password };
+}
+
+export function validateMobileMirror(input, allowedHosts = ALLOWED_MOBILE_MIRROR_HOSTS) {
+  const label = String(input?.label || "移动云盘分流").trim();
+  const password = String(input?.password || "").trim();
+  if (!label || label.length > 60) {
+    throw new Error("分流名称必须为 1-60 个字符。");
+  }
+  if (password.length > 32) {
+    throw new Error("分享密码不能超过 32 个字符。");
+  }
+
+  const rawUrl = String(input?.url || "").trim();
+  if (!rawUrl) {
+    // 允许暂时不填链接：网页暂不显示该分流按钮
+    return { label, url: "", password };
+  }
+
+  let url;
+  try {
+    url = new URL(rawUrl);
+  } catch {
+    throw new Error("请输入有效的移动云盘链接。");
+  }
+  if (url.protocol !== "https:") {
+    throw new Error("移动云盘分流链接必须使用 HTTPS。");
+  }
+  const host = url.hostname.toLowerCase();
+  if (!allowedHosts.some((allowed) => host === allowed || host.endsWith(`.${allowed}`))) {
+    throw new Error("链接域名不在允许的移动云盘列表中。");
   }
 
   return { label, url: url.href, password };
@@ -608,13 +647,22 @@ async function writeDomesticMirrorToGitHub(accessToken, mirror) {
   );
 }
 
+async function writeMobileMirrorToGitHub(accessToken, mirror) {
+  return writeMirrorJsonToGitHub(
+    accessToken,
+    "web/mobile-mirror.json",
+    "Update China Mobile Cloud mirror",
+    mirror
+  );
+}
+
 async function handleRequest(request, response) {
   applySecurityHeaders(response);
   const method = request.method || "GET";
   const origin = `http://${request.headers.host || "localhost"}`;
   const url = new URL(request.url || "/", origin);
   const adminPost = method === "POST"
-    && url.pathname === "/api/admin/domestic-mirror";
+    && (url.pathname === "/api/admin/domestic-mirror" || url.pathname === "/api/admin/mobile-mirror");
   if (!["GET", "HEAD"].includes(method) && !adminPost) {
     sendJson(response, 405, { error: "Method not allowed" });
     return;
@@ -714,7 +762,12 @@ async function handleRequest(request, response) {
       authenticated: true,
       user: adminSession.user,
       csrfToken: adminSession.csrfToken,
-      mirror: await readJson(domesticMirrorPath)
+      mirror: await readJson(domesticMirrorPath),
+      mobileMirror: await readJson(mobileMirrorPath).catch(() => ({
+        label: "移动云盘分流",
+        url: "",
+        password: ""
+      }))
     });
     return;
   }
@@ -732,9 +785,15 @@ async function handleRequest(request, response) {
 
     try {
       const body = JSON.parse(await readRequestBody(request));
-      const mirror = validateDomesticMirror(body);
-      const commit = await writeDomesticMirrorToGitHub(adminSession.accessToken, mirror);
-      sendJson(response, 200, { ok: true, mirror, commit });
+      if (url.pathname === "/api/admin/mobile-mirror") {
+        const mirror = validateMobileMirror(body);
+        const commit = await writeMobileMirrorToGitHub(adminSession.accessToken, mirror);
+        sendJson(response, 200, { ok: true, mirror, commit });
+      } else {
+        const mirror = validateDomesticMirror(body);
+        const commit = await writeDomesticMirrorToGitHub(adminSession.accessToken, mirror);
+        sendJson(response, 200, { ok: true, mirror, commit });
+      }
     } catch (error) {
       sendJson(response, 400, { error: error.message || "Failed to update mirror." });
     }
@@ -807,6 +866,11 @@ async function handleRequest(request, response) {
 
   if (url.pathname === "/api/domestic-mirror") {
     sendJson(response, 200, await readJson(domesticMirrorPath));
+    return;
+  }
+
+  if (url.pathname === "/api/mobile-mirror") {
+    sendJson(response, 200, await readJson(mobileMirrorPath));
     return;
   }
 

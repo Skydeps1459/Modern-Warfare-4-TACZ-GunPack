@@ -8,8 +8,9 @@ import {
 } from "./release-data.js?v=20261101-3";
 import {
   loadDomesticMirror,
-  loadDownloadConfig
-} from "./download-config.js?v=20261118-1";
+  loadDownloadConfig,
+  loadMobileMirror
+} from "./download-config.js?v=20261118-2";
 import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
 import {
   isEnglish,
@@ -21,7 +22,7 @@ const list = document.querySelector("#changelog-list");
 const count = document.querySelector("#release-count");
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
 
-function createReleaseEntry(release, acceleratorPrefix, domesticMirror, isLatestPack) {
+function createReleaseEntry(release, acceleratorPrefix, domesticMirror, mobileMirror, isLatestPack) {
   const article = document.createElement("article");
   article.className = "release-entry";
   article.id = releaseAnchor(release.tag);
@@ -79,6 +80,20 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, isLatest
       actions.append(notice);
     }
   }
+  if (isLatestPack && mobileMirror) {
+    const mobile = document.createElement("a");
+    mobile.className = "button button-outline";
+    mobile.href = mobileMirror.url;
+    mobile.rel = "noreferrer";
+    const mobileLabel = isEnglish() ? "China Mobile Cloud mirror" : mobileMirror.label;
+    mobile.textContent = mobileMirror.password
+      ? (isEnglish()
+          ? `${mobileLabel} · Password ${mobileMirror.password}`
+          : `${mobileLabel} · 密码 ${mobileMirror.password}`)
+      : mobileLabel;
+    bindDomesticMirrorCopy(mobile, mobileMirror);
+    actions.append(mobile);
+  }
   const direct = document.createElement("a");
   direct.className = release.asset ? "button button-ghost" : "button button-outline";
   direct.href = release.url;
@@ -128,10 +143,11 @@ function scrollToCurrentHash() {
 
 async function renderChangelog({ preferLive = false } = {}) {
   try {
-    const [releases, downloadConfig, domesticMirror] = await Promise.all([
+    const [releases, downloadConfig, domesticMirror, mobileMirror] = await Promise.all([
       loadPackReleases(),
       loadDownloadConfig(siteBaseUrl()),
-      loadDomesticMirror(siteBaseUrl(), { preferLive })
+      loadDomesticMirror(siteBaseUrl(), { preferLive }),
+      loadMobileMirror(siteBaseUrl(), { preferLive })
     ]);
     count.textContent = uiText(
       `${releases.length} 个版本`,
@@ -156,6 +172,7 @@ async function renderChangelog({ preferLive = false } = {}) {
           release,
           downloadConfig.selected.prefix,
           domesticMirror,
+          mobileMirror,
           index === 0
         )
       )
