@@ -185,13 +185,32 @@ export function validateDomesticMirror(input, allowedHosts = ALLOWED_MIRROR_HOST
   }
 
   if (input?.closed === true) {
-    // 分流关闭态：不需要链接，仅保留公告文案
+    // 分流关闭态：公告必填，链接可选（允许提前维护好链接，取消关闭后即可启用）
     const notice = String(input?.notice || "").trim();
     const noticeEn = String(input?.noticeEn || "").trim();
     if (notice.length > 300 || noticeEn.length > 600) {
       throw new Error("关闭公告文案过长。");
     }
-    return { closed: true, label, notice, noticeEn };
+    const result = { closed: true, label, notice, noticeEn };
+    const rawUrl = String(input?.url || "").trim();
+    if (rawUrl) {
+      let closedUrl;
+      try {
+        closedUrl = new URL(rawUrl);
+      } catch {
+        throw new Error("请输入有效的蓝奏云链接。");
+      }
+      if (!["http:", "https:"].includes(closedUrl.protocol)) {
+        throw new Error("分流链接必须使用 HTTP 或 HTTPS。");
+      }
+      const closedHost = closedUrl.hostname.toLowerCase();
+      if (!allowedHosts.some((allowed) => closedHost === allowed || closedHost.endsWith(`.${allowed}`))) {
+        throw new Error("链接域名不在允许的蓝奏云列表中。");
+      }
+      result.url = closedUrl.href;
+      result.password = password;
+    }
+    return result;
   }
 
   let url;

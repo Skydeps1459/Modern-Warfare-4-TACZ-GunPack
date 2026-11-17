@@ -171,3 +171,10 @@ select:focus {
   accent-color: var(--acid);
 }
 
+.form-hint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+

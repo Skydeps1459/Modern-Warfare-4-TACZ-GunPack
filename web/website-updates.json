@@ -1,6 +1,19 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.50",
+      "title": "蓝奏云分流链接可随时维护",
+      "publishedAt": "2026-11-17T23:01:59Z",
+      "summary": "domestic-mirror.json 的下载链接现在可以随时修改：关闭期间也能在后台更新链接与密码（保存后保留在配置中），取消关闭即重新启用；页脚「网页管理」入口直达该文件的 GitHub 页面，仓库所有者点铅笔即可在线编辑。",
+      "changes": [
+        "后台分流管理：关闭状态下链接与密码输入框不再禁用，可提前维护下载链接",
+        "关闭态保存时链接一并写入 domestic-mirror.json（仍校验蓝奏云域名）",
+        "页脚「网页管理」入口改为直达 domestic-mirror.json 文件视图，所有者可在线编辑"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.49",
       "title": "页脚开发署名更新",
       "publishedAt": "2026-11-17T22:58:41Z",

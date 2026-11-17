@@ -18,9 +18,8 @@ let csrfToken = "";
 
 function syncClosedState() {
   const closed = closedInput.checked;
+  // 关闭态下链接仍可编辑：提前维护好链接，取消关闭后即可启用
   urlInput.required = !closed;
-  urlInput.disabled = closed;
-  passwordInput.disabled = closed;
   noticeInput.disabled = !closed;
   noticeEnInput.disabled = !closed;
 }
@@ -80,7 +79,9 @@ form.addEventListener("submit", async (event) => {
         closed: true,
         label: labelInput.value.trim(),
         notice: noticeInput.value.trim(),
-        noticeEn: noticeEnInput.value.trim()
+        noticeEn: noticeEnInput.value.trim(),
+        url: urlInput.value.trim(),
+        password: passwordInput.value.trim()
       }
     : {
         label: labelInput.value.trim(),

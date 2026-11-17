@@ -223,6 +223,26 @@ test("validates closed domestic mirror state", () => {
     label: "蓝奏云国内分流",
     notice: "长".repeat(301)
   }), /过长/);
+
+  // closed state may pre-stage a valid link for later re-opening
+  const staged = validateDomesticMirror({
+    closed: true,
+    label: "蓝奏云国内分流",
+    notice: "关闭公告",
+    url: "https://wwaxl.lanzouc.com/itbK24dd0odi",
+    password: "6wgt"
+  });
+  assert.equal(staged.closed, true);
+  assert.equal(staged.url, "https://wwaxl.lanzouc.com/itbK24dd0odi");
+  assert.equal(staged.password, "6wgt");
+
+  // invalid staged links are still rejected
+  assert.throws(() => validateDomesticMirror({
+    closed: true,
+    label: "蓝奏云国内分流",
+    notice: "关闭公告",
+    url: "https://example.com/file"
+  }), /蓝奏云/);
 });
 
 test("validates China Mobile Cloud mirror updates", () => {
