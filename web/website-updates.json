@@ -1,6 +1,17 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.49",
+      "title": "页脚开发署名更新",
+      "publishedAt": "2026-11-17T22:58:41Z",
+      "summary": "全站页脚的开发署名由 Deepseek-V4.1-flash 更新为 Qwen4-Max-Preview，维护者仍为 Skydeps1459。",
+      "changes": [
+        "中英文首页、更新日志、网页更新、分流公告页与更新详情页模板的页脚署名统一更新"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.48",
       "title": "新增移动云盘分流渠道（后台可维护）",
       "publishedAt": "2026-11-17T22:51:42Z",
