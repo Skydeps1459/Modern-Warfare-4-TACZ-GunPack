@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T23:21:34.875Z",
+  "generatedAt": "2026-11-17T02:26:06.954Z",
   "directUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.10.3-Release/Modern.Warfare.4-1.10.3-Release.zip",
   "selected": {
     "id": "gh-monlor",
@@ -7,17 +7,17 @@
     "prefix": "https://gh.monlor.com/",
     "ok": true,
     "status": 206,
-    "latencyMs": 403,
+    "latencyMs": 353,
     "bytes": 1369
   },
   "fallback": {
-    "id": "ghproxy-icu",
-    "name": "ghproxy.icu",
-    "prefix": "https://ghproxy.icu/",
+    "id": "gh-proxy",
+    "name": "gh-proxy.com",
+    "prefix": "https://gh-proxy.com/",
     "ok": true,
     "status": 206,
-    "latencyMs": 403,
-    "bytes": 40
+    "latencyMs": 422,
+    "bytes": 1286
   },
   "acceleratedUrl": "https://gh.monlor.com/https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.10.3-Release/Modern.Warfare.4-1.10.3-Release.zip",
   "excludedHosts": [
@@ -30,7 +30,7 @@
       "prefix": "https://github.chenc.dev/",
       "ok": true,
       "status": 206,
-      "latencyMs": 1441,
+      "latencyMs": 1613,
       "bytes": 359
     },
     {
@@ -39,8 +39,8 @@
       "prefix": "https://github.tbap.top/",
       "ok": true,
       "status": 206,
-      "latencyMs": 1141,
-      "bytes": 37
+      "latencyMs": 629,
+      "bytes": 35
     },
     {
       "id": "gh-proxy",
@@ -48,8 +48,8 @@
       "prefix": "https://gh-proxy.com/",
       "ok": true,
       "status": 206,
-      "latencyMs": 437,
-      "bytes": 1369
+      "latencyMs": 422,
+      "bytes": 1286
     },
     {
       "id": "gh-monlor",
@@ -57,7 +57,7 @@
       "prefix": "https://gh.monlor.com/",
       "ok": true,
       "status": 206,
-      "latencyMs": 403,
+      "latencyMs": 353,
       "bytes": 1369
     },
     {
@@ -65,7 +65,7 @@
       "name": "gh.chjina.com",
       "prefix": "https://gh.chjina.com/",
       "ok": false,
-      "latencyMs": 187,
+      "latencyMs": 207,
       "error": "HTTP 403"
     },
     {
@@ -74,8 +74,8 @@
       "prefix": "https://ghproxy.icu/",
       "ok": true,
       "status": 206,
-      "latencyMs": 403,
-      "bytes": 40
+      "latencyMs": 605,
+      "bytes": 29
     },
     {
       "id": "github-ednovas",
@@ -83,8 +83,8 @@
       "prefix": "https://github.ednovas.xyz/",
       "ok": true,
       "status": 206,
-      "latencyMs": 856,
-      "bytes": 85
+      "latencyMs": 1355,
+      "bytes": 1369
     },
     {
       "id": "gh-sixyin",
@@ -92,8 +92,8 @@
       "prefix": "https://gh.sixyin.com/",
       "ok": true,
       "status": 206,
-      "latencyMs": 1630,
-      "bytes": 136
+      "latencyMs": 1502,
+      "bytes": 130
     }
   ]
 }
