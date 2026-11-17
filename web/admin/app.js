@@ -1,19 +1,24 @@
 const statePanel = document.querySelector("#admin-state");
 const form = document.querySelector("#mirror-form");
-const cdnForm = document.querySelector("#cdn-form");
 const accountName = document.querySelector("#account-name");
 const labelInput = document.querySelector("#mirror-label");
+const closedInput = document.querySelector("#mirror-closed");
+const noticeInput = document.querySelector("#mirror-notice");
+const noticeEnInput = document.querySelector("#mirror-notice-en");
 const urlInput = document.querySelector("#mirror-url");
 const passwordInput = document.querySelector("#mirror-password");
 const saveStatus = document.querySelector("#save-status");
-const cdnEnabledInput = document.querySelector("#cdn-enabled");
-const cdnLabelInput = document.querySelector("#cdn-label");
-const cdnModeInput = document.querySelector("#cdn-mode");
-const cdnUrlInput = document.querySelector("#cdn-url");
-const cdnPasswordInput = document.querySelector("#cdn-password");
-const cdnSaveStatus = document.querySelector("#cdn-save-status");
 
 let csrfToken = "";
+
+function syncClosedState() {
+  const closed = closedInput.checked;
+  urlInput.required = !closed;
+  urlInput.disabled = closed;
+  passwordInput.disabled = closed;
+  noticeInput.disabled = !closed;
+  noticeEnInput.disabled = !closed;
+}
 
 async function loadSession() {
   const response = await fetch("/api/admin/session", {
@@ -42,23 +47,36 @@ async function loadSession() {
   csrfToken = payload.csrfToken;
   accountName.textContent = payload.user.login;
   labelInput.value = payload.mirror.label || "";
+  closedInput.checked = payload.mirror.closed === true;
+  noticeInput.value = payload.mirror.notice || "";
+  noticeEnInput.value = payload.mirror.noticeEn || "";
   urlInput.value = payload.mirror.url || "";
   passwordInput.value = payload.mirror.password || "";
-  const cdn = payload.cdnMirror || {};
-  cdnEnabledInput.checked = cdn.enabled === true;
-  cdnLabelInput.value = cdn.label || "腾讯云CDN加速";
-  cdnModeInput.value = cdn.mode === "prefix" ? "prefix" : "direct";
-  cdnUrlInput.value = cdn.url || "";
-  cdnPasswordInput.value = cdn.password || "";
+  syncClosedState();
   statePanel.classList.add("hidden");
   form.classList.remove("hidden");
-  cdnForm.classList.remove("hidden");
 }
+
+closedInput.addEventListener("change", syncClosedState);
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   saveStatus.textContent = "正在提交到 GitHub…";
   saveStatus.className = "";
+
+  const closed = closedInput.checked;
+  const body = closed
+    ? {
+        closed: true,
+        label: labelInput.value.trim(),
+        notice: noticeInput.value.trim(),
+        noticeEn: noticeEnInput.value.trim()
+      }
+    : {
+        label: labelInput.value.trim(),
+        url: urlInput.value.trim(),
+        password: passwordInput.value.trim()
+      };
 
   const response = await fetch("/api/admin/domestic-mirror", {
     method: "POST",
@@ -67,11 +85,7 @@ form.addEventListener("submit", async (event) => {
       "Content-Type": "application/json",
       "X-CSRF-Token": csrfToken
     },
-    body: JSON.stringify({
-      label: labelInput.value.trim(),
-      url: urlInput.value.trim(),
-      password: passwordInput.value.trim()
-    })
+    body: JSON.stringify(body)
   });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
@@ -80,41 +94,10 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-  saveStatus.textContent = "已提交，GitHub Pages 将自动更新。";
+  saveStatus.textContent = closed
+    ? "已提交关闭状态，GitHub Pages 将自动更新。"
+    : "已提交，GitHub Pages 将自动更新。";
   saveStatus.className = "success";
-});
-
-cdnForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  cdnSaveStatus.textContent = "正在提交到 GitHub…";
-  cdnSaveStatus.className = "";
-
-  const response = await fetch("/api/admin/cdn-mirror", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "X-CSRF-Token": csrfToken
-    },
-    body: JSON.stringify({
-      enabled: cdnEnabledInput.checked,
-      label: cdnLabelInput.value.trim(),
-      mode: cdnModeInput.value === "prefix" ? "prefix" : "direct",
-      url: cdnUrlInput.value.trim(),
-      password: cdnPasswordInput.value.trim()
-    })
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    cdnSaveStatus.textContent = payload.error || `保存失败（HTTP ${response.status}）`;
-    cdnSaveStatus.className = "error";
-    return;
-  }
-
-  cdnSaveStatus.textContent = cdnEnabledInput.checked
-    ? "已提交，GitHub Pages 将自动更新。"
-    : "已保存（未启用，网页暂不显示该按钮）。";
-  cdnSaveStatus.className = "success";
 });
 
 loadSession().catch((error) => {

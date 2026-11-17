@@ -1258,3 +1258,46 @@ footer .site-credit a {
   }
 }
 
+/* 蓝奏云分流关闭公告（首页下载区 / 更新日志最新版本） */
+.mirror-closed-note {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  max-width: 640px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--orange);
+  background: rgba(255, 138, 61, 0.06);
+}
+
+.release-actions .mirror-closed-note {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  max-width: none;
+  text-align: left;
+}
+
+/* 分流关闭提示页 */
+.mirror-notice-card {
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--orange);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.mirror-notice-card p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 2;
+}
+
+.mirror-notice-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+

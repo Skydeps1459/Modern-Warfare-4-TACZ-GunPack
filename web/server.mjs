@@ -10,7 +10,6 @@ const projectRoot = resolve(serverDir, "..");
 const publicDir = join(serverDir, "public");
 const websiteUpdatesPath = join(serverDir, "website-updates.json");
 const domesticMirrorPath = join(serverDir, "domestic-mirror.json");
-const cdnMirrorPath = join(serverDir, "cdn-mirror.json");
 const adminDir = join(serverDir, "admin");
 const gunpackRoot = join(projectRoot, "assets", "mw4");
 const gunIndexRoot = join(projectRoot, "data", "mw4", "index", "guns");
@@ -46,11 +45,13 @@ const staticFiles = new Map([
   ["/changelog.html", { file: "changelog.html", type: "text/html; charset=utf-8" }],
   ["/website-updates.html", { file: "website-updates.html", type: "text/html; charset=utf-8" }],
   ["/website-update.html", { file: "website-update.html", type: "text/html; charset=utf-8" }],
+  ["/lanzou-notice.html", { file: "lanzou-notice.html", type: "text/html; charset=utf-8" }],
   ["/en", { file: "en/index.html", type: "text/html; charset=utf-8" }],
   ["/en/", { file: "en/index.html", type: "text/html; charset=utf-8" }],
   ["/en/index.html", { file: "en/index.html", type: "text/html; charset=utf-8" }],
   ["/en/changelog.html", { file: "en/changelog.html", type: "text/html; charset=utf-8" }],
   ["/en/website-updates.html", { file: "en/website-updates.html", type: "text/html; charset=utf-8" }],
+  ["/en/lanzou-notice.html", { file: "en/lanzou-notice.html", type: "text/html; charset=utf-8" }],
   ["/styles.css", { file: "styles.css", type: "text/css; charset=utf-8" }],
   ["/app.js", { file: "app.js", type: "text/javascript; charset=utf-8" }],
   ["/changelog.js", { file: "changelog.js", type: "text/javascript; charset=utf-8" }],
@@ -177,6 +178,16 @@ export function validateDomesticMirror(input, allowedHosts = ALLOWED_MIRROR_HOST
     throw new Error("分享密码不能超过 32 个字符。");
   }
 
+  if (input?.closed === true) {
+    // 分流关闭态：不需要链接，仅保留公告文案
+    const notice = String(input?.notice || "").trim();
+    const noticeEn = String(input?.noticeEn || "").trim();
+    if (notice.length > 300 || noticeEn.length > 600) {
+      throw new Error("关闭公告文案过长。");
+    }
+    return { closed: true, label, notice, noticeEn };
+  }
+
   let url;
   try {
     url = new URL(String(input?.url || "").trim());
@@ -192,38 +203,6 @@ export function validateDomesticMirror(input, allowedHosts = ALLOWED_MIRROR_HOST
   }
 
   return { label, url: url.href, password };
-}
-
-export function validateCdnMirror(input) {
-  const label = String(input?.label || "腾讯云CDN加速").trim();
-  const password = String(input?.password || "").trim();
-  const enabled = input?.enabled === true;
-  const mode = input?.mode === "prefix" ? "prefix" : "direct";
-  if (!label || label.length > 60) {
-    throw new Error("分流名称必须为 1-60 个字符。");
-  }
-  if (password.length > 32) {
-    throw new Error("分享密码不能超过 32 个字符。");
-  }
-
-  let url;
-  try {
-    url = new URL(String(input?.url || "").trim());
-  } catch {
-    if (!enabled) {
-      // 未启用时允许暂时不填链接，方便先保存停用状态
-      return { enabled: false, label, mode, url: "", password };
-    }
-    throw new Error("请输入有效的 CDN 下载链接。");
-  }
-  if (url.protocol !== "https:") {
-    throw new Error("CDN 分流链接必须使用 HTTPS。");
-  }
-  if (mode === "prefix" && !url.href.endsWith("/")) {
-    throw new Error("前缀模式链接需以 / 结尾（将自动拼接 GitHub Release 原链）。");
-  }
-
-  return { enabled, label, mode, url: url.href, password };
 }
 
 function parseCookies(request) {
@@ -629,22 +608,13 @@ async function writeDomesticMirrorToGitHub(accessToken, mirror) {
   );
 }
 
-async function writeCdnMirrorToGitHub(accessToken, mirror) {
-  return writeMirrorJsonToGitHub(
-    accessToken,
-    "web/cdn-mirror.json",
-    "Update Tencent Cloud CDN mirror",
-    mirror
-  );
-}
-
 async function handleRequest(request, response) {
   applySecurityHeaders(response);
   const method = request.method || "GET";
   const origin = `http://${request.headers.host || "localhost"}`;
   const url = new URL(request.url || "/", origin);
   const adminPost = method === "POST"
-    && (url.pathname === "/api/admin/domestic-mirror" || url.pathname === "/api/admin/cdn-mirror");
+    && url.pathname === "/api/admin/domestic-mirror";
   if (!["GET", "HEAD"].includes(method) && !adminPost) {
     sendJson(response, 405, { error: "Method not allowed" });
     return;
@@ -744,14 +714,7 @@ async function handleRequest(request, response) {
       authenticated: true,
       user: adminSession.user,
       csrfToken: adminSession.csrfToken,
-      mirror: await readJson(domesticMirrorPath),
-      cdnMirror: await readJson(cdnMirrorPath).catch(() => ({
-        enabled: false,
-        label: "腾讯云CDN加速",
-        mode: "direct",
-        url: "",
-        password: ""
-      }))
+      mirror: await readJson(domesticMirrorPath)
     });
     return;
   }
@@ -769,15 +732,9 @@ async function handleRequest(request, response) {
 
     try {
       const body = JSON.parse(await readRequestBody(request));
-      if (url.pathname === "/api/admin/cdn-mirror") {
-        const mirror = validateCdnMirror(body);
-        const commit = await writeCdnMirrorToGitHub(adminSession.accessToken, mirror);
-        sendJson(response, 200, { ok: true, mirror, commit });
-      } else {
-        const mirror = validateDomesticMirror(body);
-        const commit = await writeDomesticMirrorToGitHub(adminSession.accessToken, mirror);
-        sendJson(response, 200, { ok: true, mirror, commit });
-      }
+      const mirror = validateDomesticMirror(body);
+      const commit = await writeDomesticMirrorToGitHub(adminSession.accessToken, mirror);
+      sendJson(response, 200, { ok: true, mirror, commit });
     } catch (error) {
       sendJson(response, 400, { error: error.message || "Failed to update mirror." });
     }
@@ -850,11 +807,6 @@ async function handleRequest(request, response) {
 
   if (url.pathname === "/api/domestic-mirror") {
     sendJson(response, 200, await readJson(domesticMirrorPath));
-    return;
-  }
-
-  if (url.pathname === "/api/cdn-mirror") {
-    sendJson(response, 200, await readJson(cdnMirrorPath));
     return;
   }
 

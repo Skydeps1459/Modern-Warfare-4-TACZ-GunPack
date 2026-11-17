@@ -2,9 +2,8 @@ const DEFAULT_PREFIX = "https://gh-proxy.com/";
 const DOMESTIC_MIRROR_RAW_URL = "https://raw.githubusercontent.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/main/web/domestic-mirror.json";
 const DOMESTIC_MIRROR_CDN_URL = "https://cdn.jsdelivr.net/gh/Skydeps1459/Modern-Warfare-4-TACZ-GunPack@main/web/domestic-mirror.json";
 const DOMESTIC_MIRROR_API_URL = "https://api.github.com/repos/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/contents/web/domestic-mirror.json?ref=main";
-const CDN_MIRROR_RAW_URL = "https://raw.githubusercontent.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/main/web/cdn-mirror.json";
-const CDN_MIRROR_CDN_URL = "https://cdn.jsdelivr.net/gh/Skydeps1459/Modern-Warfare-4-TACZ-GunPack@main/web/cdn-mirror.json";
-const CDN_MIRROR_API_URL = "https://api.github.com/repos/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/contents/web/cdn-mirror.json?ref=main";
+const LANZOU_CLOSED_NOTICE = "由于枪包文件即将达到蓝奏云单次传输上限，为了玩家下载体验，蓝奏云分流现正式关闭，未来枪包分流下载将暂时迁移至移动云盘";
+const LANZOU_CLOSED_NOTICE_EN = "The gun pack file is approaching Lanzou Cloud's single-transfer size limit. To keep downloads smooth for players, the Lanzou mirror is now officially closed. Mirror downloads will temporarily move to China Mobile Cloud Drive.";
 
 export function decodeBase64Utf8(value) {
   const binary = atob(String(value || "").replace(/\s/g, ""));
@@ -102,6 +101,15 @@ export async function loadDomesticMirror(
       if (source.githubContents) {
         mirror = JSON.parse(decodeBase64Utf8(mirror.content));
       }
+      if (mirror.closed === true) {
+        return {
+          closed: true,
+          label: String(mirror.label || "蓝奏云国内分流"),
+          notice: String(mirror.notice || LANZOU_CLOSED_NOTICE),
+          noticeEn: String(mirror.noticeEn || LANZOU_CLOSED_NOTICE_EN),
+          source: source.url.hostname
+        };
+      }
       const url = new URL(mirror.url);
       if (!["http:", "https:"].includes(url.protocol)) throw new Error("Invalid URL");
       return {
@@ -117,62 +125,4 @@ export async function loadDomesticMirror(
   return null;
 }
 
-export async function loadCdnMirror(
-  baseUrl = new URL("./", document.baseURI),
-  { preferLive = false } = {}
-) {
-  const siteBase = typeof baseUrl === "string"
-    ? new URL(baseUrl, document.baseURI)
-    : baseUrl;
-  const endpoint = new URL("api/cdn-mirror.json", siteBase);
-  endpoint.searchParams.set("v", Date.now().toString());
-  const liveEndpoint = new URL(CDN_MIRROR_RAW_URL);
-  liveEndpoint.searchParams.set("v", Date.now().toString());
-  const cdnEndpoint = new URL(CDN_MIRROR_CDN_URL);
-  cdnEndpoint.searchParams.set("v", Date.now().toString());
-  const apiEndpoint = new URL(CDN_MIRROR_API_URL);
-  apiEndpoint.searchParams.set("v", Date.now().toString());
-
-  const sources = preferLive
-    ? [
-        { url: new URL("api/cdn-mirror", siteBase) },
-        { url: apiEndpoint, githubContents: true },
-        { url: endpoint },
-        { url: liveEndpoint },
-        { url: cdnEndpoint }
-      ]
-    : [
-        { url: new URL("api/cdn-mirror", siteBase) },
-        { url: endpoint },
-        { url: liveEndpoint },
-        { url: apiEndpoint, githubContents: true },
-        { url: cdnEndpoint }
-      ];
-  for (const source of sources) {
-    try {
-      const response = await fetch(source.url, {
-        headers: { Accept: "application/json" },
-        cache: "no-store"
-      });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      let mirror = await response.json();
-      if (source.githubContents) {
-        mirror = JSON.parse(decodeBase64Utf8(mirror.content));
-      }
-      if (mirror.enabled !== true || !mirror.url) return null;
-      const url = new URL(mirror.url);
-      if (url.protocol !== "https:") throw new Error("Invalid URL");
-      return {
-        label: String(mirror.label || "腾讯云CDN加速"),
-        mode: mirror.mode === "prefix" ? "prefix" : "direct",
-        url: url.href,
-        password: String(mirror.password || ""),
-        source: source.url.hostname
-      };
-    } catch (error) {
-      console.info(`CDN mirror source unavailable: ${source.url.hostname}`, error.message);
-    }
-  }
-  return null;
-}
 

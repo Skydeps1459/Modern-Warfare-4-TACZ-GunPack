@@ -9,7 +9,7 @@ import {
 import {
   loadDomesticMirror,
   loadDownloadConfig
-} from "./download-config.js?v=20261101-2";
+} from "./download-config.js?v=20261118-1";
 import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
 import {
   isEnglish,
@@ -52,16 +52,32 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, isLatest
   if (isLatestPack && domesticMirror) {
     const domestic = document.createElement("a");
     domestic.className = "button button-outline";
-    domestic.href = domesticMirror.url;
     domestic.rel = "noreferrer";
     const mirrorLabel = isEnglish() ? "Lanzou Cloud mirror" : domesticMirror.label;
-    domestic.textContent = domesticMirror.password
-      ? (isEnglish()
-          ? `${mirrorLabel} · Password ${domesticMirror.password}`
-          : `${mirrorLabel} · 密码 ${domesticMirror.password}`)
-      : mirrorLabel;
-    bindDomesticMirrorCopy(domestic, domesticMirror);
+    if (domesticMirror.closed) {
+      domestic.href = new URL(
+        isEnglish() ? "en/lanzou-notice.html" : "lanzou-notice.html",
+        siteBaseUrl()
+      ).href;
+      domestic.textContent = isEnglish()
+        ? `${mirrorLabel} · Closed`
+        : `${mirrorLabel} · 已关闭`;
+    } else {
+      domestic.href = domesticMirror.url;
+      domestic.textContent = domesticMirror.password
+        ? (isEnglish()
+            ? `${mirrorLabel} · Password ${domesticMirror.password}`
+            : `${mirrorLabel} · 密码 ${domesticMirror.password}`)
+        : mirrorLabel;
+      bindDomesticMirrorCopy(domestic, domesticMirror);
+    }
     actions.append(domestic);
+    if (domesticMirror.closed) {
+      const notice = document.createElement("p");
+      notice.className = "mirror-closed-note";
+      notice.textContent = isEnglish() ? domesticMirror.noticeEn : domesticMirror.notice;
+      actions.append(notice);
+    }
   }
   const direct = document.createElement("a");
   direct.className = release.asset ? "button button-ghost" : "button button-outline";

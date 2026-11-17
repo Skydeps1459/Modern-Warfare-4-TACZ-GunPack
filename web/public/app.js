@@ -10,10 +10,9 @@ import {
 } from "./website-update-data.js?v=20261101-2";
 import {
   accelerateDownloadUrl,
-  loadCdnMirror,
   loadDomesticMirror,
   loadDownloadConfig
-} from "./download-config.js?v=20261109-1";
+} from "./download-config.js?v=20261118-1";
 import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
 import {
   intlLocale,
@@ -37,7 +36,7 @@ const elements = {
   downloadAccelerated: document.querySelector("#download-accelerated"),
   downloadDirect: document.querySelector("#download-direct"),
   downloadLanzou: document.querySelector("#download-lanzou"),
-  downloadCdn: document.querySelector("#download-cdn"),
+  lanzouNotice: document.querySelector("#lanzou-closed-notice"),
   recentReleases: document.querySelector("#recent-releases"),
   homepageWebsiteUpdates: document.querySelector("#homepage-website-updates"),
   repoLinks: [
@@ -88,7 +87,6 @@ function applyDownloadLinks(url) {
   currentDownloadUrl = target;
   elements.downloadAccelerated.href = accelerateDownloadUrl(target, acceleratorPrefix);
   elements.downloadDirect.href = target;
-  applyCdnLink();
 }
 
 async function refreshDownloadAccelerator() {
@@ -115,11 +113,32 @@ async function loadDomesticMirrorLink({ preferLive = false } = {}) {
     const mirror = await loadDomesticMirror(siteBaseUrl(), { preferLive });
     if (!mirror) {
       elements.downloadLanzou.hidden = true;
+      if (elements.lanzouNotice) elements.lanzouNotice.hidden = true;
       lastDomesticMirrorKey = "";
       return;
     }
     // 内容没变就不动 DOM，避免每 30 秒重建按钮、重复绑定复制事件
     const mirrorLabel = isEnglish() ? "Lanzou Cloud mirror" : mirror.label;
+    if (mirror.closed) {
+      const key = ["closed", mirrorLabel, isEnglish()].join("|");
+      if (key === lastDomesticMirrorKey) return;
+      lastDomesticMirrorKey = key;
+      elements.downloadLanzou.removeAttribute("target");
+      elements.downloadLanzou.href = new URL(
+        isEnglish() ? "en/lanzou-notice.html" : "lanzou-notice.html",
+        siteBaseUrl()
+      ).href;
+      elements.downloadLanzou.textContent = isEnglish()
+        ? `${mirrorLabel} · Closed`
+        : `${mirrorLabel} · 已关闭`;
+      elements.downloadLanzou.hidden = false;
+      if (elements.lanzouNotice) {
+        elements.lanzouNotice.textContent = isEnglish() ? mirror.noticeEn : mirror.notice;
+        elements.lanzouNotice.hidden = false;
+      }
+      return;
+    }
+    if (elements.lanzouNotice) elements.lanzouNotice.hidden = true;
     const key = [mirror.url, mirror.password, mirrorLabel].join("|");
     if (key === lastDomesticMirrorKey) return;
     lastDomesticMirrorKey = key;
@@ -134,60 +153,6 @@ async function loadDomesticMirrorLink({ preferLive = false } = {}) {
   } finally {
     lastDomesticMirrorAt = Date.now();
     domesticMirrorInFlight = false;
-  }
-}
-
-let cdnMirror = null;
-let cdnMirrorInFlight = false;
-let lastCdnMirrorKey = null;
-let lastLiveCdnAt = 0;
-
-function applyCdnLink() {
-  if (!elements.downloadCdn) return;
-  const label = isEnglish() ? "Tencent Cloud CDN" : (cdnMirror?.label || "腾讯云CDN加速");
-  if (!cdnMirror) {
-    // CDN 尚未开放：按钮常驻，点击展示提示页
-    elements.downloadCdn.href = "./cdn-notice.html";
-    elements.downloadCdn.textContent = label;
-    elements.downloadCdn.hidden = false;
-    return;
-  }
-  const href = cdnMirror.mode === "prefix" && currentDownloadUrl
-    ? `${cdnMirror.url}${currentDownloadUrl}`
-    : cdnMirror.url;
-  elements.downloadCdn.href = href;
-  elements.downloadCdn.textContent = cdnMirror.password
-    ? (isEnglish()
-        ? `${label} · Password ${cdnMirror.password}`
-        : `${label} · 密码 ${cdnMirror.password}`)
-    : label;
-  elements.downloadCdn.hidden = false;
-  if (cdnMirror.password) {
-    bindDomesticMirrorCopy(elements.downloadCdn, cdnMirror);
-  } else if (cdnMirror.mode !== "prefix") {
-    elements.downloadCdn.target = "_blank";
-    elements.downloadCdn.rel = "noopener noreferrer";
-  }
-}
-
-async function loadCdnMirrorLink({ preferLive = false } = {}) {
-  if (cdnMirrorInFlight || !elements.downloadCdn) return;
-  if (preferLive) {
-    if (Date.now() - lastLiveCdnAt < 10_000) preferLive = false;
-    else lastLiveCdnAt = Date.now();
-  }
-  cdnMirrorInFlight = true;
-  try {
-    const mirror = await loadCdnMirror(siteBaseUrl(), { preferLive });
-    cdnMirror = mirror;
-    const key = mirror
-      ? [mirror.enabled === true, mirror.url, mirror.mode, mirror.password, isEnglish()].join("|")
-      : "";
-    if (key === lastCdnMirrorKey) return;
-    lastCdnMirrorKey = key;
-    applyCdnLink();
-  } finally {
-    cdnMirrorInFlight = false;
   }
 }
 
@@ -437,8 +402,7 @@ async function refreshPublicData() {
       loadRecentReleases(),
       loadHomepageWebsiteUpdates(),
       refreshDownloadAccelerator(),
-      loadDomesticMirrorLink(),
-      loadCdnMirrorLink()
+      loadDomesticMirrorLink()
     ]);
     lastRefreshAt = Date.now();
   } finally {
@@ -453,23 +417,19 @@ setInterval(refreshPublicData, AUTO_REFRESH_MS);
 setInterval(() => {
   if (document.visibilityState === "visible") {
     loadDomesticMirrorLink();
-    loadCdnMirrorLink();
   }
 }, MIRROR_REFRESH_MS);
 window.addEventListener("online", () => {
   loadDomesticMirrorLink({ preferLive: true });
-  loadCdnMirrorLink({ preferLive: true });
 });
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState !== "visible") return;
   // 回到页面时直接问 GitHub API，拿到的是刚提交的最新值
   loadDomesticMirrorLink({ preferLive: true });
-  loadCdnMirrorLink({ preferLive: true });
   if (Date.now() - lastRefreshAt >= AUTO_REFRESH_MS) refreshPublicData();
 });
 window.addEventListener("focus", () => {
   loadDomesticMirrorLink({ preferLive: true });
-  loadCdnMirrorLink({ preferLive: true });
 });
 
 let scrollFrame = 0;

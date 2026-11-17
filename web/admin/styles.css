@@ -74,7 +74,8 @@ label {
   color: var(--muted);
 }
 
-input {
+input,
+textarea {
   width: 100%;
   padding: 13px 14px;
   color: #fff;
@@ -82,10 +83,22 @@ input {
   border-radius: 3px;
   outline: none;
   background: #090b0a;
+  font: inherit;
 }
 
-input:focus {
+textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+input:focus,
+textarea:focus {
   border-color: var(--acid);
+}
+
+input:disabled,
+textarea:disabled {
+  opacity: 0.45;
 }
 
 button,

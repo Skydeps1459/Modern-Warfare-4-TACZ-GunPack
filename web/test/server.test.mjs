@@ -10,8 +10,7 @@ import {
   readGunPackManifest,
   readWebsiteUpdates,
   sortReleasesByDate,
-  validateDomesticMirror,
-  validateCdnMirror
+  validateDomesticMirror
 } from "../server.mjs";
 import {
   downloadConfigFromSelection,
@@ -202,56 +201,27 @@ test("validates domestic Lanzou mirror updates", () => {
   }), /蓝奏云/);
 });
 
-test("validates Tencent Cloud CDN mirror updates", () => {
-  const direct = validateCdnMirror({
-    enabled: true,
-    label: "腾讯云CDN加速",
-    mode: "direct",
-    url: "https://mw4-download.example.com/Modern.Warfare.4.zip",
-    password: ""
+test("validates closed domestic mirror state", () => {
+  const closed = validateDomesticMirror({
+    closed: true,
+    label: "蓝奏云国内分流",
+    notice: "由于枪包文件即将达到蓝奏云单次传输上限，为了玩家下载体验，蓝奏云分流现正式关闭，未来枪包分流下载将暂时迁移至移动云盘",
+    noticeEn: "The Lanzou mirror is now officially closed."
   });
-  assert.equal(direct.enabled, true);
-  assert.equal(direct.mode, "direct");
-  assert.equal(direct.url, "https://mw4-download.example.com/Modern.Warfare.4.zip");
+  assert.equal(closed.closed, true);
+  assert.equal(closed.url, undefined);
+  assert.match(closed.notice, /上限/);
 
-  const prefix = validateCdnMirror({
-    enabled: true,
-    label: "腾讯云CDN前缀",
-    mode: "prefix",
-    url: "https://cdn.example.com/",
-    password: "abcd"
-  });
-  assert.equal(prefix.mode, "prefix");
-  assert.equal(prefix.password, "abcd");
+  // closed state does not require a link
+  const closedNoNotice = validateDomesticMirror({ closed: true, label: "蓝奏云国内分流" });
+  assert.equal(closedNoNotice.closed, true);
 
-  // prefix mode requires trailing slash
-  assert.throws(() => validateCdnMirror({
-    enabled: true,
-    label: "bad prefix",
-    mode: "prefix",
-    url: "https://cdn.example.com/gh",
-    password: ""
-  }), /\/ 结尾/);
-
-  // http is rejected
-  assert.throws(() => validateCdnMirror({
-    enabled: true,
-    label: "bad scheme",
-    mode: "direct",
-    url: "http://cdn.example.com/file.zip",
-    password: ""
-  }), /HTTPS/);
-
-  // disabled mirrors may keep an empty url
-  const disabled = validateCdnMirror({
-    enabled: false,
-    label: "腾讯云CDN加速",
-    mode: "direct",
-    url: "",
-    password: ""
-  });
-  assert.equal(disabled.enabled, false);
-  assert.equal(disabled.url, "");
+  // overly long notices are rejected
+  assert.throws(() => validateDomesticMirror({
+    closed: true,
+    label: "蓝奏云国内分流",
+    notice: "长".repeat(301)
+  }), /过长/);
 });
 
 test("serves health and local gun pack data", async (t) => {
@@ -337,13 +307,24 @@ test("serves health and local gun pack data", async (t) => {
   const domesticMirrorResponse = await fetch(`${baseUrl}/api/domestic-mirror`);
   assert.equal(domesticMirrorResponse.status, 200);
   const domesticMirror = await domesticMirrorResponse.json();
-  assert.match(domesticMirror.url, /^https:\/\/[^/]*lanzou/i);
-  assert.ok(domesticMirror.password.length > 0);
+  if (domesticMirror.closed === true) {
+    assert.match(domesticMirror.notice, /上限/);
+    assert.ok(domesticMirror.noticeEn.length > 0);
+  } else {
+    assert.match(domesticMirror.url, /^https:\/\/[^/]*lanzou/i);
+    assert.ok(domesticMirror.password.length > 0);
+  }
 
-  const cdnMirrorResponse = await fetch(`${baseUrl}/api/cdn-mirror`);
-  assert.equal(cdnMirrorResponse.status, 200);
-  const cdnMirror = await cdnMirrorResponse.json();
-  assert.equal(typeof cdnMirror.enabled, "boolean");
+  const lanzouNoticeResponse = await fetch(`${baseUrl}/lanzou-notice.html`);
+  assert.equal(lanzouNoticeResponse.status, 200);
+  assert.match(await lanzouNoticeResponse.text(), /蓝奏云分流已关闭/);
+
+  const englishLanzouNoticeResponse = await fetch(`${baseUrl}/en/lanzou-notice.html`);
+  assert.equal(englishLanzouNoticeResponse.status, 200);
+  assert.match(await englishLanzouNoticeResponse.text(), /Lanzou Cloud mirror closed/);
+
+  const removedCdnMirrorResponse = await fetch(`${baseUrl}/api/cdn-mirror`);
+  assert.equal(removedCdnMirrorResponse.status, 404);
 
   const removedCdnNoticeResponse = await fetch(`${baseUrl}/cdn-notice.html`);
   assert.equal(removedCdnNoticeResponse.status, 404);
