@@ -1,6 +1,20 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.53",
+      "title": "部署指南新增前置模组步骤",
+      "publishedAt": "2026-11-21T12:30:00Z",
+      "summary": "官网部署指南由三步升级为四步：新增前置步骤“安装前置模组”，提示客户端需先安装最新版 TACZ: Arcana 模组，枪包依赖其运行。",
+      "changes": [
+        "中英文首页“三步部署”更名为“四步部署”。",
+        "新增第 01 步：客户端需先安装最新版 TACZ: Arcana 模组。",
+        "原获取发布包/放入 TACZ/重新载入顺延为 02/03/04 步。",
+        "步骤网格调整为桌面四列、平板两列、手机单列。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.52",
       "title": "特别感谢新增两位伙伴",
       "publishedAt": "2026-11-21T07:18:00Z",
@@ -335,21 +349,6 @@
       ],
       "bugFixes": [
         "修复加速站点自动匹配到故障节点后出现连接重置的问题。"
-      ],
-      "releaseUrl": null
-    },
-    {
-      "id": "website-v1.0.24",
-      "title": "修复加速下载节点重置",
-      "publishedAt": "2026-10-25T15:13:27Z",
-      "summary": "加速下载改用已验证可用的 gh-proxy.com 节点，避开会自动匹配到故障节点的代理选择。",
-      "changes": [
-        "主页、枪包更新日志和下载 API 统一使用 gh-proxy.com。",
-        "已验证 Release zip 返回 HTTP 206 并成功读取分段内容。",
-        "GitHub Release 原链继续保留为备用下载入口。"
-      ],
-      "bugFixes": [
-        "修复自动匹配到 gh.my-website.ccwu.cc 后提示连接已重置的问题。"
       ],
       "releaseUrl": null
     },
