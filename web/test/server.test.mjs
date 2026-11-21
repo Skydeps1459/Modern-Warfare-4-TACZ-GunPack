@@ -332,7 +332,8 @@ test("serves health and local gun pack data", async (t) => {
   assert.equal(englishPageResponse.status, 200);
   const englishPageHtml = await englishPageResponse.text();
   assert.match(englishPageHtml, /<html lang="en"/);
-  assert.match(englishPageHtml, /Three-step deployment/);
+  assert.match(englishPageHtml, /Four-step deployment/);
+  assert.match(englishPageHtml, /TACZ: Arcana/);
 
   const englishChangelogResponse = await fetch(`${baseUrl}/en/changelog.html`);
   assert.equal(englishChangelogResponse.status, 200);
