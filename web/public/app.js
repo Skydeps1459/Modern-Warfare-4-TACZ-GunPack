@@ -12,8 +12,9 @@ import {
   accelerateDownloadUrl,
   loadDomesticMirror,
   loadDownloadConfig,
-  loadMobileMirror
-} from "./download-config.js?v=20261118-2";
+  loadMobileMirror,
+  loadQuarkMirror
+} from "./download-config.js?v=20261121-1";
 import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
 import {
   intlLocale,
@@ -39,6 +40,7 @@ const elements = {
   downloadLanzou: document.querySelector("#download-lanzou"),
   lanzouNotice: document.querySelector("#lanzou-closed-notice"),
   downloadMobile: document.querySelector("#download-mobile"),
+  downloadQuark: document.querySelector("#download-quark"),
   recentReleases: document.querySelector("#recent-releases"),
   homepageWebsiteUpdates: document.querySelector("#homepage-website-updates"),
   repoLinks: [
@@ -192,6 +194,43 @@ async function loadMobileMirrorLink({ preferLive = false } = {}) {
     bindDomesticMirrorCopy(elements.downloadMobile, mirror);
   } finally {
     mobileMirrorInFlight = false;
+  }
+}
+
+let quarkMirrorInFlight = false;
+let lastQuarkMirrorKey = null;
+let lastLiveQuarkAt = 0;
+
+async function loadQuarkMirrorLink({ preferLive = false } = {}) {
+  if (quarkMirrorInFlight || !elements.downloadQuark) return;
+  // 连续切窗口时别把 GitHub API 的 60 次/小时额度打光
+  if (preferLive) {
+    if (Date.now() - lastLiveQuarkAt < 10_000) preferLive = false;
+    else lastLiveQuarkAt = Date.now();
+  }
+  quarkMirrorInFlight = true;
+  try {
+    const mirror = await loadQuarkMirror(siteBaseUrl(), { preferLive });
+    if (!mirror) {
+      elements.downloadQuark.hidden = true;
+      lastQuarkMirrorKey = "";
+      return;
+    }
+    // 内容没变就不动 DOM，避免每 30 秒重建按钮、重复绑定复制事件
+    const mirrorLabel = isEnglish() ? "Quark Cloud mirror" : mirror.label;
+    const key = [mirror.url, mirror.password, mirrorLabel].join("|");
+    if (key === lastQuarkMirrorKey) return;
+    lastQuarkMirrorKey = key;
+    elements.downloadQuark.href = mirror.url;
+    elements.downloadQuark.textContent = mirror.password
+      ? (isEnglish()
+          ? `${mirrorLabel} · Password ${mirror.password}`
+          : `${mirrorLabel} · 密码 ${mirror.password}`)
+      : mirrorLabel;
+    elements.downloadQuark.hidden = false;
+    bindDomesticMirrorCopy(elements.downloadQuark, mirror);
+  } finally {
+    quarkMirrorInFlight = false;
   }
 }
 
@@ -442,7 +481,8 @@ async function refreshPublicData() {
       loadHomepageWebsiteUpdates(),
       refreshDownloadAccelerator(),
       loadDomesticMirrorLink(),
-      loadMobileMirrorLink()
+      loadMobileMirrorLink(),
+      loadQuarkMirrorLink()
     ]);
     lastRefreshAt = Date.now();
   } finally {
@@ -458,22 +498,26 @@ setInterval(() => {
   if (document.visibilityState === "visible") {
     loadDomesticMirrorLink();
     loadMobileMirrorLink();
+    loadQuarkMirrorLink();
   }
 }, MIRROR_REFRESH_MS);
 window.addEventListener("online", () => {
   loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
+  loadQuarkMirrorLink({ preferLive: true });
 });
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState !== "visible") return;
   // 回到页面时直接问 GitHub API，拿到的是刚提交的最新值
   loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
+  loadQuarkMirrorLink({ preferLive: true });
   if (Date.now() - lastRefreshAt >= AUTO_REFRESH_MS) refreshPublicData();
 });
 window.addEventListener("focus", () => {
   loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
+  loadQuarkMirrorLink({ preferLive: true });
 });
 
 let scrollFrame = 0;

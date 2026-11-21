@@ -13,6 +13,11 @@ const mobileLabelInput = document.querySelector("#mobile-label");
 const mobileUrlInput = document.querySelector("#mobile-url");
 const mobilePasswordInput = document.querySelector("#mobile-password");
 const mobileSaveStatus = document.querySelector("#mobile-save-status");
+const quarkForm = document.querySelector("#quark-form");
+const quarkLabelInput = document.querySelector("#quark-label");
+const quarkUrlInput = document.querySelector("#quark-url");
+const quarkPasswordInput = document.querySelector("#quark-password");
+const quarkSaveStatus = document.querySelector("#quark-save-status");
 
 let csrfToken = "";
 
@@ -63,7 +68,12 @@ async function loadSession() {
   syncClosedState();
   statePanel.classList.add("hidden");
   form.classList.remove("hidden");
+  const quark = payload.quarkMirror || {};
+  quarkLabelInput.value = quark.label || "夸克网盘分流";
+  quarkUrlInput.value = quark.url || "";
+  quarkPasswordInput.value = quark.password || "";
   mobileForm.classList.remove("hidden");
+  quarkForm.classList.remove("hidden");
 }
 
 closedInput.addEventListener("change", syncClosedState);
@@ -140,6 +150,37 @@ mobileForm.addEventListener("submit", async (event) => {
     ? "已提交，GitHub Pages 将自动更新。"
     : "已保存（链接为空，网页暂不显示该按钮）。";
   mobileSaveStatus.className = "success";
+});
+
+quarkForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  quarkSaveStatus.textContent = "正在提交到 GitHub…";
+  quarkSaveStatus.className = "";
+
+  const response = await fetch("/api/admin/quark-mirror", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRF-Token": csrfToken
+    },
+    body: JSON.stringify({
+      label: quarkLabelInput.value.trim(),
+      url: quarkUrlInput.value.trim(),
+      password: quarkPasswordInput.value.trim()
+    })
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    quarkSaveStatus.textContent = payload.error || `保存失败（HTTP ${response.status}）`;
+    quarkSaveStatus.className = "error";
+    return;
+  }
+
+  quarkSaveStatus.textContent = quarkUrlInput.value.trim()
+    ? "已提交，GitHub Pages 将自动更新。"
+    : "已保存（链接为空，网页暂不显示该按钮）。";
+  quarkSaveStatus.className = "success";
 });
 
 loadSession().catch((error) => {

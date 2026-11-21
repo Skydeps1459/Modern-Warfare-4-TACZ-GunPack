@@ -5,6 +5,9 @@ const DOMESTIC_MIRROR_API_URL = "https://api.github.com/repos/Skydeps1459/Modern
 const MOBILE_MIRROR_RAW_URL = "https://raw.githubusercontent.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/main/web/mobile-mirror.json";
 const MOBILE_MIRROR_CDN_URL = "https://cdn.jsdelivr.net/gh/Skydeps1459/Modern-Warfare-4-TACZ-GunPack@main/web/mobile-mirror.json";
 const MOBILE_MIRROR_API_URL = "https://api.github.com/repos/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/contents/web/mobile-mirror.json?ref=main";
+const QUARK_MIRROR_RAW_URL = "https://raw.githubusercontent.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/main/web/quark-mirror.json";
+const QUARK_MIRROR_CDN_URL = "https://cdn.jsdelivr.net/gh/Skydeps1459/Modern-Warfare-4-TACZ-GunPack@main/web/quark-mirror.json";
+const QUARK_MIRROR_API_URL = "https://api.github.com/repos/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/contents/web/quark-mirror.json?ref=main";
 const LANZOU_CLOSED_NOTICE = "由于枪包文件即将达到蓝奏云单次传输上限，为了玩家下载体验，蓝奏云分流现正式关闭，未来枪包分流下载将暂时迁移至移动云盘";
 const LANZOU_CLOSED_NOTICE_EN = "The gun pack file is approaching Lanzou Cloud's single-transfer size limit. To keep downloads smooth for players, the Lanzou mirror is now officially closed. Mirror downloads will temporarily move to China Mobile Cloud Drive.";
 
@@ -184,6 +187,67 @@ export async function loadMobileMirror(
       };
     } catch (error) {
       console.info(`Mobile mirror source unavailable: ${source.url.hostname}`, error.message);
+    }
+  }
+  return null;
+}
+
+export async function loadQuarkMirror(
+  baseUrl = new URL("./", document.baseURI),
+  { preferLive = false } = {}
+) {
+  const siteBase = typeof baseUrl === "string"
+    ? new URL(baseUrl, document.baseURI)
+    : baseUrl;
+  const endpoint = new URL("api/quark-mirror.json", siteBase);
+  endpoint.searchParams.set("v", Date.now().toString());
+  const liveEndpoint = new URL(QUARK_MIRROR_RAW_URL);
+  liveEndpoint.searchParams.set("v", Date.now().toString());
+  const cdnEndpoint = new URL(QUARK_MIRROR_CDN_URL);
+  cdnEndpoint.searchParams.set("v", Date.now().toString());
+  const apiEndpoint = new URL(QUARK_MIRROR_API_URL);
+  apiEndpoint.searchParams.set("v", Date.now().toString());
+
+  // 与蓝奏云/移动云盘分流相同的多源回退顺序：
+  //   preferLive 时优先 GitHub Contents API（静态 Pages 下唯一实时源）
+  const sources = preferLive
+    ? [
+        { url: new URL("api/quark-mirror", siteBase) },
+        { url: apiEndpoint, githubContents: true },
+        { url: endpoint },
+        { url: liveEndpoint },
+        { url: cdnEndpoint }
+      ]
+    : [
+        { url: new URL("api/quark-mirror", siteBase) },
+        { url: endpoint },
+        { url: liveEndpoint },
+        { url: apiEndpoint, githubContents: true },
+        { url: cdnEndpoint }
+      ];
+  for (const source of sources) {
+    try {
+      const response = await fetch(source.url, {
+        headers: { Accept: "application/json" },
+        cache: "no-store"
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      let mirror = await response.json();
+      if (source.githubContents) {
+        mirror = JSON.parse(decodeBase64Utf8(mirror.content));
+      }
+      // 链接未填写：分流尚未开放，网页不显示按钮
+      if (!mirror.url) return null;
+      const url = new URL(mirror.url);
+      if (url.protocol !== "https:") throw new Error("Invalid URL");
+      return {
+        label: String(mirror.label || "夸克网盘分流"),
+        url: url.href,
+        password: String(mirror.password || ""),
+        source: source.url.hostname
+      };
+    } catch (error) {
+      console.info(`Quark mirror source unavailable: ${source.url.hostname}`, error.message);
     }
   }
   return null;

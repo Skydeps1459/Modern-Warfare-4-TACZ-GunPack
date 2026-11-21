@@ -11,6 +11,7 @@ const publicDir = join(serverDir, "public");
 const websiteUpdatesPath = join(serverDir, "website-updates.json");
 const domesticMirrorPath = join(serverDir, "domestic-mirror.json");
 const mobileMirrorPath = join(serverDir, "mobile-mirror.json");
+const quarkMirrorPath = join(serverDir, "quark-mirror.json");
 const adminDir = join(serverDir, "admin");
 const gunpackRoot = join(projectRoot, "assets", "mw4");
 const gunIndexRoot = join(projectRoot, "data", "mw4", "index", "guns");
@@ -38,6 +39,11 @@ const ALLOWED_MIRROR_HOSTS = (process.env.ALLOWED_MIRROR_HOSTS
   .filter(Boolean);
 const ALLOWED_MOBILE_MIRROR_HOSTS = (process.env.ALLOWED_MOBILE_MIRROR_HOSTS
   || "yun.139.com,mcloud.139.com,caiyun.139.com")
+  .split(",")
+  .map((host) => host.trim().toLowerCase())
+  .filter(Boolean);
+const ALLOWED_QUARK_MIRROR_HOSTS = (process.env.ALLOWED_QUARK_MIRROR_HOSTS
+  || "pan.quark.cn")
   .split(",")
   .map((host) => host.trim().toLowerCase())
   .filter(Boolean);
@@ -258,6 +264,39 @@ export function validateMobileMirror(input, allowedHosts = ALLOWED_MOBILE_MIRROR
   const host = url.hostname.toLowerCase();
   if (!allowedHosts.some((allowed) => host === allowed || host.endsWith(`.${allowed}`))) {
     throw new Error("链接域名不在允许的移动云盘列表中。");
+  }
+
+  return { label, url: url.href, password };
+}
+
+export function validateQuarkMirror(input, allowedHosts = ALLOWED_QUARK_MIRROR_HOSTS) {
+  const label = String(input?.label || "夸克网盘分流").trim();
+  const password = String(input?.password || "").trim();
+  if (!label || label.length > 60) {
+    throw new Error("分流名称必须为 1-60 个字符。");
+  }
+  if (password.length > 32) {
+    throw new Error("分享密码不能超过 32 个字符。");
+  }
+
+  const rawUrl = String(input?.url || "").trim();
+  if (!rawUrl) {
+    // 允许暂时不填链接：网页暂不显示该分流按钮
+    return { label, url: "", password };
+  }
+
+  let url;
+  try {
+    url = new URL(rawUrl);
+  } catch {
+    throw new Error("请输入有效的夸克网盘链接。");
+  }
+  if (url.protocol !== "https:") {
+    throw new Error("夸克网盘分流链接必须使用 HTTPS。");
+  }
+  const host = url.hostname.toLowerCase();
+  if (!allowedHosts.some((allowed) => host === allowed || host.endsWith(`.${allowed}`))) {
+    throw new Error("链接域名不在允许的夸克网盘列表中。");
   }
 
   return { label, url: url.href, password };
@@ -675,13 +714,24 @@ async function writeMobileMirrorToGitHub(accessToken, mirror) {
   );
 }
 
+async function writeQuarkMirrorToGitHub(accessToken, mirror) {
+  return writeMirrorJsonToGitHub(
+    accessToken,
+    "web/quark-mirror.json",
+    "Update Quark Cloud mirror",
+    mirror
+  );
+}
+
 async function handleRequest(request, response) {
   applySecurityHeaders(response);
   const method = request.method || "GET";
   const origin = `http://${request.headers.host || "localhost"}`;
   const url = new URL(request.url || "/", origin);
   const adminPost = method === "POST"
-    && (url.pathname === "/api/admin/domestic-mirror" || url.pathname === "/api/admin/mobile-mirror");
+    && (url.pathname === "/api/admin/domestic-mirror"
+      || url.pathname === "/api/admin/mobile-mirror"
+      || url.pathname === "/api/admin/quark-mirror");
   if (!["GET", "HEAD"].includes(method) && !adminPost) {
     sendJson(response, 405, { error: "Method not allowed" });
     return;
@@ -786,6 +836,11 @@ async function handleRequest(request, response) {
         label: "移动云盘分流",
         url: "",
         password: ""
+      })),
+      quarkMirror: await readJson(quarkMirrorPath).catch(() => ({
+        label: "夸克网盘分流",
+        url: "",
+        password: ""
       }))
     });
     return;
@@ -804,7 +859,11 @@ async function handleRequest(request, response) {
 
     try {
       const body = JSON.parse(await readRequestBody(request));
-      if (url.pathname === "/api/admin/mobile-mirror") {
+      if (url.pathname === "/api/admin/quark-mirror") {
+        const mirror = validateQuarkMirror(body);
+        const commit = await writeQuarkMirrorToGitHub(adminSession.accessToken, mirror);
+        sendJson(response, 200, { ok: true, mirror, commit });
+      } else if (url.pathname === "/api/admin/mobile-mirror") {
         const mirror = validateMobileMirror(body);
         const commit = await writeMobileMirrorToGitHub(adminSession.accessToken, mirror);
         sendJson(response, 200, { ok: true, mirror, commit });
@@ -890,6 +949,11 @@ async function handleRequest(request, response) {
 
   if (url.pathname === "/api/mobile-mirror") {
     sendJson(response, 200, await readJson(mobileMirrorPath));
+    return;
+  }
+
+  if (url.pathname === "/api/quark-mirror") {
+    sendJson(response, 200, await readJson(quarkMirrorPath));
     return;
   }
 

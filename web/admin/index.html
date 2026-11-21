@@ -72,6 +72,26 @@
         <button type="submit">保存并更新网页</button>
         <p id="mobile-save-status" role="status"></p>
       </form>
+
+      <form id="quark-form" class="panel hidden">
+        <div class="account-row">
+          <span>夸克网盘分流</span>
+        </div>
+        <label>
+          分流名称
+          <input id="quark-label" maxlength="60" required>
+        </label>
+        <label>
+          夸克网盘链接（留空则网页暂不显示该按钮）
+          <input id="quark-url" type="url" placeholder="https://pan.quark.cn/s/...">
+        </label>
+        <label>
+          分享密码（可留空）
+          <input id="quark-password" maxlength="32">
+        </label>
+        <button type="submit">保存并更新网页</button>
+        <p id="quark-save-status" role="status"></p>
+      </form>
     </main>
     <script src="/admin/app.js" type="module"></script>
   </body>

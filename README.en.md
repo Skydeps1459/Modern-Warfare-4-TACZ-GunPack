@@ -66,12 +66,12 @@ GitHub Pages build. It provides:
   website update.
 - Five-minute data refreshes and scheduled GitHub Pages rebuilds.
 - Automatically selected stable accelerator downloads with direct GitHub links.
-- A Lanzou Cloud domestic mirror with its sharing password.
+- China Mobile Cloud and Quark Cloud domestic mirrors with sharing passwords; the Lanzou mirror is closed and shows a notice only.
 - Health checks, automated tests, and a Dockerfile.
 
 ### Domestic mirror admin
 
-The Node.js backend exposes a Lanzou mirror editor at `/admin/`. It uses GitHub
+The Node.js backend exposes mirror editors (Lanzou / China Mobile Cloud / Quark) at `/admin/`. It uses GitHub
 OAuth and accepts only the repository owner's immutable GitHub user ID
 `317516594`. Saves are committed to `web/domestic-mirror.json` using the
 owner's own `public_repo` permission; no repository write secret is exposed to

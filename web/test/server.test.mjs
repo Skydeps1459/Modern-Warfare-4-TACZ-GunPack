@@ -11,7 +11,8 @@ import {
   readWebsiteUpdates,
   sortReleasesByDate,
   validateDomesticMirror,
-  validateMobileMirror
+  validateMobileMirror,
+  validateQuarkMirror
 } from "../server.mjs";
 import {
   downloadConfigFromSelection,
@@ -273,6 +274,31 @@ test("validates China Mobile Cloud mirror updates", () => {
   }), /HTTPS/);
 });
 
+test("validates Quark Cloud mirror updates", () => {
+  const mirror = validateQuarkMirror({
+    label: "夸克网盘分流",
+    url: "https://pan.quark.cn/s/0fe1d14d35e0",
+    password: "q88k"
+  });
+  assert.equal(mirror.url, "https://pan.quark.cn/s/0fe1d14d35e0");
+  assert.equal(mirror.password, "q88k");
+
+  const empty = validateQuarkMirror({ label: "夸克网盘分流", url: "", password: "" });
+  assert.equal(empty.url, "");
+
+  assert.throws(() => validateQuarkMirror({
+    label: "bad",
+    url: "https://example.com/file",
+    password: ""
+  }), /夸克网盘/);
+
+  assert.throws(() => validateQuarkMirror({
+    label: "bad scheme",
+    url: "http://pan.quark.cn/s/abc",
+    password: ""
+  }), /HTTPS/);
+});
+
 test("serves health and local gun pack data", async (t) => {
   const server = createAppServer();
   server.listen(0, "127.0.0.1");
@@ -369,6 +395,11 @@ test("serves health and local gun pack data", async (t) => {
   const mobileMirror = await mobileMirrorResponse.json();
   assert.equal(typeof mobileMirror.url, "string");
   assert.equal(typeof mobileMirror.label, "string");
+
+  const quarkMirrorResponse = await fetch(`${baseUrl}/api/quark-mirror`);
+  assert.equal(quarkMirrorResponse.status, 200);
+  const quarkMirror = await quarkMirrorResponse.json();
+  assert.ok(quarkMirror.url.startsWith("https://pan.quark.cn/"));
   if (mobileMirror.url) {
     assert.match(mobileMirror.url, /^https:\/\/[^/]*139\.com/i);
   }
