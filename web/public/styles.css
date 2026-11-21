@@ -493,6 +493,59 @@ html[lang="en"] .hero h1 span {
   line-height: 1.7;
 }
 
+/* 特别感谢展示栏（军械库前） */
+.section.thanks {
+  padding-bottom: clamp(24px, 4vw, 48px);
+}
+
+.thanks-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 48px;
+  align-items: flex-start;
+}
+
+.thanks-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 160px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.thanks-avatar {
+  width: 112px;
+  height: 112px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--panel-2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.thanks-name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  word-break: break-word;
+  transition: color 0.2s ease;
+}
+
+.thanks-card:hover .thanks-avatar,
+.thanks-card:focus-visible .thanks-avatar {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 14px 36px rgba(199, 243, 107, 0.22);
+}
+
+.thanks-card:hover .thanks-name,
+.thanks-card:focus-visible .thanks-name {
+  color: var(--acid-strong);
+}
+
 .gun-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
