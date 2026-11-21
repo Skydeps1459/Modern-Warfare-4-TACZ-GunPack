@@ -1,6 +1,19 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.52",
+      "title": "特别感谢新增两位伙伴",
+      "publishedAt": "2026-11-21T07:18:00Z",
+      "summary": "特别感谢展示栏新增两位致谢对象：杜豫isih、墨水染黑纸，头像与昵称取自 B 站并本地化存储，点击可跳转对应 B 站主页。",
+      "changes": [
+        "特别感谢栏新增 杜豫isih（space.bilibili.com/107774789）。",
+        "特别感谢栏新增 墨水染黑纸（space.bilibili.com/1994293754）。",
+        "中英文首页同步更新，现共展示三位致谢对象。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.51",
       "title": "新增特别感谢展示栏",
       "publishedAt": "2026-11-21T07:10:00Z",
