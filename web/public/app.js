@@ -37,7 +37,6 @@ const elements = {
   assetSize: document.querySelector("#asset-size"),
   downloadAccelerated: document.querySelector("#download-accelerated"),
   downloadDirect: document.querySelector("#download-direct"),
-  downloadLanzou: document.querySelector("#download-lanzou"),
   lanzouNotice: document.querySelector("#lanzou-closed-notice"),
   downloadMobile: document.querySelector("#download-mobile"),
   downloadQuark: document.querySelector("#download-quark"),
@@ -114,46 +113,19 @@ async function loadDomesticMirrorLink({ preferLive = false } = {}) {
   }
   domesticMirrorInFlight = true;
   try {
+    // 蓝奏云下载入口已移除：按钮不再渲染，仅在其关闭状态下展示提示信息
     const mirror = await loadDomesticMirror(siteBaseUrl(), { preferLive });
-    if (!mirror) {
-      elements.downloadLanzou.hidden = true;
+    if (!mirror || !mirror.closed || !elements.lanzouNotice) {
       if (elements.lanzouNotice) elements.lanzouNotice.hidden = true;
       lastDomesticMirrorKey = "";
       return;
     }
-    // 内容没变就不动 DOM，避免每 30 秒重建按钮、重复绑定复制事件
-    const mirrorLabel = isEnglish() ? "Lanzou Cloud mirror" : mirror.label;
-    if (mirror.closed) {
-      const key = ["closed", mirrorLabel, isEnglish()].join("|");
-      if (key === lastDomesticMirrorKey) return;
-      lastDomesticMirrorKey = key;
-      elements.downloadLanzou.removeAttribute("target");
-      elements.downloadLanzou.href = new URL(
-        isEnglish() ? "en/lanzou-notice.html" : "lanzou-notice.html",
-        siteBaseUrl()
-      ).href;
-      elements.downloadLanzou.textContent = isEnglish()
-        ? `${mirrorLabel} · Closed`
-        : `${mirrorLabel} · 已关闭`;
-      elements.downloadLanzou.hidden = false;
-      if (elements.lanzouNotice) {
-        elements.lanzouNotice.textContent = isEnglish() ? mirror.noticeEn : mirror.notice;
-        elements.lanzouNotice.hidden = false;
-      }
-      return;
-    }
-    if (elements.lanzouNotice) elements.lanzouNotice.hidden = true;
-    const key = [mirror.url, mirror.password, mirrorLabel].join("|");
+    const noticeText = isEnglish() ? mirror.noticeEn : mirror.notice;
+    const key = ["closed", noticeText].join("|");
     if (key === lastDomesticMirrorKey) return;
     lastDomesticMirrorKey = key;
-    elements.downloadLanzou.href = mirror.url;
-    elements.downloadLanzou.textContent = mirror.password
-      ? (isEnglish()
-          ? `${mirrorLabel} · Password ${mirror.password}`
-          : `${mirrorLabel} · 密码 ${mirror.password}`)
-      : mirrorLabel;
-    elements.downloadLanzou.hidden = false;
-    bindDomesticMirrorCopy(elements.downloadLanzou, mirror);
+    elements.lanzouNotice.textContent = noticeText;
+    elements.lanzouNotice.hidden = false;
   } finally {
     lastDomesticMirrorAt = Date.now();
     domesticMirrorInFlight = false;
