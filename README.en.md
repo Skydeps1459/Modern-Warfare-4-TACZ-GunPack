@@ -25,7 +25,7 @@ mirror, and keep the original GitHub Release URL as a fallback.
 - Bug fixes are accumulated and verified locally. A hotfix release is created
   only after at least **six independent verified bug fixes**.
 - Every hotfix Release page must list the bug fixes actually included in the
-  attached package using [`RELEASE_NOTES_TEMPLATE.md`](./RELEASE_NOTES_TEMPLATE.md).
+  attached package using [`release-notes/RELEASE_NOTES_TEMPLATE.md`](./release-notes/RELEASE_NOTES_TEMPLATE.md).
 - New guns are not uploaded or released unless explicitly requested.
 - Only the main pack participates in releases; the Lite pack remains frozen.
 

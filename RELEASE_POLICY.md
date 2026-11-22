@@ -24,8 +24,9 @@ This policy applies to every update pushed to
   enum values, or timestamps, and do not end lines with punctuation.
 - Do not list unverified fixes, future work, or fixes that are not present in the
   attached zip.
-- Use [`RELEASE_NOTES_TEMPLATE.md`](./RELEASE_NOTES_TEMPLATE.md) as the required
-  release description template.
+- Use [`release-notes/RELEASE_NOTES_TEMPLATE.md`](./release-notes/RELEASE_NOTES_TEMPLATE.md)
+  as the required release description template. All release notes and the
+  template live in the [`release-notes/`](./release-notes/) folder.
 - After uploading the replacement or new archive, read the Release page back and
   confirm that its bug list and attached file version match.
 

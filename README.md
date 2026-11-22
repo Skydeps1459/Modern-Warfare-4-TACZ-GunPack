@@ -23,7 +23,7 @@ Modern Warfare 4 是面向 Minecraft Forge 1.20.1 与 NeoForge 1.21.1 的 TACZ
 - Bug 修复先在本地累计；满 **6 个独立且已验证的 bug 修复**后，才发布末位 +1
   的 hotfix 版本。
 - 每个 hotfix 的 GitHub Release 页面必须同步列出本次实际包含的 bug 修复项，
-  统一使用 [`RELEASE_NOTES_TEMPLATE.md`](./RELEASE_NOTES_TEMPLATE.md)。
+  统一使用 [`release-notes/RELEASE_NOTES_TEMPLATE.md`](./release-notes/RELEASE_NOTES_TEMPLATE.md)。
 - 新增枪械默认不推送 GitHub、不更新 Pages、不发布 Release；只有用户明确要求
   上传或发布时才执行。
 - 发布只针对主包，Lite 保持冻结。
