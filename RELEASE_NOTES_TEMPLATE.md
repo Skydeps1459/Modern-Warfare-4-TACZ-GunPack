@@ -24,7 +24,7 @@
 
 ## 安装
 
-需要版本不低于 1.4.0 的 TACZ: Arcana MOD
+要求 1.4.0 及以上版本的 TACZ: Arcana 模组
 将 `Modern Warfare 4-<版本号>.zip` 放入 `.minecraft/tacz/`，不要解压
 更新已加载的枪包时请先完全退出游戏
 
