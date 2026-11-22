@@ -1,0 +1,691 @@
+{
+  "updates": [
+    {
+      "id": "website-v1.0.54",
+      "title": "移除蓝奏云下载按钮",
+      "publishedAt": "2026-11-22T12:50:00Z",
+      "summary": "中英文首页移除“蓝奏云国内分流”下载按钮及入口，下载区仅保留蓝奏云关闭提示信息；蓝奏云公告页仍可通过更新日志访问。",
+      "changes": [
+        "首页下载区删除蓝奏云分流按钮（含“已关闭”状态按钮）。",
+        "蓝奏云关闭提示文案保留原位展示，内容仍由后台分流配置驱动。",
+        "剩余分流入口：移动云盘、夸克网盘。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.53",
+      "title": "部署指南新增前置模组步骤",
+      "publishedAt": "2026-11-21T12:30:00Z",
+      "summary": "官网部署指南由三步升级为四步：新增前置步骤“安装前置模组”，提示客户端需先安装最新版 TACZ: Arcana 模组，枪包依赖其运行。",
+      "changes": [
+        "中英文首页“三步部署”更名为“四步部署”。",
+        "新增第 01 步：客户端需先安装最新版 TACZ: Arcana 模组。",
+        "原获取发布包/放入 TACZ/重新载入顺延为 02/03/04 步。",
+        "步骤网格调整为桌面四列、平板两列、手机单列。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.52",
+      "title": "特别感谢新增两位伙伴",
+      "publishedAt": "2026-11-21T07:18:00Z",
+      "summary": "特别感谢展示栏新增两位致谢对象：杜豫isih、墨水染黑纸，头像与昵称取自 B 站并本地化存储，点击可跳转对应 B 站主页。",
+      "changes": [
+        "特别感谢栏新增 杜豫isih（space.bilibili.com/107774789）。",
+        "特别感谢栏新增 墨水染黑纸（space.bilibili.com/1994293754）。",
+        "中英文首页同步更新，现共展示三位致谢对象。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.51",
+      "title": "新增特别感谢展示栏",
+      "publishedAt": "2026-11-21T07:10:00Z",
+      "summary": "主站军械库前新增“特别感谢”展示栏，展示特别感谢人员的圆形头像（白色边框）与名称，头像与名称一体可点击跳转至对应 B 站主页。首批致谢：CimaSilchin-神梦星辰。",
+      "changes": [
+        "中英文首页在军械库区块前新增“特别感谢”展示栏。",
+        "圆形头像 + 白色边框，名称展示于头像正下方，整体可点击跳转 B 站空间。",
+        "头像取自 B 站并本地化存储，避免外链防盗链与加载失败。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.50",
+      "title": "新增夸克网盘分流",
+      "publishedAt": "2026-11-21T03:20:00Z",
+      "summary": "国内分流下载新增夸克网盘渠道，功能与蓝奏云分流一致（分享链接+密码自动复制、后台可维护）；蓝奏云分流维持关闭公告状态，仅保留提示信息。",
+      "changes": [
+        "中英文首页新增“夸克网盘分流”下载按钮。",
+        "分流后台新增夸克网盘配置表单，支持随时修改分享链接与提取码。",
+        "夸克分流沿用多源实时刷新机制，后台修改后页面约半分钟内生效。",
+        "蓝奏云分流保持关闭状态，点击仅展示关闭公告。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.49",
+      "title": "页脚开发署名更新",
+      "publishedAt": "2026-11-17T22:58:41Z",
+      "summary": "全站页脚的开发署名由 Deepseek-V4.1-flash 更新为 Qwen4-Max-Preview，维护者仍为 Skydeps1459。",
+      "changes": [
+        "中英文首页、更新日志、网页更新、分流公告页与更新详情页模板的页脚署名统一更新"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.48",
+      "title": "新增移动云盘分流渠道（后台可维护）",
+      "publishedAt": "2026-11-17T22:51:42Z",
+      "summary": "承接蓝奏云分流关闭公告，官网新增移动云盘分流渠道：首页与更新日志在链接配置后显示下载按钮，后台分流管理可像蓝奏云一样随时更新链接与分享密码。移动云盘分享链接已配置，分流按钮现已显示。",
+      "changes": [
+        "新增移动云盘分流按钮（首页下载区与更新日志最新版本），链接未配置时自动隐藏",
+        "后台分流管理新增移动云盘表单：更新链接、分享密码，保存后自动提交 GitHub 并重建网页",
+        "移动云盘链接校验：仅允许 HTTPS 与移动云盘域名（yun.139.com 等，可通过环境变量扩展）",
+        "带密码的分享链接点击时自动复制密码，与蓝奏云体验一致",
+        "配置移动云盘分享链接，首页与更新日志的移动云盘分流按钮正式生效"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.47",
+      "title": "蓝奏云分流关闭，腾讯云CDN入口移除",
+      "publishedAt": "2026-11-17T22:43:57Z",
+      "summary": "蓝奏云分流正式关闭：枪包文件即将达到蓝奏云单次传输上限，分流下载未来将暂时迁移至移动云盘。首页与更新日志显示关闭公告，并提供双语公告页；腾讯云CDN入口及相关配置一并移除。",
+      "changes": [
+        "蓝奏云分流按钮改为「已关闭」状态，点击跳转关闭公告页，不再跳转分享链接",
+        "首页下载区与更新日志最新版本下方显示关闭公告文案",
+        "新增中英文蓝奏云分流关闭公告页（lanzou-notice.html）",
+        "移除腾讯云CDN入口、cdn-mirror.json 配置与后台 CDN 管理表单",
+        "后台分流管理支持关闭状态与中英文公告文案编辑"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.46",
+      "title": "枪包文档同步至 1.11.0",
+      "publishedAt": "2026-11-17T22:23:15Z",
+      "summary": "仓库自述文档同步到 1.11.0-Release：版本说明、枪械列表与弹药列表更新，并标注 1.20.1 与 1.21.1 双版本支持。",
+      "changes": [
+        "中英文 README 当前版本更新为 1.11.0-Release，枪械数更新为 15 把。",
+        "枪械列表补入 AK-74M 与 HK437，弹药列表补入 5.45×39mm。",
+        "标注枪包同时支持 Minecraft Forge 1.20.1 与 NeoForge 1.21.1。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.45",
+      "title": "移除腾讯云CDN下载入口",
+      "publishedAt": "2026-11-08T23:44:00Z",
+      "summary": "应运营要求，腾讯云 CDN 下载通道现已停用：中英文首页移除 CDN 下载按钮，停用提示页一并下线，其余下载通道不受影响。",
+      "changes": [
+        "中英文首页移除“腾讯云CDN加速”下载按钮。",
+        "删除 CDN 停用提示页（cdn-notice.html，中英两版）。",
+        "CDN 通道数据接口保留，待恢复开放时重新接入。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.44",
+      "title": "新增腾讯云CDN加速下载入口",
+      "publishedAt": "2026-11-08T20:48:00Z",
+      "summary": "首页下载区新增“腾讯云CDN加速”按钮，通道部署完成前点击进入提示页，开放后将自动接入直链或前缀拼接两种模式，并支持在分流后台直接维护。",
+      "changes": [
+        "中英文首页新增腾讯云CDN加速下载按钮。",
+        "CDN 未开放期间点击展示“敬请期待”提示页。",
+        "分流后台新增 CDN 配置表单，支持启用开关、直接链接与前缀拼接模式。",
+        "CDN 配置与蓝奏云分流共用多源实时刷新机制，后台修改后页面约半分钟内生效。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.43",
+      "title": "修复英文版大标题字形重叠",
+      "publishedAt": "2026-11-01T13:36:14Z",
+      "summary": "调整英文主页大标题的字号、字距和行距，避免粗体字母及描边在桌面和移动端相互重叠。",
+      "changes": [
+        "英文标题改用独立的大字号与字距规则。",
+        "增加英文标题行距并限制最大字号。",
+        "移动端继续保持无描边渲染。"
+      ],
+      "bugFixes": [
+        "修复英文版首屏大标题字母线条异常重叠的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.42",
+      "title": "新增英文版网页",
+      "publishedAt": "2026-11-01T13:27:46Z",
+      "summary": "新增英文主页、枪包更新日志、网页更新列表和更新详情页，并提供中英文切换入口。",
+      "changes": [
+        "新增 /en/ 英文主页及完整下载、安装、军械库和仓库信息。",
+        "新增英文枪包更新日志与网页更新列表。",
+        "为每条网页更新生成独立英文详情页。",
+        "中英文页面共享同一套仓库数据和下载分流配置。",
+        "导航栏新增中英文切换入口。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.41",
+      "title": "网页更新日志移除枪包记录",
+      "publishedAt": "2026-11-01T13:24:03Z",
+      "summary": "网页更新日志现在只保留网页界面、数据和功能变化，不再重复记录枪包 Release 内容。",
+      "changes": [
+        "移除 1.10.0 至 1.10.4 热更新对应的五条网页日志。",
+        "枪包版本与修复内容继续只在枪包更新日志和 GitHub Release 中展示。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.40",
+      "title": "更新日志按版本号重新排列",
+      "publishedAt": "2026-11-01T13:21:35Z",
+      "summary": "更新日志与首页最近版本改为按版本号从高到低排列，不再受 Release 发布时间差异影响。",
+      "changes": [
+        "枪包更新日志按语义版本号从高到低展示。",
+        "首页最近更新同步使用版本号排序。",
+        "首页下载入口优先选择版本号最高的枪包 Release。"
+      ],
+      "bugFixes": [
+        "修复较新版本更早发布时更新日志出现版本倒序的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.34",
+      "title": "修复网页更新详情返回链接",
+      "publishedAt": "2026-10-26T14:38:30Z",
+      "summary": "修复从网页更新详情页返回列表时进入 404 页面的问题，并兼容已经生成错误的旧链接。",
+      "changes": [
+        "详情页返回链接改为从站点根目录解析。",
+        "GitHub Pages 与本地后端为旧的嵌套列表链接增加自动重定向。",
+        "提升详情页脚本缓存版本，确保浏览器加载修复后的代码。"
+      ],
+      "bugFixes": [
+        "修复从网页更新详情页点击返回网页更新时跳转到 404 页面的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.24",
+      "title": "蓝奏云分流按钮改为实时更新",
+      "publishedAt": "2026-10-26T11:56:05Z",
+      "summary": "蓝奏云分流按钮改为每 30 秒自动检查一次，切回页面时直接读取仓库最新值，后端改完不用等整页刷新",
+      "changes": [
+        "分流按钮每 30 秒自动轮询一次，页面可见时才会请求",
+        "切回标签页、窗口重新获得焦点或网络恢复时，立即拉取最新的分流链接和密码",
+        "内容没变化时不改动按钮，避免重复绑定复制事件",
+        "更新日志页切回前台时同样刷新分流信息"
+      ],
+      "bugFixes": [
+        "修复后台更新蓝奏云分流后，前台按钮要等最多 5 分钟才变化的问题"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.33",
+      "title": "修复国内分流按钮中文乱码",
+      "publishedAt": "2026-10-26T05:31:46Z",
+      "summary": "修复 GitHub Contents API 回退时蓝奏云分流按钮名称显示为乱码的问题。",
+      "changes": [
+        "GitHub Contents API 的 Base64 内容改为按 UTF-8 解码。",
+        "提升主页、日志页和下载配置模块缓存版本，确保浏览器加载修复后的脚本。"
+      ],
+      "bugFixes": [
+        "修复主页国内分流按钮在 GitHub raw 不可用时显示中文乱码的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.32",
+      "title": "蓝奏云配置改为实时优先读取",
+      "publishedAt": "2026-10-26T05:27:03Z",
+      "summary": "主页优先读取 GitHub 仓库中的最新蓝奏云配置，并在切回页面时立即复查地址和密码。",
+      "changes": [
+        "蓝奏云配置优先读取 GitHub raw 文件，不再先等待 Pages 静态快照。",
+        "页面重新获得焦点或切回前台时立即刷新蓝奏云地址与密码。",
+        "GitHub raw 不可用时自动回退到 Pages 静态快照。"
+      ],
+      "bugFixes": [
+        "修复手动修改蓝奏云地址或密码后主页短时间仍显示旧值的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.31",
+      "title": "页脚加入网页与后端维护信息",
+      "publishedAt": "2026-10-25T16:31:02Z",
+      "summary": "页脚新增网页与后端开发者、维护者和作者 B 站主页链接。",
+      "changes": [
+        "页脚标注网页及其后端由 Deepseek-V4.1-flash 开发并更新。",
+        "页脚标注 Skydeps1459 维护。",
+        "新增作者 B 站主页链接。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.30",
+      "title": "下载节点改为每天自动测速",
+      "publishedAt": "2026-10-25T16:15:29Z",
+      "summary": "新增每日测速任务，提交最快稳定节点，并由 Pages 自动生成主下载链接。",
+      "changes": [
+        "新增 web/scripts/refresh-download-mirror.mjs 每日测速脚本。",
+        "新增 Daily Download Mirror GitHub Actions 工作流，每天运行一次。",
+        "测速结果保存到 web/download-selection.json。",
+        "Pages 构建读取每日选择，并与最新枪包 Release 自动拼接下载地址。",
+        "测速全部失败时保留上一次可用节点，不覆盖现有链接。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.29",
+      "title": "蓝奏云分流自动复制密码",
+      "publishedAt": "2026-10-25T15:34:51Z",
+      "summary": "访客点击蓝奏云分流按钮时会自动复制分享密码，并显示复制成功提示。",
+      "changes": [
+        "主页与最新枪包日志的蓝奏云按钮共享复制逻辑。",
+        "点击后在当前页面底部显示密码复制成功提示。",
+        "蓝奏云链接继续在新标签页打开，原页面提示不会被覆盖。",
+        "Clipboard API 不可用时自动尝试兼容复制方式，并提示手动输入密码。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.28",
+      "title": "页脚新增低调网页管理入口",
+      "publishedAt": "2026-10-25T15:31:28Z",
+      "summary": "在页面底部加入不醒目的网页管理入口，当前跳转到 GitHub 的分流配置编辑页。",
+      "changes": [
+        "主页、枪包日志、网页更新和详情页页脚新增“网页管理”链接。",
+        "链接默认指向 web/domestic-mirror.json 的 GitHub 在线编辑页。",
+        "GitHub 权限仍然只允许拥有仓库写权限的账号保存。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.27",
+      "title": "修复蓝奏云模块脚本缓存",
+      "publishedAt": "2026-10-25T15:24:30Z",
+      "summary": "提升下载配置模块版本，确保浏览器立即加载蓝奏云分流新功能。",
+      "changes": [
+        "download-config.js 缓存版本升至 v2。",
+        "主页与枪包日志引用新的模块版本。"
+      ],
+      "bugFixes": [
+        "修复线上浏览器缓存旧模块后蓝奏云分流按钮不显示的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.26",
+      "title": "加入蓝奏云分流与所有者后台",
+      "publishedAt": "2026-10-25T15:22:25Z",
+      "summary": "主页和最新枪包日志新增蓝奏云国内分流，并提供仅限仓库所有者 GitHub 账号维护的后台。",
+      "changes": [
+        "蓝奏云国内分流显示链接与提取密码。",
+        "新增 GitHub OAuth 后台 /admin/。",
+        "后台只接受 GitHub 用户 ID 317516594。",
+        "仅允许保存蓝奏云域名链接，并使用 OAuth 用户自己的权限提交仓库变更。",
+        "保存后由现有 Pages 工作流自动更新网页。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.25",
+      "title": "新增下载节点自动测速",
+      "publishedAt": "2026-10-25T15:16:17Z",
+      "summary": "构建时自动测试候选加速节点，筛选最快稳定线路并统一转换主站所有下载链接。",
+      "changes": [
+        "新增 web/download-mirrors.json 候选节点列表。",
+        "构建时对当前枪包 zip 执行 Range 请求测速，拒绝重置、超时和 HTML 响应。",
+        "生成 api/download-config.json，供主页和枪包更新日志共同读取。",
+        "GitHub Release 和每 5 分钟定时构建会重新测速当前最新版本。"
+      ],
+      "bugFixes": [
+        "修复加速站点自动匹配到故障节点后出现连接重置的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.23",
+      "title": "调整桌面端火力覆盖区字距",
+      "publishedAt": "2026-10-25T14:31:56Z",
+      "summary": "桌面端“火力覆盖区”的文字字距明确设置为 0.82px，移动端保持独立设置。",
+      "changes": [
+        "桌面端标题描边文字增加 0.82px 字距。",
+        "移动端实心文字继续使用现有独立字距。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.22",
+      "title": "移动端标题改为实心渲染",
+      "publishedAt": "2026-10-25T14:29:16Z",
+      "summary": "移动端完全取消“火力覆盖区”的文字描边，改用实心文字，彻底避免复杂汉字的笔画粘连。",
+      "changes": [
+        "移动端文字填充颜色改为实心浅色。",
+        "移动端文字描边宽度设为 0。",
+        "桌面端继续保留原有描边视觉效果。"
+      ],
+      "bugFixes": [
+        "修复部分移动设备上中文字符笔画与描边重叠的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.21",
+      "title": "修复移动端标题描边重叠",
+      "publishedAt": "2026-10-25T14:25:15Z",
+      "summary": "移动端“火力覆盖区”改用更细的描边和更宽松的字距，避免粗边框与相邻文字叠压。",
+      "changes": [
+        "文字描边加入 paint-order: stroke fill。",
+        "移动端描边宽度从 1px 降到 0.65px。",
+        "移动端描边文字使用轻微正字距，减少中文字符边缘碰撞。"
+      ],
+      "bugFixes": [
+        "修复移动端“火力覆盖区”文字描边异常加粗和重叠的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.20",
+      "title": "继续增大首屏标题行距",
+      "publishedAt": "2026-10-25T14:18:04Z",
+      "summary": "进一步拉开“准备进入 / 火力覆盖区”两行主标题的上下间距。",
+      "changes": [
+        "首屏主标题行高从 1 调整为 1.14。",
+        "保持桌面端与移动端响应式字号不变。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.19",
+      "title": "加大首屏标题行距",
+      "publishedAt": "2026-10-25T14:15:31Z",
+      "summary": "把“准备进入 / 火力覆盖区”两行标题之间的间距调得更舒展。",
+      "changes": [
+        "首屏主标题行高从 0.88 调整为 1。",
+        "桌面端与移动端同步应用新的标题间距。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.18",
+      "title": "页面滚动时同步导航哈希",
+      "publishedAt": "2026-10-25T14:10:08Z",
+      "summary": "点击分区锚点后，滚动到其他区域或回到顶部时会同步更新或移除 URL 哈希。",
+      "changes": [
+        "滚回页面顶部时自动恢复为无哈希的基础地址。",
+        "滚动到军械库、最近更新、安装和网页更新区域时同步对应锚点。",
+        "使用 replaceState 更新地址，不会额外增加浏览器历史记录。"
+      ],
+      "bugFixes": [
+        "修复点击 #arsenal 后滚回顶部，URL 仍残留 #arsenal 的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.17",
+      "title": "同步 GitHub 新用户名 Skydeps1459",
+      "publishedAt": "2026-10-25T14:01:49Z",
+      "summary": "GitHub 用户名从 MoreFun321432 更新为 Skydeps1459，仓库与 Pages 域名同步迁移。",
+      "changes": [
+        "GitHub 仓库地址改为 Skydeps1459/Modern-Warfare-4-TACZ-GunPack。",
+        "GitHub Pages 地址改为 skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack。",
+        "网站配置、API 请求、Release、下载和文档链接全部同步。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.16",
+      "title": "仓库名称改为 Modern Warfare 4 TACZ GunPack",
+      "publishedAt": "2026-10-25T13:58:47Z",
+      "summary": "GitHub 仓库改用 Modern Warfare 4 TACZ GunPack 的 URL 标识，Pages 恢复使用当前账号的前缀。",
+      "changes": [
+        "仓库 URL 标识改为 Modern-Warfare-4-TACZ-GunPack。",
+        "GitHub Pages 前缀恢复为当前账号 MoreFun321432。",
+        "网站配置、API、下载、Release 与文档链接同步更新。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.15",
+      "title": "站点链接前缀改为 MW4GunPack",
+      "publishedAt": "2026-10-25T13:54:55Z",
+      "summary": "GitHub 仓库重命名为 MW4GunPack，网页与 API 的仓库地址同步更新。",
+      "changes": [
+        "GitHub 仓库名称改为 MW4GunPack。",
+        "GitHub Pages 地址改为 /MW4GunPack/。",
+        "网站配置、更新日志、README 与模板中的仓库链接同步替换。",
+        "旧仓库地址由 GitHub 自动重定向到新名称。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.14",
+      "title": "主页更新卡直接进入详情页",
+      "publishedAt": "2026-10-25T13:46:44Z",
+      "summary": "主页底部的网页更新卡片不再跳到列表锚点，而是直接打开对应独立详情页。",
+      "changes": [
+        "主页更新卡统一使用 website-updates/<版本>.html 路径。",
+        "网页更新列表和主页复用同一个详情页地址生成函数。",
+        "旧的总览锚点链接不再用于主页卡片。"
+      ],
+      "bugFixes": [
+        "修复点击主页网页更新卡片后只显示网页更新总览的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.13",
+      "title": "网页更新使用独立详情页",
+      "publishedAt": "2026-10-25T13:41:45Z",
+      "summary": "每条网页更新改为独立的静态详情页路径，旧的查询参数链接会自动重定向。",
+      "changes": [
+        "构建时为每条网页更新生成 website-updates/<版本>.html。",
+        "网页更新列表直接链接到对应独立详情页。",
+        "旧的 website-update.html?id=... 链接自动跳转到新路径。",
+        "详情页继续展示完整内容与问题修复，不提供下载。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.12",
+      "title": "网页更新加入三级详情页",
+      "publishedAt": "2026-10-25T13:38:31Z",
+      "summary": "网页更新列表改为只显示摘要，每次更新的完整内容进入独立详情页查看。",
+      "changes": [
+        "新增 website-update.html 单条更新详情页。",
+        "网页更新列表只显示版本、日期、摘要和条目数量。",
+        "每条记录增加“查看完整更新日志”按钮。",
+        "详情页保留完整的更新内容与问题修复列表。",
+        "详情页继续支持每 5 分钟自动刷新。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.11",
+      "title": "加固网页更新链接缓存",
+      "publishedAt": "2026-10-25T13:34:00Z",
+      "summary": "站内网页更新入口加入版本参数，避免浏览器继续加载旧缓存中的锚点逻辑。",
+      "changes": [
+        "主页、枪包日志页和网页更新卡片统一使用带版本参数的链接。",
+        "网页更新数据模块升级缓存版本。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.10",
+      "title": "修复网页更新直达链接",
+      "publishedAt": "2026-10-25T13:31:33Z",
+      "summary": "带网页版本锚点的直达链接现在可以正常打开，并定位到对应更新记录。",
+      "changes": [
+        "改用 getElementById 解析 URL 锚点。",
+        "支持网页版本号中的小数点和百分号编码。",
+        "同步加固枪包更新日志的锚点定位。"
+      ],
+      "bugFixes": [
+        "修复直接访问 #web-update-website-v1.0.9 等链接时显示“网页更新记录暂时无法载入”的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.9",
+      "title": "网页数据每 5 分钟自动更新",
+      "publishedAt": "2026-10-25T13:19:02Z",
+      "summary": "打开网页时定时刷新数据，GitHub Pages 也会按五分钟计划重建静态快照。",
+      "changes": [
+        "主页、枪包日志页和网页更新页每 5 分钟自动刷新。",
+        "页面切回前台时会立即检查并刷新数据。",
+        "GitHub Pages 增加每 5 分钟运行一次的定时构建。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.8",
+      "title": "修复静态仓库快照字段映射",
+      "publishedAt": "2026-10-25T13:17:19Z",
+      "summary": "GitHub Pages 静态仓库快照改用前端字段映射，仓库名称、更新时间与 Stars 可正常展示。",
+      "changes": [
+        "兼容静态 repository.json 的 camelCase 字段。",
+        "保留 GitHub API 原始字段作为后备。",
+        "API 不可用时显示静态仓库状态，而非空白信息。"
+      ],
+      "bugFixes": [
+        "修复离线回退后仓库名称、更新时间和 Stars 为空或 NaN 的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.7",
+      "title": "修复 GitHub API 限流导致网页显示离线",
+      "publishedAt": "2026-10-25T13:15:16Z",
+      "summary": "枪包数据改为优先读取 GitHub Pages 静态快照，GitHub API 仅作为可选增强信息源。",
+      "changes": [
+        "构建时生成 api/repository.json 仓库状态快照。",
+        "枪包、Release 和仓库状态优先读取静态数据。",
+        "GitHub API 返回 401、403 或网络失败时不再阻断枪包页面。"
+      ],
+      "bugFixes": [
+        "修复 GitHub API 触发匿名限流后首页误报“网页后端暂时无法连接”的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.6",
+      "title": "修复网页更新记录缓存",
+      "publishedAt": "2026-10-25T13:12:08Z",
+      "summary": "网页更新数据请求增加版本参数，避免 GitHub Pages 或浏览器继续显示旧的日志快照。",
+      "changes": [
+        "本地 API 与静态 JSON 请求均加入实时缓存参数。",
+        "新增网页日志后可立即刷新显示。"
+      ],
+      "bugFixes": [
+        "修复新增网页更新记录可能被旧缓存覆盖的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.5",
+      "title": "版本状态卡片改为当前版本概览",
+      "publishedAt": "2026-10-25T13:11:02Z",
+      "summary": "将首屏右侧容易误解的部署清单文案改成更直白的当前版本概览。",
+      "changes": [
+        "将 DEPLOYMENT MANIFEST 改为“当前版本概览”。",
+        "将状态文字 LIVE 改为“已同步”。",
+        "同步更新无障碍标签与网页更新记录。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.4",
+      "title": "主页底部加入网页更新记录",
+      "publishedAt": "2026-10-25T13:06:02Z",
+      "summary": "在主页“仓库与发布同步”下方直接展示最近三次网页更新，并提供完整记录入口。",
+      "changes": [
+        "主页最底部新增网页更新记录区域。",
+        "默认展示最近 3 次网页版本、日期、标题和摘要。",
+        "完整网页更新历史继续保留在独立页面。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.2",
+      "title": "网页更新改为仓库日志驱动",
+      "publishedAt": "2026-10-25T13:04:47Z",
+      "summary": "网页更新内容改由仓库内单一的 JSON 日志维护，并在本地后端与 GitHub Pages 上保持同步。",
+      "changes": [
+        "新增 web/website-updates.json 作为网页更新历史的数据源。",
+        "本地后端新增 /api/website-updates 接口。",
+        "GitHub Pages 构建时自动生成 api/website-updates.json 快照。",
+        "网页更新页按版本展示摘要、更新内容和问题修复。",
+        "后续每次网页可见改动都必须在同一提交中更新该日志。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.1",
+      "title": "网页更新与枪包更新分离",
+      "publishedAt": "2026-10-25T13:01:52Z",
+      "summary": "网页自身的功能变化改用仓库内固定日志记录，并与枪包版本、bug 修复和下载记录分开维护。",
+      "changes": [
+        "新增独立“网页更新”页面，集中展示网页功能与界面变化。",
+        "首页最近更新和枪包更新日志只显示带 zip 附件的枪包 Release。",
+        "网页更新只保留 GitHub 发行说明入口，不再提供网站文件下载。",
+        "Release 发布或编辑后通过主分支自动重建 GitHub Pages。",
+        "更新记录按发布时间倒序展示。"
+      ],
+      "bugFixes": [
+        "修复网页版本混入枪包更新日志的问题。",
+        "修复网页版发行记录出现下载操作的问题。"
+      ],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.0",
+      "title": "最近更新与完整日志",
+      "publishedAt": "2026-10-25T12:53:20Z",
+      "summary": "建立网页版本记录，首页展示最近枪包更新，并提供完整日志页面。",
+      "changes": [
+        "首页新增“更新与日志”区域，默认展示最近 3 次 Release。",
+        "新增完整更新日志页，展示版本内容、附件信息和下载入口。",
+        "下载继续支持 github.akams.cn 测速加速，并保留 GitHub 原链。",
+        "网页版 Release 不替换枪包下载目标。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/website-v1.0.0"
+    }
+  ]
+}

@@ -35,7 +35,7 @@ Modern Warfare 4 是面向 Minecraft Forge 1.20.1 与 NeoForge 1.21.1 的 TACZ
 | 类型 | 枪械 |
 | --- | --- |
 | 突击步枪 | AK-47、AK-74M、FN FAL、HK416D、HK437、M16A1、M4A1、SCAR-H、MCX SPEAR LT |
-| 狙击/精准步枪 | AWP、MRAD、M700 |
+| 狙击/精准步枪 | AWP、MRAD、M700、HK G28 |
 | 轻机枪 | RPK |
 | 战斗步枪 | HK G3 |
 | 手枪 | 沙漠之鹰、HK MK23 |

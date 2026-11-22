@@ -1,0 +1,9 @@
+{
+  "name": "mw4.gun.hkg28.name",
+  "display": "mw4:hkg28_display",
+  "data": "mw4:hkg28_data",
+  "tooltip": "mw4.gun.hkg28.desc",
+  "type": "dmr",
+  "item_type": "modern_kinetic",
+  "sort": 22
+}

@@ -1,6 +1,6 @@
 {
   "pack.mw4.scar_h_pack.name": "Modern Warfare 4",
-  "pack.mw4.scar_h_pack.desc": "Modern Warfare 4 枪包。",
+  "pack.mw4.scar_h_pack.desc": "Modern Warfare 4 枪包。【开发预览版】正式版以加密发布包为准。",
   "mw4.ammo.556x45.name": "§a5.56x45mm 子弹",
   "mw4.attachment.drum_mag.name": "弹鼓",
   "mw4.gun.hk416d.name": "HK416D 突击步枪",
@@ -44,5 +44,11 @@
   "mw4.gun.hk437.desc": "§a模块化短管步枪 手感利落 近中距离都够用",
   "mw4.ammo.545x39.name": "§a5.45x39mm 子弹",
   "mw4.gun.ak74m.name": "AK-74M 突击步枪",
-  "mw4.gun.ak74m.desc": "§a从雨林到海湾 再到雪原 换了折叠枪托和聚合物护木的老兵 脾气一点没改"
+  "mw4.gun.ak74m.desc": "§a从雨林到海湾 再到雪原 换了折叠枪托和聚合物护木的老兵 脾气一点没改",
+  "mw4.gun.hkg28.name": "HK G28 精确射手步枪",
+  "mw4.gun.hkg28.desc": "§a7.62 口径的精确射手步枪 精度换来的是一枪一停 别指望它替你压枪\n§7感谢大佬神梦星尘提供的模型",
+  "mw4.ammo.762x51_m61.name": "7.62x51mm M61",
+  "mw4.ammo.762x51_m80.name": "7.62x51mm M80",
+  "mw4.ammo.762x51_m993.name": "7.62x51mm M993",
+  "mw4.ammo.762x51_m948_slap.name": "7.62x51mm M948 脱壳穿甲弹"
 }

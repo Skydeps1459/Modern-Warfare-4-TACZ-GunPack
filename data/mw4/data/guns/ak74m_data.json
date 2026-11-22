@@ -142,7 +142,7 @@
   },
   "melee": {
     "distance": 1,
-    "cooldown": 0.6,
+    "cooldown": 0.4,
     "default": {
       "animation_type": "melee_stock",
       "distance": 1,

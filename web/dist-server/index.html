@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Modern Warfare 4 TACZ 枪包下载、版本与仓库信息。">
+    <meta name="theme-color" content="#0a0c0b">
+    <title>Modern Warfare 4 // TACZ Gun Pack</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css?v=20261121-3">
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Modern Warfare 4 首页">
+        <span class="brand-mark">MW</span>
+        <span class="brand-copy">
+          <strong>MODERN WARFARE 4</strong>
+          <small>TACZ GUN PACK</small>
+        </span>
+      </a>
+      <nav aria-label="导航">
+        <a href="#arsenal">军械库</a>
+        <a href="#updates">最近更新</a>
+        <a href="./changelog.html">更新日志</a>
+        <a href="#website-log">网页更新</a>
+        <a href="#install">安装</a>
+        <a class="language-link" href="./en/" lang="en">EN</a>
+        <a id="repo-nav-link" href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack" rel="noreferrer">GitHub ↗</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse"></span> TACTICAL ARMORY / ONLINE</p>
+          <h1>准备进入<br><span>火力覆盖区</span></h1>
+          <p class="hero-text">
+            为主世界打造的 Modern Warfare 4 TACZ 枪包。统一模型、动画、音效与换弹逻辑，
+            从仓库获取最新版本，放进 <code>tacz</code> 目录即可部署。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" id="download-accelerated" href="/files/Modern.Warfare.4-1.10.4-Release.zip" rel="noreferrer">
+              <span>加速下载枪包</span>
+              <span class="button-arrow">↓</span>
+            </a>
+            <a class="button button-ghost" id="download-direct" href="/files/Modern.Warfare.4-1.10.4-Release.zip" rel="noreferrer">
+              GitHub 原链
+            </a>
+            <a class="button button-outline" id="download-mobile" href="#" rel="noreferrer" hidden>
+              移动云盘分流
+            </a>
+            <a class="button button-outline" id="download-quark" href="#" rel="noreferrer" hidden>
+              夸克网盘分流
+            </a>
+          </div>
+          <p class="mirror-closed-note" id="lanzou-closed-notice" hidden></p>
+          <dl class="hero-stats">
+            <div>
+              <dt>当前版本</dt>
+              <dd id="pack-version">读取中…</dd>
+            </div>
+            <div>
+              <dt>枪械数量</dt>
+              <dd id="gun-count">--</dd>
+            </div>
+            <div>
+              <dt>仓库 Stars</dt>
+              <dd id="repo-stars">--</dd>
+            </div>
+          </dl>
+        </div>
+
+        <aside class="deployment-card" aria-label="当前版本概览">
+          <div class="card-grid" aria-hidden="true"></div>
+          <div class="card-topline">
+            <span>当前版本概览</span>
+            <span class="status-label">已同步</span>
+          </div>
+          <div class="scope" aria-hidden="true">
+            <span class="scope-ring scope-ring-one"></span>
+            <span class="scope-ring scope-ring-two"></span>
+            <span class="scope-cross scope-cross-x"></span>
+            <span class="scope-cross scope-cross-y"></span>
+            <span class="scope-center"></span>
+          </div>
+          <div class="manifest-list">
+            <div><span>PACKAGE</span><strong id="manifest-version">MW4</strong></div>
+            <div><span>RELEASE</span><strong id="release-date">CHECKING</strong></div>
+            <div><span>PACK LICENSE</span><strong id="manifest-license">GPL-3.0</strong></div>
+            <div><span>NAMESPACE</span><strong>mw4</strong></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="ticker" aria-label="枪包信息">
+        <div>
+          <span>14 WEAPON PLATFORMS</span>
+          <span>5 AMMO CALIBERS</span>
+          <span>FORGE 1.20.1</span>
+          <span>TACZ 1.1.8</span>
+          <span>GPL-3.0 PACK / MIT SITE</span>
+          <span aria-hidden="true">14 WEAPON PLATFORMS</span>
+          <span aria-hidden="true">5 AMMO CALIBERS</span>
+          <span aria-hidden="true">FORGE 1.20.1</span>
+          <span aria-hidden="true">TACZ 1.1.8</span>
+          <span aria-hidden="true">GPL-3.0 PACK / MIT SITE</span>
+        </div>
+      </section>
+
+      <section class="section thanks" id="thanks">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SPECIAL THANKS</p>
+            <h2>特别感谢</h2>
+          </div>
+          <p>感谢以下大佬提供技术与其他内容支持。点击头像与名字即可前往 TA 的 B 站主页。</p>
+        </div>
+        <div class="thanks-grid">
+          <a class="thanks-card" href="https://space.bilibili.com/294128475" target="_blank" rel="noreferrer">
+            <img class="thanks-avatar" src="./thanks/cima.webp" alt="CimaSilchin-神梦星辰 的头像" width="112" height="112" loading="lazy">
+            <span class="thanks-name">CimaSilchin-神梦星辰</span>
+          </a>
+          <a class="thanks-card" href="https://space.bilibili.com/107774789" target="_blank" rel="noreferrer">
+            <img class="thanks-avatar" src="./thanks/duyu.webp" alt="杜豫isih 的头像" width="112" height="112" loading="lazy">
+            <span class="thanks-name">杜豫isih</span>
+          </a>
+          <a class="thanks-card" href="https://space.bilibili.com/1994293754" target="_blank" rel="noreferrer">
+            <img class="thanks-avatar" src="./thanks/moshui.webp" alt="墨水染黑纸 的头像" width="112" height="112" loading="lazy">
+            <span class="thanks-name">墨水染黑纸</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section arsenal" id="arsenal">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CURRENT LOADOUT</p>
+            <h2>军械库</h2>
+          </div>
+          <p>数据直接读取仓库内的枪包索引，新增枪械后网页会自动同步。</p>
+        </div>
+        <div class="gun-grid" id="gun-grid" aria-live="polite">
+          <div class="loading-panel">正在载入枪包数据…</div>
+        </div>
+      </section>
+
+      <section class="section updates" id="updates">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RECENT PATCHES</p>
+            <h2>更新与日志</h2>
+          </div>
+          <p>默认展示最近三次枪包 Release。网页本身的功能更新在独立页面维护，不进入枪包下载记录。</p>
+        </div>
+        <div class="update-grid" id="recent-releases" aria-live="polite">
+          <div class="loading-panel">正在载入最近更新…</div>
+        </div>
+        <div class="updates-more">
+          <a class="button button-outline" href="./changelog.html">查看完整更新日志 ↗</a>
+        </div>
+      </section>
+
+      <section class="section intel" id="install">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FIELD MANUAL</p>
+            <h2>四步部署</h2>
+          </div>
+          <p>适用于 Forge 1.20.1 + TACZ。更新前建议完全退出游戏，避免旧 zip 句柄被占用。</p>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="step-number">01</span>
+            <div>
+              <h3>安装前置模组</h3>
+              <p>客户端需先安装最新版 <code>TACZ: Arcana</code> 模组，枪包依赖其运行。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">02</span>
+            <div>
+              <h3>获取发布包</h3>
+              <p>下载 GitHub Release 中的 <code>Modern Warfare 4-&lt;版本&gt;.zip</code>。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">03</span>
+            <div>
+              <h3>放入 TACZ</h3>
+              <p>把 zip 放进实例的 <code>.minecraft/tacz/</code> 目录，不要解压。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">04</span>
+            <div>
+              <h3>重新载入</h3>
+              <p>启动游戏，或执行 <code>/tacz reload</code>；更新枪包时请重启客户端。</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="repository-panel">
+        <div>
+          <p class="eyebrow">SOURCE CONTROL</p>
+          <h2>仓库与发布同步</h2>
+          <p id="repository-description">后端通过 GitHub API 同步仓库状态、最近发布日期与下载资源。</p>
+        </div>
+        <div class="repo-metrics">
+          <div><span>REPOSITORY</span><strong id="repo-name">Skydeps1459 / Modern-Warfare-4-TACZ-GunPack</strong></div>
+          <div><span>LAST PUSH</span><strong id="repo-updated">--</strong></div>
+          <div><span>DOWNLOAD ASSET</span><strong id="asset-size">--</strong></div>
+        </div>
+        <a class="button button-outline" id="repo-panel-link" href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack" rel="noreferrer">打开 GitHub 仓库 ↗</a>
+      </section>
+
+      <section class="section website-history" id="website-log">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">WEBSITE BUILD LOG</p>
+            <h2>网页更新记录</h2>
+          </div>
+          <p>仅记录网页界面、数据同步与功能变化。最近三条显示在这里，完整历史在独立页面。</p>
+        </div>
+        <div class="home-website-update-list" id="homepage-website-updates" aria-live="polite">
+          <div class="loading-panel">正在载入网页更新记录…</div>
+        </div>
+        <div class="updates-more">
+          <a class="button button-outline" href="./website-updates.html?v=20261025-11">查看全部网页更新 ↗</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>MODERN WARFARE 4 // TACZ</span>
+      <span><a href="./website-updates.html?v=20261025-11">网页更新</a> · 枪包 <a href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/blob/main/GUNPACK-LICENSE.md" rel="noreferrer">GPL-3.0</a> · 网站代码与文档 <a href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/blob/main/LICENSE" rel="noreferrer">MIT</a> · <a class="admin-entry" href="https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/blob/main/web/mobile-mirror.json" rel="noreferrer" title="仅仓库所有者可保存">网页管理</a></span>
+      <span class="site-credit">本网页及其后端由 Qwen4-Max-Preview 开发并更新 · Skydeps1459 维护 · <a href="https://space.bilibili.com/342953064?spm_id_from=333.1007.0.0" rel="noreferrer" target="_blank">作者B站主页 ↗</a></span>
+    </footer>
+
+    <script src="./app.js?v=20261122-1" type="module"></script>
+  </body>
+</html>
+

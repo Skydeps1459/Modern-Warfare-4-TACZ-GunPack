@@ -36,7 +36,7 @@ See [`RELEASE_POLICY.md`](./RELEASE_POLICY.md) for the complete policy.
 | Category | Weapons |
 | --- | --- |
 | Assault rifles | AK-47, AK-74M, FN FAL, HK416D, HK437, M16A1, M4A1, SCAR-H, MCX SPEAR LT |
-| Sniper / precision rifles | AWP, MRAD, M700 |
+| Sniper / precision rifles | AWP, MRAD, M700, HK G28 |
 | Light machine gun | RPK |
 | Battle rifle | HK G3 |
 | Pistols | Desert Eagle, HK MK23 |

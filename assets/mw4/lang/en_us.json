@@ -1,6 +1,6 @@
 {
   "pack.mw4.scar_h_pack.name": "Modern Warfare 4",
-  "pack.mw4.scar_h_pack.desc": "Modern Warfare 4 gun pack.",
+  "pack.mw4.scar_h_pack.desc": "Modern Warfare 4 gun pack. [Dev Preview] The official release is the encrypted pack.",
   "mw4.ammo.556x45.name": "§a5.56x45mm Bullet",
   "mw4.attachment.drum_mag.name": "Drum Magazine",
   "mw4.gun.hk416d.name": "HK416D",
@@ -44,5 +44,11 @@
   "mw4.gun.hk437.desc": "§aA compact modular rifle with clean handling for close and mid-range fights",
   "mw4.ammo.545x39.name": "§a5.45x39mm Bullet",
   "mw4.gun.ak74m.name": "AK-74M",
-  "mw4.gun.ak74m.desc": "§aFrom the jungle to the gulf and on to the snow A veteran with a folding stock and polymer furniture Same temper as ever"
+  "mw4.gun.ak74m.desc": "§aFrom the jungle to the gulf and on to the snow A veteran with a folding stock and polymer furniture Same temper as ever",
+  "mw4.gun.hkg28.name": "HK G28",
+  "mw4.gun.hkg28.desc": "§aA 7.62 marksman rifle Accuracy paid for with a slower trigger It won't hold steady for you\n§7Model courtesy of ShenMengXingChen",
+  "mw4.ammo.762x51_m61.name": "7.62x51mm M61",
+  "mw4.ammo.762x51_m80.name": "7.62x51mm M80",
+  "mw4.ammo.762x51_m993.name": "7.62x51mm M993",
+  "mw4.ammo.762x51_m948_slap.name": "7.62x51mm M948 SLAP"
 }
