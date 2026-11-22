@@ -7,7 +7,7 @@
 [![Gun pack: GPL--3.0](https://img.shields.io/badge/gun%20pack-GPL--3.0-orange)](./GUNPACK-LICENSE.md)
 
 Modern Warfare 4 是面向 Minecraft Forge 1.20.1 与 NeoForge 1.21.1 的 TACZ
-枪包，命名空间为 `mw4`。当前版本为 **1.11.0-Release**，包含 15 把枪、弹药、
+枪包，命名空间为 `mw4`。当前版本为 **1.12.0-Release**，包含 16 把枪、弹药、
 配件、换弹状态机和仓库联动网页。
 
 在线网页：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>
@@ -35,7 +35,8 @@ Modern Warfare 4 是面向 Minecraft Forge 1.20.1 与 NeoForge 1.21.1 的 TACZ
 | 类型 | 枪械 |
 | --- | --- |
 | 突击步枪 | AK-47、AK-74M、FN FAL、HK416D、HK437、M16A1、M4A1、SCAR-H、MCX SPEAR LT |
-| 狙击/精准步枪 | AWP、MRAD、M700、HK G28 |
+| 精确射手步枪 | HK G28 |
+| 狙击步枪 | AWP、MRAD、M700 |
 | 轻机枪 | RPK |
 | 战斗步枪 | HK G3 |
 | 手枪 | 沙漠之鹰、HK MK23 |

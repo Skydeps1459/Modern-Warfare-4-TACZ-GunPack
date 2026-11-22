@@ -7,8 +7,8 @@
 [![Gun pack: GPL--3.0](https://img.shields.io/badge/gun%20pack-GPL--3.0-orange)](./GUNPACK-LICENSE.md)
 
 Modern Warfare 4 is a TACZ gun pack for Minecraft Forge 1.20.1 and NeoForge
-1.21.1 with the namespace `mw4`. The current release is **1.11.0-Release**,
-containing 15 guns, ammunition, attachments, reload state machines, and a
+1.21.1 with the namespace `mw4`. The current release is **1.12.0-Release**,
+containing 16 guns, ammunition, attachments, reload state machines, and a
 repository-linked website.
 
 Website: <https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>
@@ -36,7 +36,8 @@ See [`RELEASE_POLICY.md`](./RELEASE_POLICY.md) for the complete policy.
 | Category | Weapons |
 | --- | --- |
 | Assault rifles | AK-47, AK-74M, FN FAL, HK416D, HK437, M16A1, M4A1, SCAR-H, MCX SPEAR LT |
-| Sniper / precision rifles | AWP, MRAD, M700, HK G28 |
+| Marksman rifles | HK G28 |
+| Sniper rifles | AWP, MRAD, M700 |
 | Light machine gun | RPK |
 | Battle rifle | HK G3 |
 | Pistols | Desert Eagle, HK MK23 |

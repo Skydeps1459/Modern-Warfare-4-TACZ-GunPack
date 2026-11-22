@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-21T23:45:15.892Z",
-  "directUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.11.0-Release/Modern.Warfare.4-1.11.0-Release.zip",
+  "generatedAt": "2026-11-22T15:22:35.450Z",
+  "directUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.12.0-Release/Modern.Warfare.4-1.12.0-Release.zip",
   "selected": {
+    "id": "gh-proxy",
+    "name": "gh-proxy.com",
+    "prefix": "https://gh-proxy.com/",
+    "ok": true,
+    "status": 206,
+    "latencyMs": 952,
+    "bytes": 1286
+  },
+  "fallback": {
     "id": "gh-monlor",
     "name": "gh.monlor.com",
     "prefix": "https://gh.monlor.com/",
     "ok": true,
     "status": 206,
-    "latencyMs": 390,
-    "bytes": 1369
+    "latencyMs": 1015,
+    "bytes": 1320
   },
-  "fallback": {
-    "id": "ghproxy-icu",
-    "name": "ghproxy.icu",
-    "prefix": "https://ghproxy.icu/",
-    "ok": true,
-    "status": 206,
-    "latencyMs": 390,
-    "bytes": 35
-  },
-  "acceleratedUrl": "https://gh.monlor.com/https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.11.0-Release/Modern.Warfare.4-1.11.0-Release.zip",
+  "acceleratedUrl": "https://gh-proxy.com/https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.12.0-Release/Modern.Warfare.4-1.12.0-Release.zip",
   "excludedHosts": [
     "gh.my-website.ccwu.cc"
   ],
@@ -29,17 +29,16 @@
       "name": "github.chenc.dev",
       "prefix": "https://github.chenc.dev/",
       "ok": false,
-      "latencyMs": 173,
+      "latencyMs": 2454,
       "error": "fetch failed"
     },
     {
       "id": "github-tbap",
       "name": "github.tbap.top",
       "prefix": "https://github.tbap.top/",
-      "ok": true,
-      "status": 206,
-      "latencyMs": 560,
-      "bytes": 34
+      "ok": false,
+      "latencyMs": 135,
+      "error": "fetch failed"
     },
     {
       "id": "gh-proxy",
@@ -47,8 +46,8 @@
       "prefix": "https://gh-proxy.com/",
       "ok": true,
       "status": 206,
-      "latencyMs": 418,
-      "bytes": 1285
+      "latencyMs": 952,
+      "bytes": 1286
     },
     {
       "id": "gh-monlor",
@@ -56,16 +55,16 @@
       "prefix": "https://gh.monlor.com/",
       "ok": true,
       "status": 206,
-      "latencyMs": 390,
-      "bytes": 1369
+      "latencyMs": 1015,
+      "bytes": 1320
     },
     {
       "id": "gh-chjina",
       "name": "gh.chjina.com",
       "prefix": "https://gh.chjina.com/",
       "ok": false,
-      "latencyMs": 226,
-      "error": "HTTP 403"
+      "latencyMs": 450,
+      "error": "fetch failed"
     },
     {
       "id": "ghproxy-icu",
@@ -73,17 +72,16 @@
       "prefix": "https://ghproxy.icu/",
       "ok": true,
       "status": 206,
-      "latencyMs": 390,
-      "bytes": 35
+      "latencyMs": 2956,
+      "bytes": 36
     },
     {
       "id": "github-ednovas",
       "name": "github.ednovas.xyz",
       "prefix": "https://github.ednovas.xyz/",
-      "ok": true,
-      "status": 206,
-      "latencyMs": 1649,
-      "bytes": 79
+      "ok": false,
+      "latencyMs": 9016,
+      "error": "timeout"
     },
     {
       "id": "gh-sixyin",
@@ -91,8 +89,8 @@
       "prefix": "https://gh.sixyin.com/",
       "ok": true,
       "status": 206,
-      "latencyMs": 1503,
-      "bytes": 136
+      "latencyMs": 3755,
+      "bytes": 128
     }
   ]
 }
