@@ -1,6 +1,34 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.56",
+      "title": "更新国内分流链接并优化下载按钮排版",
+      "publishedAt": "2026-11-22T15:55:00Z",
+      "summary": "移动云盘与夸克网盘分流链接更新为最新分享地址；主页与更新日志页下载按钮改为整齐的两列网格排版，移动端自动单列。",
+      "changes": [
+        "移动云盘分流链接更新（yun.139.com 新分享地址）。",
+        "夸克网盘分流链接更新（pan.quark.cn/s/ea7425a37b22）。",
+        "主页下载区四按钮改为 2×2 等宽网格，窄屏单列。",
+        "更新日志页各版本下载按钮改为两列网格对齐，关闭提示独占整行，移动端单列。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
+      "id": "website-v1.0.55",
+      "title": "枪包文档与下载同步至 1.12.0",
+      "publishedAt": "2026-11-22T15:20:00Z",
+      "summary": "官网同步 1.12.0-Release：新增 HK G28 精确射手步枪，枪械总数更新为 17 把，全站下载按钮与加速线路切换到 v1.12.0-Release 附件。",
+      "changes": [
+        "中英文 README 当前版本更新为 1.12.0-Release，枪械数更新为 17 把。",
+        "枪械列表新增“精确射手步枪”分类并列入 HK G28，AWP/MRAD/M700 归入狙击步枪。",
+        "全站主下载地址与加速镜像测速结果切换到 v1.12.0-Release 发布附件。",
+        "更新日志页自动收录 1.12.0-Release 发布说明。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.12.0-Release"
+    },
+    {
       "id": "website-v1.0.54",
       "title": "移除蓝奏云下载按钮",
       "publishedAt": "2026-11-22T12:50:00Z",

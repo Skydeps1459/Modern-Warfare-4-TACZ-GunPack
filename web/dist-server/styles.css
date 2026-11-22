@@ -218,10 +218,16 @@ html[lang="en"] .hero h1 span {
 }
 
 .hero-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  flex-wrap: wrap;
+  max-width: 560px;
   margin-top: 38px;
+}
+
+.hero-actions .button {
+  width: 100%;
+  gap: 12px;
 }
 
 .button {
@@ -912,10 +918,19 @@ html[lang="en"] .hero h1 span {
 }
 
 .release-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  width: min(100%, 430px);
+  flex-shrink: 0;
+}
+
+.release-actions .button {
+  width: 100%;
+  gap: 10px;
+  padding: 0 14px;
+  white-space: normal;
+  text-align: center;
 }
 
 .release-facts {
@@ -1271,7 +1286,8 @@ footer .site-credit a {
   }
 
   .release-actions {
-    justify-content: flex-start;
+    width: 100%;
+    grid-template-columns: 1fr;
   }
 
   .updates-more {
@@ -1284,6 +1300,10 @@ footer .site-credit a {
 }
 
 @media (max-width: 460px) {
+  .hero-actions {
+    grid-template-columns: 1fr;
+  }
+
   .brand-copy strong {
     font-size: 11px;
   }
@@ -1329,7 +1349,7 @@ footer .site-credit a {
 }
 
 .release-actions .mirror-closed-note {
-  flex-basis: 100%;
+  grid-column: 1 / -1;
   margin: 4px 0 0;
   max-width: none;
   text-align: left;
