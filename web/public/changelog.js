@@ -50,35 +50,12 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, mobileMi
     accelerated.textContent = uiText("加速下载", "Accelerated download");
     actions.append(accelerated);
   }
-  if (isLatestPack && domesticMirror) {
-    const domestic = document.createElement("a");
-    domestic.className = "button button-outline";
-    domestic.rel = "noreferrer";
-    const mirrorLabel = isEnglish() ? "Lanzou Cloud mirror" : domesticMirror.label;
-    if (domesticMirror.closed) {
-      domestic.href = new URL(
-        isEnglish() ? "en/lanzou-notice.html" : "lanzou-notice.html",
-        siteBaseUrl()
-      ).href;
-      domestic.textContent = isEnglish()
-        ? `${mirrorLabel} · Closed`
-        : `${mirrorLabel} · 已关闭`;
-    } else {
-      domestic.href = domesticMirror.url;
-      domestic.textContent = domesticMirror.password
-        ? (isEnglish()
-            ? `${mirrorLabel} · Password ${domesticMirror.password}`
-            : `${mirrorLabel} · 密码 ${domesticMirror.password}`)
-        : mirrorLabel;
-      bindDomesticMirrorCopy(domestic, domesticMirror);
-    }
-    actions.append(domestic);
-    if (domesticMirror.closed) {
-      const notice = document.createElement("p");
-      notice.className = "mirror-closed-note";
-      notice.textContent = isEnglish() ? domesticMirror.noticeEn : domesticMirror.notice;
-      actions.append(notice);
-    }
+  // 蓝奏云下载按钮与入口已永久移除：仅在其关闭状态下保留提示信息
+  if (isLatestPack && domesticMirror && domesticMirror.closed) {
+    const notice = document.createElement("p");
+    notice.className = "mirror-closed-note";
+    notice.textContent = isEnglish() ? domesticMirror.noticeEn : domesticMirror.notice;
+    actions.append(notice);
   }
   if (isLatestPack && mobileMirror) {
     const mobile = document.createElement("a");

@@ -45,4 +45,3 @@
 ## 下载
 
 - GitHub Release 附件：`Modern Warfare 4-1.11.0-Release.zip`
-- 网页稳定加速下载：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>
