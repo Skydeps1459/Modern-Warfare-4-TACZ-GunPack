@@ -9,7 +9,7 @@ import {
 import {
   loadDomesticMirror,
   loadDownloadConfig,
-  loadMobileMirror
+  loadQuarkMirror
 } from "./download-config.js?v=20261118-2";
 import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
 import {
@@ -22,7 +22,7 @@ const list = document.querySelector("#changelog-list");
 const count = document.querySelector("#release-count");
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
 
-function createReleaseEntry(release, acceleratorPrefix, domesticMirror, mobileMirror, isLatestPack) {
+function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMirror, isLatestPack) {
   const article = document.createElement("article");
   article.className = "release-entry";
   article.id = releaseAnchor(release.tag);
@@ -57,19 +57,20 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, mobileMi
     notice.textContent = isEnglish() ? domesticMirror.noticeEn : domesticMirror.notice;
     actions.append(notice);
   }
-  if (isLatestPack && mobileMirror) {
-    const mobile = document.createElement("a");
-    mobile.className = "button button-outline";
-    mobile.href = mobileMirror.url;
-    mobile.rel = "noreferrer";
-    const mobileLabel = isEnglish() ? "China Mobile Cloud mirror" : mobileMirror.label;
-    mobile.textContent = mobileMirror.password
+  // 详细更新页国内分流展示夸克网盘（移动云盘分流仅保留在主页下载区）
+  if (isLatestPack && quarkMirror) {
+    const quark = document.createElement("a");
+    quark.className = "button button-outline";
+    quark.href = quarkMirror.url;
+    quark.rel = "noreferrer";
+    const quarkLabel = isEnglish() ? "Quark Cloud mirror" : quarkMirror.label;
+    quark.textContent = quarkMirror.password
       ? (isEnglish()
-          ? `${mobileLabel} · Password ${mobileMirror.password}`
-          : `${mobileLabel} · 密码 ${mobileMirror.password}`)
-      : mobileLabel;
-    bindDomesticMirrorCopy(mobile, mobileMirror);
-    actions.append(mobile);
+          ? `${quarkLabel} · Password ${quarkMirror.password}`
+          : `${quarkLabel} · 密码 ${quarkMirror.password}`)
+      : quarkLabel;
+    bindDomesticMirrorCopy(quark, quarkMirror);
+    actions.append(quark);
   }
   const direct = document.createElement("a");
   direct.className = release.asset ? "button button-ghost" : "button button-outline";
@@ -120,11 +121,11 @@ function scrollToCurrentHash() {
 
 async function renderChangelog({ preferLive = false } = {}) {
   try {
-    const [releases, downloadConfig, domesticMirror, mobileMirror] = await Promise.all([
+    const [releases, downloadConfig, domesticMirror, quarkMirror] = await Promise.all([
       loadPackReleases(),
       loadDownloadConfig(siteBaseUrl()),
       loadDomesticMirror(siteBaseUrl(), { preferLive }),
-      loadMobileMirror(siteBaseUrl(), { preferLive })
+      loadQuarkMirror(siteBaseUrl(), { preferLive })
     ]);
     count.textContent = uiText(
       `${releases.length} 个版本`,
@@ -149,7 +150,7 @@ async function renderChangelog({ preferLive = false } = {}) {
           release,
           downloadConfig.selected.prefix,
           domesticMirror,
-          mobileMirror,
+          quarkMirror,
           index === 0
         )
       )
