@@ -1,6 +1,6 @@
 # Modern Warfare 4 1.12.0-Release
 
-> 什么叫你在修BUG这件事上面花了两天时间？
+> 是的孩子们 我们又多了N个BUG
 
 ## 新增内容
 
