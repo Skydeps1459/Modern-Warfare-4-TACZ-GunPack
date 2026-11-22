@@ -8,7 +8,7 @@
 
 Modern Warfare 4 is a TACZ gun pack for Minecraft Forge 1.20.1 and NeoForge
 1.21.1 with the namespace `mw4`. The current release is **1.12.0-Release**,
-containing 16 guns, ammunition, attachments, reload state machines, and a
+containing 17 guns, ammunition, attachments, reload state machines, and a
 repository-linked website.
 
 Website: <https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>
