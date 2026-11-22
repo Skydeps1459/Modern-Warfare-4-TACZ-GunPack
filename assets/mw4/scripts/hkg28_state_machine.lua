@@ -50,13 +50,14 @@ local function isAds(context)
     return context:getAimingProgress() > 0.5
 end
 
--- 播放换弹动画（官方 MCX 口径读扩容等级；本枪网格只有 mag_standard/1/2，配件清单仅开放 1、2 级）
+-- 播放换弹动画（官方 MCX 口径读扩容等级 + 精确对号）
+-- ext == 3：特殊弹药配件（FMJ/HP/I 占扩容槽、等级 3），网格与动画均按二级扩容兜底
 local function runReloadAnimation(context)
     local track = context:getTrack(STATIC_TRACK_LINE, MAIN_TRACK)
     local ext = context:getMagExtentLevel()
     local ads = isAds(context)
     if (isNoAmmo(context)) then
-        if (ext == 2) then
+        if (ext == 2 or ext == 3) then
             context:runAnimation(ads and "reload_empty_xmag2_ads" or "reload_empty_xmag2", track, false, PLAY_ONCE_STOP, 0.2)
         elseif (ext == 1) then
             context:runAnimation(ads and "reload_xmag1_empty_ads" or "reload_xmag1_empty", track, false, PLAY_ONCE_STOP, 0.2)
@@ -65,7 +66,7 @@ local function runReloadAnimation(context)
             context:runAnimation(ads and "reload_empty_ads" or "reload_empty", track, false, PLAY_ONCE_STOP, 0.2)
         end
     else
-        if (ext == 2) then
+        if (ext == 2 or ext == 3) then
             context:runAnimation(ads and "reload_tactical_xmag2_ads" or "reload_tactical_xmag2", track, false, PLAY_ONCE_STOP, 0.2)
         elseif (ext == 1) then
             context:runAnimation(ads and "reload_tactical_xmag1_ads" or "reload_tactical_xmag1", track, false, PLAY_ONCE_STOP, 0.2)
@@ -75,13 +76,13 @@ local function runReloadAnimation(context)
     end
 end
 
--- 播放检视动画（空仓检视只有标准版；带弹检视按扩容等级分流）
+-- 播放检视动画（空仓检视只有标准版；带弹检视按扩容等级分流；ext == 3 同二级扩容）
 local function runInspectAnimation(context)
     local track = context:getTrack(STATIC_TRACK_LINE, MAIN_TRACK)
     local ext = context:getMagExtentLevel()
     if (isNoAmmo(context)) then
         context:runAnimation("inspect_empty", track, false, PLAY_ONCE_STOP, 0.2)
-    elseif (ext == 2) then
+    elseif (ext == 2 or ext == 3) then
         context:runAnimation("inspect_xmag2", track, false, PLAY_ONCE_STOP, 0.2)
     elseif (ext == 1) then
         context:runAnimation("inspect_xmag1", track, false, PLAY_ONCE_STOP, 0.2)
