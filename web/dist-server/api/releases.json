@@ -1,16 +1,31 @@
 [
   {
+    "tag": "v1.12.0-Release",
+    "name": "Modern Warfare 4 1.12.0-Release",
+    "url": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.12.0-Release",
+    "publishedAt": "2026-11-22T15:15:44Z",
+    "body": "# Modern Warfare 4 1.12.0-Release\n\n> 是的孩子们 我们又多了N个BUG\n\n## 新增内容\n\n新增 HK G28 精确射手步枪\n\n- 10 发标准弹匣 扩容弹匣为 20 / 30 发 半自动射击\n- 使用 7.62x51mm 弹药 可在枪匠台合成\n- 归类为射手步枪 完整的检视 换弹 扩容检视与三段刺刀近战随机播放\n- 二级扩容空仓换弹带第二弹匣插入动作 开火与换弹音效独立\n- 默认装配原厂战术枪托 可在枪匠台自由更换其他枪托\n\n## Bug 修复\n\n- **G28 动画回退默认**：G28 在部分环境下整套动画变成默认基础动作 现在全部动作正常播放\n- **G28 扩容动画误判**：未装备扩容弹匣时换弹与检视却播放扩容动作 现在按实际弹匣等级正确分流\n- **G28 检视弹匣子弹**：弹匣打空仅剩膛内一发时检视仍显示弹匣内有子弹 现在空弹匣检视不再显示子弹\n- **G28 二级扩容战术换弹**：非空仓的战术换弹也会冒出第二个弹匣 现在仅空仓换弹才出现第二弹匣\n- **G28 换弹节奏**：换弹动作早已结束却仍在等待冷却 现在动作收尾即可再次换弹与开火\n- **G28 弹药数值延迟**：换弹时弹匣已装回但右下角弹药数过一会才跳变 现在数值在插匣到位时同步更新\n- **G28 特殊弹药弹匣消失**：装备穿甲 空尖 燃烧等特殊弹药时整个弹匣不显示 现在弹匣正常显示\n- **G28 特殊弹药换弹动作**：装备特殊弹药时换弹与检视播放标准弹匣动作而非扩容动作 现在与二级扩容弹匣动作一致\n\n## 其他变更\n\n- G28 开火音效更换为更干脆的新版音源\n- G28 手持姿态微调 左右手锚点更贴合枪身\n\n## 安装\n\n> **⚠️ 重要提醒：要求 1.4.0 及以上版本的 TACZ: Arcana 模组**\n\n将 `Modern Warfare 4-1.12.0-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.12.0-Release`\n- ZIP：`Modern Warfare 4-1.12.0-Release.zip`\n- 文件大小：`85446366`\n- SHA-256：`60DB9C3730FC091653EAB47AF16F78A8DEDDE1C16AC69561970C61BB845E849B`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.12.0-Release.zip`\n",
+    "prerelease": false,
+    "downloadUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.12.0-Release/Modern.Warfare.4-1.12.0-Release.zip",
+    "asset": {
+      "name": "Modern.Warfare.4-1.12.0-Release.zip",
+      "size": 85446366,
+      "downloadCount": 56,
+      "updatedAt": "2026-11-22T20:09:22Z"
+    }
+  },
+  {
     "tag": "v1.11.0-Release",
     "name": "Modern Warfare 4 1.11.0-Release",
     "url": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.11.0-Release",
     "publishedAt": "2026-11-17T22:31:37Z",
-    "body": "# Modern Warfare 4 1.11.0-Release\n\n> 这次更新主要是适配兼容1.2.0并正式实装了随机近战动画的功能，未来也将更新包内老枪支持新版的枪包功能\n\n## 新增内容\n\n新增 AK-74M 突击步枪\n\n- 30 发标准弹匣 扩容弹匣为 40 / 50 / 60 发 射速 650 RPM 全自动与半自动\n- 使用全新 5.45x39mm 弹药 可在枪匠台合成\n- 包含专属状态机 快慢机切换动画与两段枪托近战随机播放\n- 完整的检视 换弹 扩容检视动作与独立开火 消音音效\n- 默认装配原厂枪托 可在枪匠台自由更换其他枪托\n\n## Bug 修复\n\n- **AK-74M 加载失败**：AK-74M 在部分环境下无法正确加载导致整包枪械异常 现在可以正常加载使用\n- **1.21.1 兼容性**：枪包在 Minecraft 1.21.1 NeoForge 环境下无法正常使用 现在 1.20.1 与 1.21.1 双版本均可运行\n- **1.21.1 枪匠台配方**：1.21.1 环境下枪匠台合成配方全部失效 现在弹药与枪械配方可正常合成\n- **AK-74M 默认枪托**：AK-74M 出厂强制装配战术枪托且无法保持原厂外观 现在默认显示原厂枪托\n- **MK23 换弹时间**：MK23 换弹动作早已结束但仍在等待换弹冷却 现在换弹节奏与动作一致\n- **SCAR-H 弹鼓配件**：SCAR-H 可安装不匹配的弹鼓与扩容配件导致显示异常 现在已移除无效配件选项\n- **HK437 瞄具显示**：HK437 瞄具标签残留无效显示网格 现在已清理不再产生异常渲染\n\n## 其他变更\n\n- AK-74M 消音开火音效更换为更干脆的新版音源\n- AK-74M 物品栏槽位图标更新\n- AK-74M 未装备瞄具时的机瞄放大倍率提高 开镜视野更近\n- 发布规则调整：hotfix 发布门槛由 3 个独立修复提高至 6 个\n\n## 安装\n\n将 `Modern Warfare 4-1.11.0-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.11.0-Release`\n- ZIP：`Modern Warfare 4-1.11.0-Release.zip`\n- 文件大小：`83633421`\n- SHA-256：`8C55A69D41B1A95812A829C5328290CC5E551C6F859B001ADFF2B75434F8EFD9`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.11.0-Release.zip`\n- 网页稳定加速下载：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>",
+    "body": "# Modern Warfare 4 1.11.0-Release\n\n> 这次更新主要是适配兼容1.2.0并正式实装了随机近战动画的功能，未来也将更新包内老枪支持新版的枪包功能\n\n## 新增内容\n\n新增 AK-74M 突击步枪\n\n- 30 发标准弹匣 扩容弹匣为 40 / 50 / 60 发 射速 650 RPM 全自动与半自动\n- 使用全新 5.45x39mm 弹药 可在枪匠台合成\n- 包含专属状态机 快慢机切换动画与两段枪托近战随机播放\n- 完整的检视 换弹 扩容检视动作与独立开火 消音音效\n- 默认装配原厂枪托 可在枪匠台自由更换其他枪托\n\n## Bug 修复\n\n- **AK-74M 加载失败**：AK-74M 在部分环境下无法正确加载导致整包枪械异常 现在可以正常加载使用\n- **1.21.1 兼容性**：枪包在 Minecraft 1.21.1 NeoForge 环境下无法正常使用 现在 1.20.1 与 1.21.1 双版本均可运行\n- **1.21.1 枪匠台配方**：1.21.1 环境下枪匠台合成配方全部失效 现在弹药与枪械配方可正常合成\n- **AK-74M 默认枪托**：AK-74M 出厂强制装配战术枪托且无法保持原厂外观 现在默认显示原厂枪托\n- **MK23 换弹时间**：MK23 换弹动作早已结束但仍在等待换弹冷却 现在换弹节奏与动作一致\n- **SCAR-H 弹鼓配件**：SCAR-H 可安装不匹配的弹鼓与扩容配件导致显示异常 现在已移除无效配件选项\n- **HK437 瞄具显示**：HK437 瞄具标签残留无效显示网格 现在已清理不再产生异常渲染\n\n## 其他变更\n\n- AK-74M 消音开火音效更换为更干脆的新版音源\n- AK-74M 物品栏槽位图标更新\n- AK-74M 未装备瞄具时的机瞄放大倍率提高 开镜视野更近\n- 发布规则调整：hotfix 发布门槛由 3 个独立修复提高至 6 个\n\n## 安装\n\n将 `Modern Warfare 4-1.11.0-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.11.0-Release`\n- ZIP：`Modern Warfare 4-1.11.0-Release.zip`\n- 文件大小：`83633421`\n- SHA-256：`8C55A69D41B1A95812A829C5328290CC5E551C6F859B001ADFF2B75434F8EFD9`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.11.0-Release.zip`\n",
     "prerelease": false,
     "downloadUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.11.0-Release/Modern.Warfare.4-1.11.0-Release.zip",
     "asset": {
       "name": "Modern.Warfare.4-1.11.0-Release.zip",
       "size": 83633421,
-      "downloadCount": 72,
+      "downloadCount": 189,
       "updatedAt": "2026-11-18T18:28:01Z"
     }
   },
@@ -19,13 +34,13 @@
     "name": "Modern Warfare 4 1.10.3-Release",
     "url": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.3-Release",
     "publishedAt": "2026-11-01T09:30:36Z",
-    "body": "# Modern Warfare 4 1.10.3-Release\n\n## Bug 修复\n\n- **HK437 瞄具展示模型**：未装备瞄具时仍会显示异常瞄具网格 现在已从模型中移除这两块错误网格\n- **HK437 前握把视角**：前握把改装界面视角偏离安装位置 现在会对准实际握把区域\n- **HK437 枪管显隐**：装备前握把时枪管仍会异常隐藏 现在枪管直接绑定枪管挂点并始终显示\n- **HK437 默认护木**：装备配件时默认护木会被隐藏 现在默认护木始终保持显示\n\n## 其他变更\n\n- 更新日志和网站记录同步到 1.10.3-Release\n\n## 安装\n\n将 `Modern Warfare 4-1.10.3-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.3-Release`\n- ZIP：`Modern Warfare 4-1.10.3-Release.zip`\n- 文件大小：`82950161`\n- SHA-256：`E344EAA008C6B4FC729265A50D00FD148B4333913117EFD6345AF51506F4CF4C`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.3-Release.zip`\n- 网页稳定加速下载：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>\n",
+    "body": "# Modern Warfare 4 1.10.3-Release\n\n## Bug 修复\n\n- **HK437 瞄具展示模型**：未装备瞄具时仍会显示异常瞄具网格 现在已从模型中移除这两块错误网格\n- **HK437 前握把视角**：前握把改装界面视角偏离安装位置 现在会对准实际握把区域\n- **HK437 枪管显隐**：装备前握把时枪管仍会异常隐藏 现在枪管直接绑定枪管挂点并始终显示\n- **HK437 默认护木**：装备配件时默认护木会被隐藏 现在默认护木始终保持显示\n\n## 其他变更\n\n- 更新日志和网站记录同步到 1.10.3-Release\n\n## 安装\n\n将 `Modern Warfare 4-1.10.3-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.3-Release`\n- ZIP：`Modern Warfare 4-1.10.3-Release.zip`\n- 文件大小：`82950161`\n- SHA-256：`E344EAA008C6B4FC729265A50D00FD148B4333913117EFD6345AF51506F4CF4C`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.3-Release.zip`\n",
     "prerelease": false,
     "downloadUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.10.3-Release/Modern.Warfare.4-1.10.3-Release.zip",
     "asset": {
       "name": "Modern.Warfare.4-1.10.3-Release.zip",
       "size": 82950161,
-      "downloadCount": 124,
+      "downloadCount": 126,
       "updatedAt": "2026-11-01T09:30:35Z"
     }
   },
@@ -34,13 +49,13 @@
     "name": "Modern Warfare 4 1.10.4-Release",
     "url": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.4-Release",
     "publishedAt": "2026-11-01T09:26:28Z",
-    "body": "# Modern Warfare 4 1.10.4-Release\n\n## Bug 修复\n\n- **HK437 前握把挂点**：前握把安装后的位置不正确 现在已校准到正确挂点高度\n- **HK437 近战动画与音效**：近战动画固定顺序播放且音效引用不匹配 现在三段动画随机播放并分别使用动画文件内固定音效\n- **HK437 命中反馈**：普通命中与击杀音效和其他枪不一致 现在统一使用相同反馈音效\n\n## 其他变更\n\n- 更新日志和网站记录同步到 1.10.4-Release\n\n## 安装\n\n将 `Modern Warfare 4-1.10.4-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.4-Release`\n- ZIP：`Modern Warfare 4-1.10.4-Release.zip`\n- 文件大小：`83027892`\n- SHA-256：`C96D0E86AC1F9D211BC4B565A915D4A5AB5E91B9B145095002BFB2352AA8A37A`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.4-Release.zip`\n- 网页稳定加速下载：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>\n",
+    "body": "# Modern Warfare 4 1.10.4-Release\n\n## Bug 修复\n\n- **HK437 前握把挂点**：前握把安装后的位置不正确 现在已校准到正确挂点高度\n- **HK437 近战动画与音效**：近战动画固定顺序播放且音效引用不匹配 现在三段动画随机播放并分别使用动画文件内固定音效\n- **HK437 命中反馈**：普通命中与击杀音效和其他枪不一致 现在统一使用相同反馈音效\n\n## 其他变更\n\n- 更新日志和网站记录同步到 1.10.4-Release\n\n## 安装\n\n将 `Modern Warfare 4-1.10.4-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.4-Release`\n- ZIP：`Modern Warfare 4-1.10.4-Release.zip`\n- 文件大小：`83027892`\n- SHA-256：`C96D0E86AC1F9D211BC4B565A915D4A5AB5E91B9B145095002BFB2352AA8A37A`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.4-Release.zip`\n",
     "prerelease": false,
     "downloadUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.10.4-Release/Modern.Warfare.4-1.10.4-Release.zip",
     "asset": {
       "name": "Modern.Warfare.4-1.10.4-Release.zip",
       "size": 83027892,
-      "downloadCount": 538,
+      "downloadCount": 558,
       "updatedAt": "2026-11-01T09:26:27Z"
     }
   },
@@ -49,7 +64,7 @@
     "name": "Modern Warfare 4 1.10.2-Release",
     "url": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.2-Release",
     "publishedAt": "2026-11-01T09:13:35Z",
-    "body": "# Modern Warfare 4 1.10.2-Release\n\n## Bug 修复\n\n- **HK437 空瞄具显示**：未装备瞄具时仍会显示瞄具展示模型 现在会完整隐藏\n- **HK437 空仓切枪**：空仓切换武器时不会保持挂机状态 现在切枪全程保持空仓姿态\n- **HK437 前握把视角**：前握把改装界面视角位置不正确 现在已校准到正常观察位置\n- **HK437 枪管显隐**：装备前握把时枪管会被错误隐藏 现在只隐藏默认护木并保留枪管\n\n## 其他变更\n\n- 更新日志和网站记录同步到 1.10.2-Release\n\n## 安装\n\n将 `Modern Warfare 4-1.10.2-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.2-Release`\n- ZIP：`Modern Warfare 4-1.10.2-Release.zip`\n- 文件大小：`83282573`\n- SHA-256：`19A4C8ED2B6F2BA3A22FC3807CDEDFC947A6CE0FA847ED715E0B75E452BE8C70`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.2-Release.zip`\n- 网页稳定加速下载：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>\n",
+    "body": "# Modern Warfare 4 1.10.2-Release\n\n## Bug 修复\n\n- **HK437 空瞄具显示**：未装备瞄具时仍会显示瞄具展示模型 现在会完整隐藏\n- **HK437 空仓切枪**：空仓切换武器时不会保持挂机状态 现在切枪全程保持空仓姿态\n- **HK437 前握把视角**：前握把改装界面视角位置不正确 现在已校准到正常观察位置\n- **HK437 枪管显隐**：装备前握把时枪管会被错误隐藏 现在只隐藏默认护木并保留枪管\n\n## 其他变更\n\n- 更新日志和网站记录同步到 1.10.2-Release\n\n## 安装\n\n将 `Modern Warfare 4-1.10.2-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.2-Release`\n- ZIP：`Modern Warfare 4-1.10.2-Release.zip`\n- 文件大小：`83282573`\n- SHA-256：`19A4C8ED2B6F2BA3A22FC3807CDEDFC947A6CE0FA847ED715E0B75E452BE8C70`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.2-Release.zip`\n",
     "prerelease": false,
     "downloadUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.10.2-Release/Modern.Warfare.4-1.10.2-Release.zip",
     "asset": {
@@ -64,13 +79,13 @@
     "name": "Modern Warfare 4 1.10.1-Release",
     "url": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.1-Release",
     "publishedAt": "2026-11-01T07:38:01Z",
-    "body": "# Modern Warfare 4 1.10.1-Release\n\n## Bug 修复\n\n- **HK437 快慢机音效**：切换快慢机时仍会叠加官方音效 现在只播放枪包自带的切换声\n- **HK437 切枪动画**：空仓切换武器时切枪动画会丢失 现在空仓和非空仓都会完整播放\n- **HK437 第三人称配件**：第三人称下弹鼓和扩容弹匣会错误显示 现在会跟随实际配件状态\n\n## 其他变更\n\n- HK437 更新日志与网站记录同步到 1.10.1-Release\n\n## 安装\n\n将 `Modern Warfare 4-1.10.1-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.1-Release`\n- ZIP：`Modern Warfare 4-1.10.1-Release.zip`\n- 文件大小：`83281438`\n- SHA-256：`C62C7EBA2BB0CC2B35524AF45B3784A7C7D56388E9602029E60110F695DE08B0`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.1-Release.zip`\n- 网页稳定加速下载：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>\n",
+    "body": "# Modern Warfare 4 1.10.1-Release\n\n## Bug 修复\n\n- **HK437 快慢机音效**：切换快慢机时仍会叠加官方音效 现在只播放枪包自带的切换声\n- **HK437 切枪动画**：空仓切换武器时切枪动画会丢失 现在空仓和非空仓都会完整播放\n- **HK437 第三人称配件**：第三人称下弹鼓和扩容弹匣会错误显示 现在会跟随实际配件状态\n\n## 其他变更\n\n- HK437 更新日志与网站记录同步到 1.10.1-Release\n\n## 安装\n\n将 `Modern Warfare 4-1.10.1-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.1-Release`\n- ZIP：`Modern Warfare 4-1.10.1-Release.zip`\n- 文件大小：`83281438`\n- SHA-256：`C62C7EBA2BB0CC2B35524AF45B3784A7C7D56388E9602029E60110F695DE08B0`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.1-Release.zip`\n",
     "prerelease": false,
     "downloadUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.10.1-Release/Modern.Warfare.4-1.10.1-Release.zip",
     "asset": {
       "name": "Modern.Warfare.4-1.10.1-Release.zip",
       "size": 83281438,
-      "downloadCount": 26,
+      "downloadCount": 30,
       "updatedAt": "2026-11-01T07:44:58Z"
     }
   },
@@ -79,13 +94,13 @@
     "name": "Modern Warfare 4 1.10.0-Release",
     "url": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.10.0-Release",
     "publishedAt": "2026-10-31T21:03:31Z",
-    "body": "# Modern Warfare 4 1.10.0-Release\n\n> 时隔多天第一次接触mesh网格模型的一次较大的更新，也是总算做出来一个可玩版本了，有BUG请反馈我会一一修复\n\n## 新增内容\n\n新增 HK437 突击步枪\n\n- 30 发标准弹匣 扩容弹匣为 45 发和 60 发 射速 703 RPM\n- 包含专属状态机 常规与消音开火音效 和完整的检视换弹动作\n- 导入 113 个音效文件并接入更新后的动画时间轴\n\n## Bug 修复\n\n- **HK437 备弹匣**：普通战术换弹时备弹匣不显示或动画错误 现在会按原始动作正常显示\n- **HK437 快慢机状态**：半自动和全自动状态及切换动画缺失 现在可以正常切换并保持状态\n- **HK437 快慢机手臂和镜头**：切换快慢机时手臂与镜头动作缺失 现在会随切换动画正常播放\n- **HK437 扩容弹匣状态**：切换快慢机时扩容弹匣会错误变回基础弹匣 现在会保持当前弹匣\n- **HK437 握把兼容**：装配握把后默认枪管仍会显示 现在会随默认护木一起隐藏\n- **HK437 空仓检视**：扩容弹匣空仓检视时仍会显示弹匣内子弹 现在零发时会完整隐藏\n- **HK437 空仓挂机**：空仓时拉机柄没有保持后置姿态 现在会正常停留在挂机位置\n- **MRAD 切枪音效**：切换武器时切枪声音会重叠播放 现在每次切换只播放一次\n- **MK23 持枪镜头**：持枪镜头位置偏低 现在已抬高到正常位置\n\n## 其他变更\n\n- HK437 一级扩容配件已禁用\n- HK437 右手绝对姿态动画已统一映射到待机姿态基准\n- HK437 常规与消音开火分别使用独立音效\n\n## 安装\n\n将 `Modern Warfare 4-1.10.0-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.0-Release`\n- ZIP：`Modern Warfare 4-1.10.0-Release.zip`\n- 文件大小：`83272519`\n- SHA-256：`295526A2E36A93FEE130AA29680E54CC077EF0835E093F0E26A1A55768AF5863`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.0-Release.zip`\n- 网页稳定加速下载：<https://skydeps1459.github.io/Modern-Warfare-4-TACZ-GunPack/>\n",
+    "body": "# Modern Warfare 4 1.10.0-Release\n\n> 时隔多天第一次接触mesh网格模型的一次较大的更新，也是总算做出来一个可玩版本了，有BUG请反馈我会一一修复\n\n## 新增内容\n\n新增 HK437 突击步枪\n\n- 30 发标准弹匣 扩容弹匣为 45 发和 60 发 射速 703 RPM\n- 包含专属状态机 常规与消音开火音效 和完整的检视换弹动作\n- 导入 113 个音效文件并接入更新后的动画时间轴\n\n## Bug 修复\n\n- **HK437 备弹匣**：普通战术换弹时备弹匣不显示或动画错误 现在会按原始动作正常显示\n- **HK437 快慢机状态**：半自动和全自动状态及切换动画缺失 现在可以正常切换并保持状态\n- **HK437 快慢机手臂和镜头**：切换快慢机时手臂与镜头动作缺失 现在会随切换动画正常播放\n- **HK437 扩容弹匣状态**：切换快慢机时扩容弹匣会错误变回基础弹匣 现在会保持当前弹匣\n- **HK437 握把兼容**：装配握把后默认枪管仍会显示 现在会随默认护木一起隐藏\n- **HK437 空仓检视**：扩容弹匣空仓检视时仍会显示弹匣内子弹 现在零发时会完整隐藏\n- **HK437 空仓挂机**：空仓时拉机柄没有保持后置姿态 现在会正常停留在挂机位置\n- **MRAD 切枪音效**：切换武器时切枪声音会重叠播放 现在每次切换只播放一次\n- **MK23 持枪镜头**：持枪镜头位置偏低 现在已抬高到正常位置\n\n## 其他变更\n\n- HK437 一级扩容配件已禁用\n- HK437 右手绝对姿态动画已统一映射到待机姿态基准\n- HK437 常规与消音开火分别使用独立音效\n\n## 安装\n\n将 `Modern Warfare 4-1.10.0-Release.zip` 放入 `.minecraft/tacz/`，不要解压\n更新已加载的枪包时请先完全退出游戏\n\n## 校验\n\n- 枪包版本：`1.10.0-Release`\n- ZIP：`Modern Warfare 4-1.10.0-Release.zip`\n- 文件大小：`83272519`\n- SHA-256：`295526A2E36A93FEE130AA29680E54CC077EF0835E093F0E26A1A55768AF5863`\n- 发布前检查：命名空间、动画/音效引用、打包内容、部署副本哈希\n\n## 下载\n\n- GitHub Release 附件：`Modern Warfare 4-1.10.0-Release.zip`\n",
     "prerelease": false,
     "downloadUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/download/v1.10.0-Release/Modern.Warfare.4-1.10.0-Release.zip",
     "asset": {
       "name": "Modern.Warfare.4-1.10.0-Release.zip",
       "size": 83272519,
-      "downloadCount": 404,
+      "downloadCount": 430,
       "updatedAt": "2026-10-31T21:14:11Z"
     }
   },
@@ -100,7 +115,7 @@
     "asset": {
       "name": "Modern.Warfare.4-1.8.2-Release.zip",
       "size": 26227354,
-      "downloadCount": 239,
+      "downloadCount": 242,
       "updatedAt": "2026-10-26T11:50:18Z"
     }
   },
@@ -115,7 +130,7 @@
     "asset": {
       "name": "Modern.Warfare.4-1.8.1-Release.zip",
       "size": 26227920,
-      "downloadCount": 49,
+      "downloadCount": 50,
       "updatedAt": "2026-10-26T05:16:51Z"
     }
   },
@@ -140,7 +155,7 @@
     "asset": {
       "name": "Modern.Warfare.4-1.8.0-Release.zip",
       "size": 26229060,
-      "downloadCount": 274,
+      "downloadCount": 280,
       "updatedAt": "2026-10-25T11:14:40Z"
     }
   }

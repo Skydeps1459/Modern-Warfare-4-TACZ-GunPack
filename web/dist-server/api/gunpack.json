@@ -1,14 +1,14 @@
 {
   "name": "Modern Warfare 4",
   "nameEn": "Modern Warfare 4",
-  "description": "Modern Warfare 4 枪包。",
-  "descriptionEn": "Modern Warfare 4 gun pack.",
-  "version": "1.11.0-Release",
+  "description": "Modern Warfare 4 枪包。【开发预览版】正式版以加密发布包为准。",
+  "descriptionEn": "Modern Warfare 4 gun pack. [Dev Preview] The official release is the encrypted pack.",
+  "version": "1.12.0-Release",
   "license": "GPL-3.0",
   "authors": [
     "MoreFun"
   ],
-  "packDate": "2026-11-14",
+  "packDate": "2026-11-22",
   "namespace": "mw4",
   "guns": [
     {
@@ -202,6 +202,18 @@
       "typeLabelEn": "Assault Rifle",
       "sort": 21,
       "iconUrl": "api/icons/ak74m.png"
+    },
+    {
+      "id": "hkg28",
+      "name": "HK G28 精确射手步枪",
+      "nameEn": "HK G28",
+      "description": "7.62 口径的精确射手步枪 精度换来的是一枪一停 别指望它替你压枪\n§7感谢大佬神梦星辰提供的模型",
+      "descriptionEn": "A 7.62 marksman rifle Accuracy paid for with a slower trigger It won't hold steady for you\n§7Model courtesy of ShenMengXingChen",
+      "type": "dmr",
+      "typeLabel": "精确射手步枪",
+      "typeLabelEn": "Marksman Rifle",
+      "sort": 22,
+      "iconUrl": "api/icons/hkg28.png"
     }
   ]
 }
