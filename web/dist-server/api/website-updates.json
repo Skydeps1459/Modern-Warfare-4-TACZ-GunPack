@@ -1,6 +1,19 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.59",
+      "title": "更新夸克网盘与移动云盘分流链接",
+      "publishedAt": "2026-11-23T06:05:00Z",
+      "summary": "国内分流下载链接更换为最新分享地址：夸克网盘与移动云盘均更新。主页下载区与详细更新页的夸克分流按钮实时生效。",
+      "changes": [
+        "夸克网盘分流链接更新为 pan.quark.cn/s/8be33de96fe4。",
+        "移动云盘分流链接更新为 yun.139.com 新分享地址（2yA8LuHEKET2k）。",
+        "两个链接均无提取码，按钮直接跳转。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.58",
       "title": "移动端快捷定位侧边栏与更新日志页排版优化",
       "publishedAt": "2026-11-23T05:45:00Z",
