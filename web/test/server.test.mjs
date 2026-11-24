@@ -10,6 +10,7 @@ import {
   readGunPackManifest,
   readWebsiteUpdates,
   sortReleasesByDate,
+  validateAcceleratorConfig,
   validateDomesticMirror,
   validateMobileMirror,
   validateQuarkMirror
@@ -299,6 +300,21 @@ test("validates Quark Cloud mirror updates", () => {
   }), /HTTPS/);
 });
 
+test("validates the accelerated download switch", () => {
+  assert.deepEqual(validateAcceleratorConfig({ enabled: true }), { enabled: true });
+  assert.deepEqual(validateAcceleratorConfig({ enabled: false }), { enabled: false });
+  assert.throws(() => validateAcceleratorConfig({ enabled: "yes" }), /布尔值/);
+  assert.throws(() => validateAcceleratorConfig({}), /布尔值/);
+  assert.throws(() => validateAcceleratorConfig(null), /布尔值/);
+});
+
+test("accelerator switch defaults to disabled in the repository config", async () => {
+  const config = JSON.parse(
+    await readFile(new URL("../accelerator.json", import.meta.url), "utf8")
+  );
+  assert.equal(config.enabled, false);
+});
+
 test("serves health and local gun pack data", async (t) => {
   const server = createAppServer();
   server.listen(0, "127.0.0.1");
@@ -412,6 +428,11 @@ test("serves health and local gun pack data", async (t) => {
   const englishLanzouNoticeResponse = await fetch(`${baseUrl}/en/lanzou-notice.html`);
   assert.equal(englishLanzouNoticeResponse.status, 200);
   assert.match(await englishLanzouNoticeResponse.text(), /Lanzou Cloud mirror closed/);
+
+  const acceleratorResponse = await fetch(`${baseUrl}/api/accelerator`);
+  assert.equal(acceleratorResponse.status, 200);
+  const accelerator = await acceleratorResponse.json();
+  assert.equal(typeof accelerator.enabled, "boolean");
 
   const removedCdnMirrorResponse = await fetch(`${baseUrl}/api/cdn-mirror`);
   assert.equal(removedCdnMirrorResponse.status, 404);

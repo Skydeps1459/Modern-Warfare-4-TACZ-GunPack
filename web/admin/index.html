@@ -12,12 +12,25 @@
       <header>
         <p class="eyebrow">MW4 // RESTRICTED CONTROL</p>
         <h1>分流管理</h1>
-        <p>只有仓库所有者 GitHub 账号可以修改国内蓝奏云分流（含关闭状态与公告）与移动云盘分流链接。</p>
+        <p>只有仓库所有者 GitHub 账号可以修改加速下载开关、国内蓝奏云分流（含关闭状态与公告）与移动云盘、夸克网盘分流链接。</p>
       </header>
 
       <section id="admin-state" class="panel">
         <p>正在检查 GitHub 登录状态…</p>
       </section>
+
+      <form id="accelerator-form" class="panel hidden">
+        <div class="account-row">
+          <span>加速下载总开关</span>
+        </div>
+        <label class="checkbox-row">
+          <input id="accelerator-enabled" type="checkbox">
+          启用加速下载（勾选后首页与更新日志页显示加速下载按钮）
+        </label>
+        <p class="form-hint">默认关闭：网页屏蔽加速下载按钮与功能，仅保留 GitHub 原仓库链接。打开后与之前相同（gh 代理加速）。保存后 GitHub Pages 自动更新，站内静态文件需重新部署。</p>
+        <button type="submit">保存开关状态</button>
+        <p id="accelerator-save-status" role="status"></p>
+      </form>
 
       <form id="mirror-form" class="panel hidden">
         <div class="account-row">

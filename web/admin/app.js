@@ -18,6 +18,9 @@ const quarkLabelInput = document.querySelector("#quark-label");
 const quarkUrlInput = document.querySelector("#quark-url");
 const quarkPasswordInput = document.querySelector("#quark-password");
 const quarkSaveStatus = document.querySelector("#quark-save-status");
+const acceleratorForm = document.querySelector("#accelerator-form");
+const acceleratorEnabledInput = document.querySelector("#accelerator-enabled");
+const acceleratorSaveStatus = document.querySelector("#accelerator-save-status");
 
 let csrfToken = "";
 
@@ -74,6 +77,8 @@ async function loadSession() {
   quarkPasswordInput.value = quark.password || "";
   mobileForm.classList.remove("hidden");
   quarkForm.classList.remove("hidden");
+  acceleratorEnabledInput.checked = payload.accelerator?.enabled === true;
+  acceleratorForm.classList.remove("hidden");
 }
 
 closedInput.addEventListener("change", syncClosedState);
@@ -181,6 +186,34 @@ quarkForm.addEventListener("submit", async (event) => {
     ? "已提交，GitHub Pages 将自动更新。"
     : "已保存（链接为空，网页暂不显示该按钮）。";
   quarkSaveStatus.className = "success";
+});
+
+acceleratorForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  acceleratorSaveStatus.textContent = "正在提交到 GitHub…";
+  acceleratorSaveStatus.className = "";
+
+  const enabled = acceleratorEnabledInput.checked;
+  const response = await fetch("/api/admin/accelerator", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRF-Token": csrfToken
+    },
+    body: JSON.stringify({ enabled })
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    acceleratorSaveStatus.textContent = payload.error || `保存失败（HTTP ${response.status}）`;
+    acceleratorSaveStatus.className = "error";
+    return;
+  }
+
+  acceleratorSaveStatus.textContent = enabled
+    ? "已打开加速下载，GitHub Pages 将自动更新。"
+    : "已关闭加速下载（保留 GitHub 原链），GitHub Pages 将自动更新。";
+  acceleratorSaveStatus.className = "success";
 });
 
 loadSession().catch((error) => {

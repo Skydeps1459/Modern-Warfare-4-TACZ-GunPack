@@ -12,6 +12,7 @@ const websiteUpdatesPath = join(serverDir, "website-updates.json");
 const domesticMirrorPath = join(serverDir, "domestic-mirror.json");
 const mobileMirrorPath = join(serverDir, "mobile-mirror.json");
 const quarkMirrorPath = join(serverDir, "quark-mirror.json");
+const acceleratorPath = join(serverDir, "accelerator.json");
 const adminDir = join(serverDir, "admin");
 const gunpackRoot = join(projectRoot, "assets", "mw4");
 const gunIndexRoot = join(projectRoot, "data", "mw4", "index", "guns");
@@ -300,6 +301,20 @@ export function validateQuarkMirror(input, allowedHosts = ALLOWED_QUARK_MIRROR_H
   }
 
   return { label, url: url.href, password };
+}
+
+export function validateAcceleratorConfig(input) {
+  const enabled = input?.enabled;
+  if (typeof enabled !== "boolean") {
+    throw new Error("加速下载开关必须为布尔值（enabled: true/false）。");
+  }
+  return { enabled };
+}
+
+async function readAcceleratorConfig() {
+  const config = await readJson(acceleratorPath).catch(() => null);
+  // 配置缺失或损坏时一律按"关闭"处理，绝不默认放行加速
+  return { enabled: config?.enabled === true };
 }
 
 function parseCookies(request) {
@@ -723,6 +738,15 @@ async function writeQuarkMirrorToGitHub(accessToken, mirror) {
   );
 }
 
+async function writeAcceleratorToGitHub(accessToken, config) {
+  return writeMirrorJsonToGitHub(
+    accessToken,
+    "web/accelerator.json",
+    config.enabled ? "Enable accelerated download" : "Disable accelerated download",
+    config
+  );
+}
+
 async function handleRequest(request, response) {
   applySecurityHeaders(response);
   const method = request.method || "GET";
@@ -731,7 +755,8 @@ async function handleRequest(request, response) {
   const adminPost = method === "POST"
     && (url.pathname === "/api/admin/domestic-mirror"
       || url.pathname === "/api/admin/mobile-mirror"
-      || url.pathname === "/api/admin/quark-mirror");
+      || url.pathname === "/api/admin/quark-mirror"
+      || url.pathname === "/api/admin/accelerator");
   if (!["GET", "HEAD"].includes(method) && !adminPost) {
     sendJson(response, 405, { error: "Method not allowed" });
     return;
@@ -841,7 +866,8 @@ async function handleRequest(request, response) {
         label: "夸克网盘分流",
         url: "",
         password: ""
-      }))
+      })),
+      accelerator: await readAcceleratorConfig()
     });
     return;
   }
@@ -859,7 +885,11 @@ async function handleRequest(request, response) {
 
     try {
       const body = JSON.parse(await readRequestBody(request));
-      if (url.pathname === "/api/admin/quark-mirror") {
+      if (url.pathname === "/api/admin/accelerator") {
+        const config = validateAcceleratorConfig(body);
+        const commit = await writeAcceleratorToGitHub(adminSession.accessToken, config);
+        sendJson(response, 200, { ok: true, accelerator: config, commit });
+      } else if (url.pathname === "/api/admin/quark-mirror") {
         const mirror = validateQuarkMirror(body);
         const commit = await writeQuarkMirrorToGitHub(adminSession.accessToken, mirror);
         sendJson(response, 200, { ok: true, mirror, commit });
@@ -918,7 +948,9 @@ async function handleRequest(request, response) {
     const location = github.data?.release?.downloadUrl
       || github.data?.repository?.url
       || `https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v${gunpack.version}`;
-    const accelerated = url.searchParams.get("accelerated") === "1"
+    // 加速总开关关闭时，即使带 accelerated=1 也走原链
+    const accelerator = await readAcceleratorConfig();
+    const accelerated = accelerator.enabled && url.searchParams.get("accelerated") === "1"
       ? `https://gh-proxy.com/${location}`
       : location;
     redirect(response, accelerated);
@@ -954,6 +986,11 @@ async function handleRequest(request, response) {
 
   if (url.pathname === "/api/quark-mirror") {
     sendJson(response, 200, await readJson(quarkMirrorPath));
+    return;
+  }
+
+  if (url.pathname === "/api/accelerator") {
+    sendJson(response, 200, await readAcceleratorConfig(), "no-store");
     return;
   }
 

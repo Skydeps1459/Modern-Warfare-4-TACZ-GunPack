@@ -248,6 +248,7 @@ export async function buildStaticSite() {
   await cp(join(webDir, "domestic-mirror.json"), join(distDir, "api", "domestic-mirror.json"));
   await cp(join(webDir, "mobile-mirror.json"), join(distDir, "api", "mobile-mirror.json"));
   await cp(join(webDir, "quark-mirror.json"), join(distDir, "api", "quark-mirror.json"));
+  await cp(join(webDir, "accelerator.json"), join(distDir, "api", "accelerator.json"));
 
   const [detailTemplate, englishDetailTemplate, websiteUpdates] = await Promise.all([
     readFile(join(webDir, "templates", "website-update-detail.html"), "utf8"),

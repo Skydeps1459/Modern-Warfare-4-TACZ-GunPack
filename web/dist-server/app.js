@@ -10,11 +10,12 @@ import {
 } from "./website-update-data.js?v=20261101-2";
 import {
   accelerateDownloadUrl,
+  loadAcceleratorSwitch,
   loadDomesticMirror,
   loadDownloadConfig,
   loadMobileMirror,
   loadQuarkMirror
-} from "./download-config.js?v=20261121-1";
+} from "./download-config.js?v=20261125-1";
 import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
 import {
   intlLocale,
@@ -85,17 +86,47 @@ function applyRepositoryLinks(url) {
   for (const link of elements.repoLinks) link.href = url;
 }
 
+// 加速下载总开关：默认关闭。关闭时隐藏加速按钮，GitHub 原链升级为主按钮。
+let acceleratorEnabled = false;
+
 const SERVER_FILE_URL = "/files/Modern.Warfare.4-1.10.4-Release.zip";
 
 function applyDownloadLinks(url) {
-  // 站内版：CDN 通道已移除，加速与原链均走服务器本地分发
+  // 站内版：加速与原链均走服务器本地分发；加速按钮仍受后台总开关控制
   currentDownloadUrl = SERVER_FILE_URL;
-  if (elements.downloadAccelerated) elements.downloadAccelerated.href = SERVER_FILE_URL;
-  if (elements.downloadDirect) elements.downloadDirect.href = SERVER_FILE_URL;
+  if (elements.downloadAccelerated) {
+    elements.downloadAccelerated.href = SERVER_FILE_URL;
+    elements.downloadAccelerated.hidden = !acceleratorEnabled;
+  }
+  if (elements.downloadDirect) {
+    elements.downloadDirect.href = SERVER_FILE_URL;
+    elements.downloadDirect.classList.toggle("button-primary", !acceleratorEnabled);
+    elements.downloadDirect.classList.toggle("button-ghost", acceleratorEnabled);
+  }
 }
 
 async function refreshDownloadAccelerator() {
   // 站内版不使用 gh 代理加速，下载固定走服务器本地文件
+}
+
+let acceleratorSwitchInFlight = false;
+let lastLiveAcceleratorAt = 0;
+
+async function loadAcceleratorSwitchState({ preferLive = false } = {}) {
+  if (acceleratorSwitchInFlight) return;
+  // 连续切窗口时别把 GitHub API 的 60 次/小时额度打光
+  if (preferLive) {
+    if (Date.now() - lastLiveAcceleratorAt < 10_000) preferLive = false;
+    else lastLiveAcceleratorAt = Date.now();
+  }
+  acceleratorSwitchInFlight = true;
+  try {
+    const state = await loadAcceleratorSwitch(siteBaseUrl(), { preferLive });
+    acceleratorEnabled = state.enabled === true;
+    applyDownloadLinks(currentDownloadUrl);
+  } finally {
+    acceleratorSwitchInFlight = false;
+  }
 }
 
 let domesticMirrorInFlight = false;
@@ -452,6 +483,7 @@ async function refreshPublicData() {
       loadRecentReleases(),
       loadHomepageWebsiteUpdates(),
       refreshDownloadAccelerator(),
+      loadAcceleratorSwitchState(),
       loadDomesticMirrorLink(),
       loadMobileMirrorLink(),
       loadQuarkMirrorLink()
@@ -468,12 +500,14 @@ setInterval(refreshPublicData, AUTO_REFRESH_MS);
 // 分流按钮单独高频轮询（30 秒）：后端一改，页面最多半分钟内跟上
 setInterval(() => {
   if (document.visibilityState === "visible") {
+    loadAcceleratorSwitchState();
     loadDomesticMirrorLink();
     loadMobileMirrorLink();
     loadQuarkMirrorLink();
   }
 }, MIRROR_REFRESH_MS);
 window.addEventListener("online", () => {
+  loadAcceleratorSwitchState({ preferLive: true });
   loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
   loadQuarkMirrorLink({ preferLive: true });
@@ -481,12 +515,14 @@ window.addEventListener("online", () => {
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState !== "visible") return;
   // 回到页面时直接问 GitHub API，拿到的是刚提交的最新值
+  loadAcceleratorSwitchState({ preferLive: true });
   loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
   loadQuarkMirrorLink({ preferLive: true });
   if (Date.now() - lastRefreshAt >= AUTO_REFRESH_MS) refreshPublicData();
 });
 window.addEventListener("focus", () => {
+  loadAcceleratorSwitchState({ preferLive: true });
   loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
   loadQuarkMirrorLink({ preferLive: true });

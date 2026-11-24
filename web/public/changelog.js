@@ -7,10 +7,11 @@ import {
   renderReleaseNotes
 } from "./release-data.js?v=20261101-3";
 import {
+  loadAcceleratorSwitch,
   loadDomesticMirror,
   loadDownloadConfig,
   loadQuarkMirror
-} from "./download-config.js?v=20261118-2";
+} from "./download-config.js?v=20261125-1";
 import { bindDomesticMirrorCopy } from "./domestic-mirror.js?v=20261101-2";
 import {
   isEnglish,
@@ -22,7 +23,7 @@ const list = document.querySelector("#changelog-list");
 const count = document.querySelector("#release-count");
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
 
-function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMirror, isLatestPack) {
+function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMirror, isLatestPack, acceleratorEnabled) {
   const article = document.createElement("article");
   article.className = "release-entry";
   article.id = releaseAnchor(release.tag);
@@ -42,7 +43,8 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMir
 
   const actions = document.createElement("div");
   actions.className = "release-actions";
-  if (release.asset) {
+  // 加速下载受后台总开关控制：默认关闭时不渲染加速按钮，GitHub 原链转为主按钮
+  if (release.asset && acceleratorEnabled) {
     const accelerated = document.createElement("a");
     accelerated.className = "button button-primary";
     accelerated.href = acceleratedReleaseUrl(release.downloadUrl, acceleratorPrefix);
@@ -73,7 +75,9 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMir
     actions.append(quark);
   }
   const direct = document.createElement("a");
-  direct.className = release.asset ? "button button-ghost" : "button button-outline";
+  direct.className = release.asset
+    ? (acceleratorEnabled ? "button button-ghost" : "button button-primary")
+    : "button button-outline";
   direct.href = release.url;
   direct.rel = "noreferrer";
   direct.textContent = release.asset
@@ -121,12 +125,14 @@ function scrollToCurrentHash() {
 
 async function renderChangelog({ preferLive = false } = {}) {
   try {
-    const [releases, downloadConfig, domesticMirror, quarkMirror] = await Promise.all([
+    const [releases, downloadConfig, domesticMirror, quarkMirror, acceleratorSwitch] = await Promise.all([
       loadPackReleases(),
       loadDownloadConfig(siteBaseUrl()),
       loadDomesticMirror(siteBaseUrl(), { preferLive }),
-      loadQuarkMirror(siteBaseUrl(), { preferLive })
+      loadQuarkMirror(siteBaseUrl(), { preferLive }),
+      loadAcceleratorSwitch(siteBaseUrl(), { preferLive })
     ]);
+    const acceleratorEnabled = acceleratorSwitch.enabled === true;
     count.textContent = uiText(
       `${releases.length} 个版本`,
       `${releases.length} releases`
@@ -151,7 +157,8 @@ async function renderChangelog({ preferLive = false } = {}) {
           downloadConfig.selected.prefix,
           domesticMirror,
           quarkMirror,
-          index === 0
+          index === 0,
+          acceleratorEnabled
         )
       )
     );

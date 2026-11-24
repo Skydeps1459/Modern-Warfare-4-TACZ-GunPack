@@ -1,6 +1,20 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.60",
+      "title": "加速下载新增后台总开关（默认关闭）",
+      "publishedAt": "2026-11-24T17:00:00Z",
+      "summary": "加速下载按钮与功能改由后台总开关控制，默认关闭：首页与更新日志页不再显示加速下载按钮，GitHub 原仓库链接保留并升级为主下载按钮。后台打开开关后恢复与之前相同的 gh 代理加速。",
+      "changes": [
+        "新增 web/accelerator.json 开关配置（enabled 默认 false）与后台「加速下载总开关」表单，仅仓库所有者可切换。",
+        "关闭时首页隐藏加速下载按钮，GitHub 原链转为主按钮；更新日志页不渲染加速按钮，GitHub Release 转为主按钮。",
+        "开关状态多源实时加载（GitHub Contents API 优先），配置缺失或加载失败一律按关闭处理。",
+        "服务端 /api/download 在开关关闭时即使带 accelerated=1 也走原链。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.59",
       "title": "更新夸克网盘与移动云盘分流链接",
       "publishedAt": "2026-11-23T06:05:00Z",
