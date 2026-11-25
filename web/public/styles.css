@@ -18,6 +18,11 @@
   box-sizing: border-box;
 }
 
+/* hidden 属性必须压过组件 display（.button 等是 inline-flex，会覆盖 UA 的 display:none） */
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
 }

@@ -1,6 +1,19 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.61",
+      "title": "修复加速下载按钮隐藏失效",
+      "publishedAt": "2026-11-25T05:30:00Z",
+      "summary": "修复加速下载总开关关闭时首页按钮仍然显示的问题：按钮组件的 display 样式覆盖了 hidden 属性的默认隐藏效果，现已全局强制 hidden 生效。",
+      "changes": [
+        "全局补充 [hidden] { display: none !important }，确保带 hidden 属性的按钮真正隐藏。"
+      ],
+      "bugFixes": [
+        "开关关闭时首页「加速下载枪包」按钮未隐藏（.button 的 inline-flex 覆盖了 hidden 的 UA 样式）。"
+      ],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.60",
       "title": "加速下载新增后台总开关（默认关闭）",
       "publishedAt": "2026-11-24T17:00:00Z",
