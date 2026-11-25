@@ -8,7 +8,6 @@ import {
 } from "./release-data.js?v=20261101-3";
 import {
   loadAcceleratorSwitch,
-  loadDomesticMirror,
   loadDownloadConfig,
   loadQuarkMirror
 } from "./download-config.js?v=20261125-1";
@@ -23,7 +22,7 @@ const list = document.querySelector("#changelog-list");
 const count = document.querySelector("#release-count");
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
 
-function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMirror, isLatestPack, acceleratorEnabled) {
+function createReleaseEntry(release, acceleratorPrefix, quarkMirror, isLatestPack, acceleratorEnabled) {
   const article = document.createElement("article");
   article.className = "release-entry";
   article.id = releaseAnchor(release.tag);
@@ -52,13 +51,7 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMir
     accelerated.textContent = uiText("加速下载", "Accelerated download");
     actions.append(accelerated);
   }
-  // 蓝奏云下载按钮与入口已永久移除：仅在其关闭状态下保留提示信息
-  if (isLatestPack && domesticMirror && domesticMirror.closed) {
-    const notice = document.createElement("p");
-    notice.className = "mirror-closed-note";
-    notice.textContent = isEnglish() ? domesticMirror.noticeEn : domesticMirror.notice;
-    actions.append(notice);
-  }
+  // 蓝奏云下载按钮与入口已永久移除：关闭提示信息也已下线，不再渲染
   // 详细更新页国内分流展示夸克网盘（移动云盘分流仅保留在主页下载区）
   if (isLatestPack && quarkMirror) {
     const quark = document.createElement("a");
@@ -125,10 +118,9 @@ function scrollToCurrentHash() {
 
 async function renderChangelog({ preferLive = false } = {}) {
   try {
-    const [releases, downloadConfig, domesticMirror, quarkMirror, acceleratorSwitch] = await Promise.all([
+    const [releases, downloadConfig, quarkMirror, acceleratorSwitch] = await Promise.all([
       loadPackReleases(),
       loadDownloadConfig(siteBaseUrl()),
-      loadDomesticMirror(siteBaseUrl(), { preferLive }),
       loadQuarkMirror(siteBaseUrl(), { preferLive }),
       loadAcceleratorSwitch(siteBaseUrl(), { preferLive })
     ]);
@@ -155,7 +147,6 @@ async function renderChangelog({ preferLive = false } = {}) {
         createReleaseEntry(
           release,
           downloadConfig.selected.prefix,
-          domesticMirror,
           quarkMirror,
           index === 0,
           acceleratorEnabled

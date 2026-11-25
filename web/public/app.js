@@ -11,7 +11,6 @@ import {
 import {
   accelerateDownloadUrl,
   loadAcceleratorSwitch,
-  loadDomesticMirror,
   loadDownloadConfig,
   loadMobileMirror,
   loadQuarkMirror
@@ -38,7 +37,6 @@ const elements = {
   assetSize: document.querySelector("#asset-size"),
   downloadAccelerated: document.querySelector("#download-accelerated"),
   downloadDirect: document.querySelector("#download-direct"),
-  lanzouNotice: document.querySelector("#lanzou-closed-notice"),
   downloadMobile: document.querySelector("#download-mobile"),
   downloadQuark: document.querySelector("#download-quark"),
   recentReleases: document.querySelector("#recent-releases"),
@@ -129,39 +127,7 @@ async function loadAcceleratorSwitchState({ preferLive = false } = {}) {
   }
 }
 
-let domesticMirrorInFlight = false;
-let lastDomesticMirrorAt = 0;
-let lastDomesticMirrorKey = null;
-let lastLiveMirrorAt = 0;
 const MIRROR_REFRESH_MS = 30 * 1000;
-
-async function loadDomesticMirrorLink({ preferLive = false } = {}) {
-  if (domesticMirrorInFlight) return;
-  // 连续切窗口时别把 GitHub API 的 60 次/小时额度打光
-  if (preferLive) {
-    if (Date.now() - lastLiveMirrorAt < 10_000) preferLive = false;
-    else lastLiveMirrorAt = Date.now();
-  }
-  domesticMirrorInFlight = true;
-  try {
-    // 蓝奏云下载入口已移除：按钮不再渲染，仅在其关闭状态下展示提示信息
-    const mirror = await loadDomesticMirror(siteBaseUrl(), { preferLive });
-    if (!mirror || !mirror.closed || !elements.lanzouNotice) {
-      if (elements.lanzouNotice) elements.lanzouNotice.hidden = true;
-      lastDomesticMirrorKey = "";
-      return;
-    }
-    const noticeText = isEnglish() ? mirror.noticeEn : mirror.notice;
-    const key = ["closed", noticeText].join("|");
-    if (key === lastDomesticMirrorKey) return;
-    lastDomesticMirrorKey = key;
-    elements.lanzouNotice.textContent = noticeText;
-    elements.lanzouNotice.hidden = false;
-  } finally {
-    lastDomesticMirrorAt = Date.now();
-    domesticMirrorInFlight = false;
-  }
-}
 
 let mobileMirrorInFlight = false;
 let lastMobileMirrorKey = null;
@@ -484,7 +450,6 @@ async function refreshPublicData() {
       loadHomepageWebsiteUpdates(),
       refreshDownloadAccelerator(),
       loadAcceleratorSwitchState(),
-      loadDomesticMirrorLink(),
       loadMobileMirrorLink(),
       loadQuarkMirrorLink()
     ]);
@@ -501,14 +466,12 @@ setInterval(refreshPublicData, AUTO_REFRESH_MS);
 setInterval(() => {
   if (document.visibilityState === "visible") {
     loadAcceleratorSwitchState();
-    loadDomesticMirrorLink();
     loadMobileMirrorLink();
     loadQuarkMirrorLink();
   }
 }, MIRROR_REFRESH_MS);
 window.addEventListener("online", () => {
   loadAcceleratorSwitchState({ preferLive: true });
-  loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
   loadQuarkMirrorLink({ preferLive: true });
 });
@@ -516,14 +479,12 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState !== "visible") return;
   // 回到页面时直接问 GitHub API，拿到的是刚提交的最新值
   loadAcceleratorSwitchState({ preferLive: true });
-  loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
   loadQuarkMirrorLink({ preferLive: true });
   if (Date.now() - lastRefreshAt >= AUTO_REFRESH_MS) refreshPublicData();
 });
 window.addEventListener("focus", () => {
   loadAcceleratorSwitchState({ preferLive: true });
-  loadDomesticMirrorLink({ preferLive: true });
   loadMobileMirrorLink({ preferLive: true });
   loadQuarkMirrorLink({ preferLive: true });
 });
