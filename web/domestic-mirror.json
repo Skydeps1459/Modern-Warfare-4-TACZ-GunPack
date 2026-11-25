@@ -1,6 +1,6 @@
 {
   "closed": true,
   "label": "蓝奏云国内分流",
-  "notice": "由于枪包文件即将达到蓝奏云单次传输上限，为了玩家下载体验，蓝奏云分流现正式关闭，未来枪包分流下载将暂时迁移至移动云盘",
-  "noticeEn": "The gun pack file is approaching Lanzou Cloud's single-transfer size limit. To keep downloads smooth for players, the Lanzou mirror is now officially closed. Mirror downloads will temporarily move to China Mobile Cloud Drive."
+  "notice": "由于枪包文件即将达到蓝奏云单次传输上限，为了玩家下载体验，蓝奏云分流现正式关闭，未来枪包分流下载将暂时迁移至移动云盘\n作者与夸克达成合作啦！往后使用夸克镜像下载会产生收益 所以暂时关闭默认的加速下载通道啦 希望各位多多支持",
+  "noticeEn": "The gun pack file is approaching Lanzou Cloud's single-transfer size limit. To keep downloads smooth for players, the Lanzou mirror is now officially closed. Mirror downloads will temporarily move to China Mobile Cloud Drive.\nThe author has partnered with Quark Cloud! Downloads via the Quark mirror now support the project, so the default accelerated download channel is temporarily disabled. Thanks for your support!"
 }
