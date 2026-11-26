@@ -21,7 +21,7 @@
       "typeLabel": "手枪",
       "typeLabelEn": "Pistol",
       "sort": 2,
-      "iconUrl": "api/icons/deagle.png"
+      "iconUrl": "api/icons/deagle"
     },
     {
       "id": "m16a1",
@@ -33,7 +33,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 4,
-      "iconUrl": "api/icons/m16a1.png"
+      "iconUrl": "api/icons/m16a1"
     },
     {
       "id": "ak47",
@@ -45,7 +45,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 5,
-      "iconUrl": "api/icons/ak47.png"
+      "iconUrl": "api/icons/ak47"
     },
     {
       "id": "scar_h",
@@ -57,7 +57,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 6,
-      "iconUrl": "api/icons/scar_h.png"
+      "iconUrl": "api/icons/scar_h"
     },
     {
       "id": "awp",
@@ -69,7 +69,7 @@
       "typeLabel": "狙击步枪",
       "typeLabelEn": "Sniper Rifle",
       "sort": 7,
-      "iconUrl": "api/icons/awp.png"
+      "iconUrl": "api/icons/awp"
     },
     {
       "id": "mrad",
@@ -81,7 +81,7 @@
       "typeLabel": "狙击步枪",
       "typeLabelEn": "Sniper Rifle",
       "sort": 8,
-      "iconUrl": "api/icons/mrad.png"
+      "iconUrl": "api/icons/mrad"
     },
     {
       "id": "hk416d",
@@ -93,7 +93,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 9,
-      "iconUrl": "api/icons/hk416d.png"
+      "iconUrl": "api/icons/hk416d"
     },
     {
       "id": "hkg3",
@@ -105,7 +105,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 10,
-      "iconUrl": "api/icons/hkg3.png"
+      "iconUrl": "api/icons/hkg3"
     },
     {
       "id": "mk23",
@@ -117,7 +117,7 @@
       "typeLabel": "手枪",
       "typeLabelEn": "Pistol",
       "sort": 11,
-      "iconUrl": "api/icons/mk23.png"
+      "iconUrl": "api/icons/mk23"
     },
     {
       "id": "rpk",
@@ -129,7 +129,7 @@
       "typeLabel": "机枪",
       "typeLabelEn": "Machine Gun",
       "sort": 11,
-      "iconUrl": "api/icons/rpk.png"
+      "iconUrl": "api/icons/rpk"
     },
     {
       "id": "m700",
@@ -141,7 +141,7 @@
       "typeLabel": "狙击步枪",
       "typeLabelEn": "Sniper Rifle",
       "sort": 12,
-      "iconUrl": "api/icons/m700.png"
+      "iconUrl": "api/icons/m700"
     },
     {
       "id": "fn_fal",
@@ -153,7 +153,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 18,
-      "iconUrl": "api/icons/fn_fal.png"
+      "iconUrl": "api/icons/fn_fal"
     },
     {
       "id": "mcx_spear_lt",
@@ -165,7 +165,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 19,
-      "iconUrl": "api/icons/mcx_spear_lt.png"
+      "iconUrl": "api/icons/mcx_spear_lt"
     },
     {
       "id": "hk437",
@@ -177,7 +177,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 20,
-      "iconUrl": "api/icons/hk437.png"
+      "iconUrl": "api/icons/hk437"
     },
     {
       "id": "ak74m",
@@ -189,7 +189,7 @@
       "typeLabel": "突击步枪",
       "typeLabelEn": "Assault Rifle",
       "sort": 21,
-      "iconUrl": "api/icons/ak74m.png"
+      "iconUrl": "api/icons/ak74m"
     },
     {
       "id": "hkg28",
@@ -201,7 +201,19 @@
       "typeLabel": "精确射手步枪",
       "typeLabelEn": "Marksman Rifle",
       "sort": 22,
-      "iconUrl": "api/icons/hkg28.png"
+      "iconUrl": "api/icons/hkg28"
+    },
+    {
+      "id": "urgi",
+      "name": "URGI",
+      "nameEn": "URGI",
+      "description": "14.5 英寸 M4 平台 换成 Geissele 自由浮置护木 每一发都比原厂 M4A1 更干净 但它终究还是 5.56",
+      "descriptionEn": "A 14.5-inch M4-pattern upper on a Geissele free-float rail Every shot feels crisper than a stock M4A1 but it is still only 5.56",
+      "type": "rifle",
+      "typeLabel": "突击步枪",
+      "typeLabelEn": "Assault Rifle",
+      "sort": 23,
+      "iconUrl": "api/icons/urgi"
     }
   ]
 }
