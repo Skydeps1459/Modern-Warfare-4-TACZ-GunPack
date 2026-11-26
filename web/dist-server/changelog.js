@@ -22,6 +22,15 @@ import {
 const list = document.querySelector("#changelog-list");
 const count = document.querySelector("#release-count");
 const AUTO_REFRESH_MS = 5 * 60 * 1000;
+const COMPACT_QUERY = "(max-width: 760px)";
+const compactMedia = typeof window !== "undefined" && typeof window.matchMedia === "function"
+  ? window.matchMedia(COMPACT_QUERY)
+  : null;
+
+// 移动端不展示加速下载按钮：窄屏下按钮组只保留分流与 GitHub 原链。
+function isCompactViewport() {
+  return compactMedia ? compactMedia.matches : false;
+}
 
 function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMirror, isLatestPack, acceleratorEnabled) {
   const article = document.createElement("article");
@@ -43,8 +52,10 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMir
 
   const actions = document.createElement("div");
   actions.className = "release-actions";
-  // 加速下载受后台总开关控制：默认关闭时不渲染加速按钮，GitHub 原链转为主按钮
-  if (release.asset && acceleratorEnabled) {
+  // 加速下载受后台总开关控制：默认关闭时不渲染加速按钮，GitHub 原链转为主按钮。
+  // 移动端（≤760px）一律不展示加速按钮，只保留分流与 GitHub 原链。
+  const showAccelerator = acceleratorEnabled && !isCompactViewport();
+  if (release.asset && showAccelerator) {
     const accelerated = document.createElement("a");
     accelerated.className = "button button-primary";
     accelerated.href = acceleratedReleaseUrl(release.downloadUrl, acceleratorPrefix);
@@ -76,7 +87,7 @@ function createReleaseEntry(release, acceleratorPrefix, domesticMirror, quarkMir
   }
   const direct = document.createElement("a");
   direct.className = release.asset
-    ? (acceleratorEnabled ? "button button-ghost" : "button button-primary")
+    ? (showAccelerator ? "button button-ghost" : "button button-primary")
     : "button button-outline";
   direct.href = release.url;
   direct.rel = "noreferrer";
@@ -195,4 +206,16 @@ setInterval(refreshChangelog, AUTO_REFRESH_MS);
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") refreshChangelog({ preferLive: true });
 });
+
+// 视口跨过移动端断点时重绘，保证加速按钮的显隐始终与当前屏幕宽度一致。
+if (compactMedia) {
+  const onCompactChange = () => {
+    refreshChangelog();
+  };
+  if (typeof compactMedia.addEventListener === "function") {
+    compactMedia.addEventListener("change", onCompactChange);
+  } else if (typeof compactMedia.addListener === "function") {
+    compactMedia.addListener(onCompactChange);
+  }
+}
 
