@@ -1,6 +1,21 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.64",
+      "title": "枪包下载同步至 1.13.0 并下架 M4A1",
+      "publishedAt": "2026-11-26T09:55:27Z",
+      "summary": "官网同步 1.13.0-Release：新增 URGI 突击步枪，M4A1 从枪包数据层下架，枪械总数调整为 16 把，全站下载按钮与加速线路切换到 v1.13.0-Release 附件。",
+      "changes": [
+        "中英文 README 当前版本更新为 1.13.0-Release，枪械数更新为 16 把。",
+        "枪械列表新增 URGI 突击步枪。",
+        "枪械列表移除 M4A1，其名称与描述一并下架。",
+        "全站主下载地址与加速镜像测速结果切换到 v1.13.0-Release 发布附件。",
+        "更新日志页自动收录 1.13.0-Release 发布说明。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": "https://github.com/Skydeps1459/Modern-Warfare-4-TACZ-GunPack/releases/tag/v1.13.0-Release"
+    },
+    {
       "id": "website-v1.0.63",
       "title": "移除首页与更新日志页的橙色关闭公告",
       "publishedAt": "2026-11-25T18:00:00Z",
