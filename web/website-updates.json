@@ -1,6 +1,18 @@
 {
   "updates": [
     {
+      "id": "website-v1.0.66",
+      "title": "更新夸克网盘分流链接",
+      "publishedAt": "2026-11-26T10:25:00Z",
+      "summary": "夸克网盘分流链接更换为 pan.quark.cn/s/72e787381cb8，首页下载区与更新日志页最新版本的夸克按钮同步指向新分享。",
+      "changes": [
+        "web/quark-mirror.json 分流地址更新为 https://pan.quark.cn/s/72e787381cb8。",
+        "首页下载区「夸克网盘分流」按钮与更新日志页最新版本分流按钮同步指向新链接。"
+      ],
+      "bugFixes": [],
+      "releaseUrl": null
+    },
+    {
       "id": "website-v1.0.65",
       "title": "移动端更新日志页隐藏加速下载按钮",
       "publishedAt": "2026-11-26T10:12:00Z",
