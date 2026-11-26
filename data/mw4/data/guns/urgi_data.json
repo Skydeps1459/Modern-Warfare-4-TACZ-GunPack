@@ -11,21 +11,21 @@
   "script": "mw4:xmag_reload_logic",
   "script_param": {
     "reload_feed": 1.21,
-    "reload_cooldown": 1.26,
+    "reload_cooldown": 2.5,
     "empty_feed": 1.86,
-    "empty_cooldown": 1.91,
+    "empty_cooldown": 2.67,
     "reload_xmag_1_feed": 1.47,
-    "reload_xmag_1_cooldown": 1.52,
+    "reload_xmag_1_cooldown": 2.77,
     "empty_xmag_1_feed": 2.15,
-    "empty_xmag_1_cooldown": 2.2,
+    "empty_xmag_1_cooldown": 2.93,
     "reload_xmag_2_feed": 1.47,
-    "reload_xmag_2_cooldown": 1.52,
+    "reload_xmag_2_cooldown": 2.77,
     "empty_xmag_2_feed": 2.15,
-    "empty_xmag_2_cooldown": 2.2,
+    "empty_xmag_2_cooldown": 2.93,
     "reload_xmag_3_feed": 1.65,
-    "reload_xmag_3_cooldown": 1.7,
+    "reload_xmag_3_cooldown": 3.03,
     "empty_xmag_3_feed": 2.43,
-    "empty_xmag_3_cooldown": 2.48
+    "empty_xmag_3_cooldown": 3.23
   },
   "bullet": {
     "life": 0.9,
@@ -65,8 +65,8 @@
       "tactical": 1.21
     },
     "cooldown": {
-      "empty": 1.91,
-      "tactical": 1.26
+      "empty": 2.67,
+      "tactical": 2.5
     }
   },
   "draw_time": 0.77,
