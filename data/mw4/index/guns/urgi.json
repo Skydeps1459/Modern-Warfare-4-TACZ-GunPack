@@ -1,0 +1,9 @@
+{
+  "name": "mw4.gun.urgi.name",
+  "display": "mw4:urgi_display",
+  "data": "mw4:urgi_data",
+  "tooltip": "mw4.gun.urgi.desc",
+  "type": "rifle",
+  "item_type": "modern_kinetic",
+  "sort": 23
+}

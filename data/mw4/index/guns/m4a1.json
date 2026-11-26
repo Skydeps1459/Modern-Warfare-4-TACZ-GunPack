@@ -1,9 +1,0 @@
-{
-  "name": "mw4.gun.m4a1.name",
-  "display": "mw4:m4a1_display",
-  "data": "mw4:m4a1_data",
-  "tooltip": "mw4.gun.m4a1.desc",
-  "type": "rifle",
-  "sort": 3,
-  "item_type": "modern_kinetic"
-}

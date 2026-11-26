@@ -50,5 +50,7 @@
   "mw4.ammo.762x51_m61.name": "7.62x51mm M61",
   "mw4.ammo.762x51_m80.name": "7.62x51mm M80",
   "mw4.ammo.762x51_m993.name": "7.62x51mm M993",
-  "mw4.ammo.762x51_m948_slap.name": "7.62x51mm M948 脱壳穿甲弹"
+  "mw4.ammo.762x51_m948_slap.name": "7.62x51mm M948 脱壳穿甲弹",
+  "mw4.gun.urgi.name": "URGI",
+  "mw4.gun.urgi.desc": "§a14.5 英寸 M4 平台 换成 Geissele 自由浮置护木 每一发都比原厂 M4A1 更干净 但它终究还是 5.56"
 }

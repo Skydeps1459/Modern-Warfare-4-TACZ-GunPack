@@ -50,5 +50,7 @@
   "mw4.ammo.762x51_m61.name": "7.62x51mm M61",
   "mw4.ammo.762x51_m80.name": "7.62x51mm M80",
   "mw4.ammo.762x51_m993.name": "7.62x51mm M993",
-  "mw4.ammo.762x51_m948_slap.name": "7.62x51mm M948 SLAP"
+  "mw4.ammo.762x51_m948_slap.name": "7.62x51mm M948 SLAP",
+  "mw4.gun.urgi.name": "URGI",
+  "mw4.gun.urgi.desc": "§aA 14.5-inch M4-pattern upper on a Geissele free-float rail Every shot feels crisper than a stock M4A1 but it is still only 5.56"
 }

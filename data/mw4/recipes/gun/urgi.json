@@ -3,7 +3,7 @@
   "materials": [
     {
       "item": {
-        "tag": "c:ingots/iron"
+        "tag": "forge:ingots/iron"
       },
       "count": 22
     },
@@ -16,6 +16,6 @@
   ],
   "result": {
     "type": "gun",
-    "id": "mw4:m4a1"
+    "id": "mw4:urgi"
   }
 }
