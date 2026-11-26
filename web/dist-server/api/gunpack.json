@@ -24,18 +24,6 @@
       "iconUrl": "api/icons/deagle.png"
     },
     {
-      "id": "m4a1",
-      "name": "M4A1",
-      "nameEn": "M4A1",
-      "description": "美军指定万金油 上能打巷战 下能打玻璃 唯一打不过的是队友的走位",
-      "descriptionEn": "The US militarys all purpose tool Great in alleys great on glass only loses to your teammates positioning",
-      "type": "rifle",
-      "typeLabel": "突击步枪",
-      "typeLabelEn": "Assault Rifle",
-      "sort": 3,
-      "iconUrl": "api/icons/m4a1.png"
-    },
-    {
       "id": "m16a1",
       "name": "M16A1 突击步枪",
       "nameEn": "M16A1",
